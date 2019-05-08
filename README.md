@@ -22,9 +22,7 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
             is developed to be open and independent library, its functionality can be extended or customized for content extraction, processing and presentation.
         </p>
         <p>The library depends on <a href="https://jquery.com/">jQuery</a> for making AJAX calls to extract content and utilizes <a href="http://knockoutjs.com/">KnockoutJs</a> for presenting processed content.</p>
-
-        <p>CRUDS expects server side content response presented in following JSON format :</p>
-
+<p>CRUDS expects server side content response presented in following JSON format :</p>
 <pre>
 {
       errors: [],
