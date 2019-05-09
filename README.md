@@ -3,7 +3,7 @@
 <p>CRUDS utilize CRUDController to extract data from a data source or CRUDSource and processes response with CRUDProcessor to produce typed objects. Observers utilize typed objects and present them in their appropriate views.</p>
 <p>This simplifies the process of data extraction, processing and presentation.</p>
 
-<h2>CRUD2CRUD Architecture</h2>
+<h2>CRUD=CRUD Architecture</h2>
 <p>WindnTrees implements CRUD 2 CRUD application architecture where server side publish services in terms of CRUD controllers and the client side consumes those services using CRUD controllers.</p>
 
 <pre>
