@@ -4,7 +4,7 @@
 <p>This simplifies the process of data extraction, processing and presentation.</p>
 
 <h2>CRUD=CRUD Architecture</h2>
-<p>WindnTrees implements CRUD 2 CRUD application architecture where server side publish services in terms of CRUD controllers and the client side consumes those services using CRUD controllers.</p>
+<p>WindnTrees implements CRUD 2 CRUD (CRUDS parallel) application architecture where server side publish services in terms of CRUD controllers and the client side consumes those services using CRUD controllers.</p>
 
 <pre>
 [Server Side]
