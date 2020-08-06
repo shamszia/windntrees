@@ -25,7 +25,7 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
 <p>CRUDS expects server side content response presented in following JSON format :</p>
 <pre>
 {
-      content: object,
+      content: {},
       errors: [] 
 }
 </pre>
@@ -50,7 +50,7 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
 
 <p>install-package WindnTrees.Core</p>
 
-<p>Note: nuget package manager does not install windntrees1.0.0.min.js in correct project scripts library directory, make sure you recover script files from C:\Users\&lt;&lt;Username&gt;&gt;\.nuget\packages\. Or Download from following url <a href="https://github.com/shamszia/windntrees">here</a>.</p>
+<p>Note: nuget package manager does not install windntrees.min.js in correct project scripts library directory, make sure you recover script files from C:\Users\&lt;&lt;Username&gt;&gt;\.nuget\packages\. Or Download from following url <a href="https://github.com/shamszia/windntrees">here</a>.</p>
 
 <h3>Maven / Thymeleaf / Java</h3>
 <p>You may resolve windntrees application references using following:</p>
