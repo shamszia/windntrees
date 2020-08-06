@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -40,9 +40,6 @@ function CRUDView(options) {
     extOptions.events = false;
     instance = SearchView(extOptions);
     
-    instance.MasterView = null;
-    instance.DetailView = null;
-    
     /**
      * Gets the type of view.
      * 
@@ -51,348 +48,7 @@ function CRUDView(options) {
     instance.getType = function () {
         return 'CRUDView';
     };
-
-    /**
-     * Observer interface reference to the actual observer.
-     * 
-     * @returns {Window.Observer|CRUDView.Observer}
-     */
-    instance.getMasterObserverInterface = function () {
-        return instance.MasterView.getObserverInterface();
-    };
-
-    /**
-     * Gets view's actual underlying observer.
-     * 
-     * @returns {unresolved}
-     */
-    instance.getMasterObserverObject = function () {
-        var observerInterface = instance.getMasterObserverInterface();
-        try {
-            while (1) {
-                observerInterface = observerInterface.getObserver();
-            }
-        } catch (e) {
-        }
-        return observerInterface;
-    };
-
-    /**
-     * Observer interface reference to the actual observer.
-     * 
-     * @returns {Window.Observer|CRUDView.Observer}
-     */
-    instance.getDetailObserverInterface = function () {
-        return instance.DetailView.getObserverInterface();
-    };
-
-    /**
-     * Gets view's actual underlying observer.
-     * 
-     * @returns {unresolved}
-     */
-    instance.getDetailObserverObject = function () {
-        var observerInterface = instance.getDetailObserverInterface();
-        try {
-            while (1) {
-                observerInterface = observerInterface.getObserver();
-            }
-        } catch (e) {
-        }
-        return observerInterface;
-    };
-
-    /**
-     * Sets master view.
-     * @param {type} view
-     * @returns {undefined}
-     */
-    instance.setMasterView = function (view) {
-        instance.MasterView = view;
-    };
-
-    /**
-     * Gets master view.
-     * 
-     * @returns {type.prevview}
-     */
-    instance.getMasterView = function () {
-        return instance.MasterView;
-    };
-
-    /**
-     * Sets related detail view.
-     * 
-     * @param {type} view
-     * @returns {undefined}
-     */
-    instance.setDetailView = function (view) {
-        if (view !== null && view !== undefined) {
-
-            var relatedView = CRUDRelatedView({'view': view});
-            instance.DetailView = relatedView;
-            instance.DetailView.setMasterView(this);
-
-            /**
-             * Extends relating master view's entity object with addDetailItem 
-             * function at runtime.
-             * 
-             * options.name - items or subitems array name within an entity 
-             * object graph
-             * 
-             * options.data - new item to insert
-             * options.order - 'first' or 'last'
-             * 
-             * @param {type} options 
-             */
-            instance.getObserverInterface().getContentTypeObjectPrototype().addDetailItem = function (options) {
-                var instance = this;
-                var subitems = instance.get(options.name);
-
-                if (subitems !== null && subitems !== undefined) {
-                    if (Array.isArray(subitems)) {
-                        if (options.order !== null && options.order !== undefined) {
-                            if (options.order === 'first') {
-                                subitems.splice(0, 0, JSON.parse(options.data));
-                            } else {
-                                subitems.push(JSON.parse(options.data));
-                            }
-                        } else {
-                            subitems.splice(0, 0, JSON.parse(options.data));
-                        }
-                        return;
-                    }
-                }
-            };
-
-            /**
-             * Extends relating master view's entity object with editOrRemoveDetailItem 
-             * function at runtime.
-             * 
-             * options.name - items or subitems array name within an entity 
-             * object graph.
-             * 
-             * options.data - entity object to edit or remove
-             * options.action - 'edit' or 'remove'
-             * 
-             * @param {type} options 
-             * 
-             */
-            instance.getObserverInterface().getContentTypeObjectPrototype().editOrRemoveDetailItem = function (options) {
-                var instance = this;
-                var subitems = instance.get(options.name);
-
-                if (subitems !== null && subitems !== undefined) {
-                    if (Array.isArray(subitems)) {
-                        for (var i = 0; i < subitems.length; i++) {
-                            var dataObject = JSON.parse(options.data);
-                            var item = new options.dataPrototype.constructor(subitems[i]);
-                            var dataItem = new options.dataPrototype.constructor(dataObject);
-                            dataItem._datakey = dataObject._datakey;
-
-                            if (typeof (item._datakey) === "string") {
-                                if (typeof (dataItem._datakey) === "string") {
-                                    if (item._datakey === dataItem._datakey) {
-                                        if (options.action !== null && options.action !== undefined) {
-                                            if (options.action === 'edit') {
-                                                subitems.splice(i, 1, dataObject);
-                                            } else if (options.action === 'remove') {
-                                                subitems.splice(i, 1);
-                                            } else {
-                                                subitems.splice(i, 1, dataObject);
-                                            }
-                                        } else {
-                                            subitems.splice(i, 1, dataObject);
-                                        }
-                                        return true;
-                                    }
-                                }
-                            } else if (typeof (item._datakey) === "object") {
-                                if (typeof (options.data._datakey) === "object") {
-                                    var fieldNames = Object.getOwnPropertyNames(item);
-                                    var matchFound = false;
-
-                                    for (var j = 0; j < fieldNames.length; j++) {
-                                        if (item[fieldNames[j]] === dataItem[fieldNames[j]]) {
-                                            matchFound = true;
-                                        } else {
-                                            matchFound = false;
-                                            break;
-                                        }
-                                    }
-
-                                    if (matchFound) {
-                                        if (options.action !== null && options.action !== undefined) {
-                                            if (options.action === 'edit') {
-                                                subitems.splice(i, 1, dataObject);
-                                            } else if (options.action === 'remove') {
-                                                subitems.splice(i, 1);
-                                            } else {
-                                                subitems.splice(i, 1, dataObject);
-                                            }
-                                        } else {
-                                            subitems.splice(i, 1, dataObject);
-                                        }
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                        return false;
-                    }
-                }
-            };
-
-            /**
-             * Loads DetailView's records based on the MasterView's record selection.
-             * 
-             * data.record - entity record to be set as master key record
-             * data.page - page number
-             * 
-             * @param {type} data
-             * @returns {undefined}
-             */
-            instance.selectDetail = function (data) {
-                if (data.record === null || data.record === undefined) {
-                    instance.find(data.page);
-                } else {
-
-                    if (data.navigation === null || data.navigation === undefined) {
-                        instance.getObserverInterface().setMasterKeyRecord(data.record);
-                    }
-
-                    instance.getObserverInterface().displayGridProcessingActivity();
-
-                    instance.getDetailObserverInterface().setCurrentList(data.page);
-                    instance.getDetailObserverInterface().clearListRecordsView();
-                    instance.getDetailObserverInterface().displayGridProcessingActivity();
-
-                    instance.getDetailView().getCRUDProcessor().select({'uri': instance.getDetailView().URI,
-                        'key': instance.getObserverInterface().getMasterKeyRecord().getKey(),
-                        'source': data.source === undefined ? null : data.source,
-                        'keyword': instance.getDetailObserverInterface().getKeyword(),
-                        'size': instance.getDetailObserverInterface().getListSize(),
-                        'page': data.page,
-                        'callback': function (result) {
-
-                            instance.getDetailObserverInterface().displayGridClearActivity();
-                            instance.getObserverInterface().displayGridClearActivity();
-
-                            if (instance.getDetailView().isResponseError()) {
-                                instance.getDetailObserverInterface().displayGridFailureActivity();
-                            } else {
-                                if (instance.getDetailView().isInputError()) {
-                                    instance.getDetailObserverInterface().setErrors(instance.getDetailView().getErrors());
-                                } else {
-                                    instance.getDetailObserverInterface().displayGridSuccessActivity();
-                                    instance.getDetailObserverInterface().fillListRecordsView({
-                                        page: data.page,
-                                        responseData: instance.getDetailView().getCRUDProcessor().responseData(),
-                                        records: instance.getDetailView().getCRUDProcessor().Records
-                                    });
-                                }
-                            }
-                        }
-                    });
-                }
-            };
-
-            if (instance.getObserverInterface().selectDetail === undefined) {
-                /**
-                 * Loads detail records based on MasterView's selected record.
-                 * 
-                 * data.record - selection entity record
-                 * data.page - page number
-                 * 
-                 * @param {type} data
-                 * 
-                 * @returns {undefined}
-                 */
-                instance.getObserverInterface().selectDetail = function (data) {
-                    instance.getObserverObject().selectDetail(data);
-                };
-            }
-
-            if (instance.getObserverObject().selectDetail === undefined) {
-                /**
-                 * Loads detail records based on MasterView's selected record.
-                 * 
-                 * data.record - selection entity record
-                 * data.page - page number
-                 * 
-                 * @param {type} data
-                 * 
-                 * @returns {undefined}
-                 */
-                instance.getObserverObject().selectDetail = function (data) {
-                    if (instance.getObserverInterface().getMasterKeyRecord() !== null) {
-                        if (instance.getObserverInterface().getMasterKeyRecord().getKey() !== data.record.getKey()) {
-                            instance.selectDetail(data);
-                        }
-                    } else {
-                        instance.selectDetail(data);
-                    }
-                };
-            }
-
-            /**
-             * Observer find function definition.
-             * 
-             * @param {type} page
-             * @returns {undefined}
-             */
-            instance.getDetailObserverInterface().findMaster = function (page) {
-                instance.find(page);
-            };
-
-            /**
-             * Observer find function definition.
-             * 
-             * @param {type} page
-             * @returns {undefined}
-             */
-            instance.getDetailObserverObject().findMaster = function (page) {
-                instance.find(page);
-            };
-        }
-    };
-
-    /**
-     * Gets related detail view.
-     * 
-     * @returns {type.nextview}
-     */
-    instance.getDetailView = function () {
-        return instance.DetailView;
-    };
-
-    /**
-     * Sets master key record.
-     * 
-     * @param {type} record
-     * @returns {unresolved}
-     */
-    instance.setMasterKeyRecord = function (record) {
-        return instance.getObserverObject().setMasterKeyRecord(record);
-    };
-
-    /**
-     * Gets master key record.
-     * 
-     * @returns {unresolved}
-     */
-    instance.getMasterKeyRecord = function () {
-        return instance.getObserverObject().getMasterKeyRecord();
-    };
-
-    /**
-     * Gets master key record.
-     * 
-     * @returns {unresolved}
-     */
-    instance.getContextualMasterKeyRecord = function () {
-        return instance.getObserverObject().getMasterKeyRecord();
-    };
+    
 
     //CRUD Functions
     ////////////////////////////////////////////////////////////////////////////
@@ -451,7 +107,7 @@ function CRUDView(options) {
             content = (options.content === null || options.content === undefined) ? (instance.getObserverInterface().getFormStringifiedObject()) : instance.getObserverInterface().getStringifiedObject(options.content);
         }
 
-        if (options.target === 'CreateContent' || options.target === 'UpdateContent') {
+        if (options.target === 'CreateFileContent' || options.target === 'UpdateFileContent') {
 
             var uploadForm = (options.form !== null && options.form !== undefined) ? options.form : '__uploadform';
 
@@ -623,33 +279,6 @@ function CRUDView(options) {
                 instance.delete(record);
             }
         };
-
-        /**
-         * Gets contextual master key record for views resolution.
-         * 
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().getContextualMasterKeyRecord = function () {
-            instance.getContextualMasterKeyRecord();
-        };
-        
-        /**
-         * Gets the attached view.
-         * 
-         * @returns {CRUDView.getObserverObject.getView}
-         */
-        instance.getObserverInterface().getDetailView = function () {
-            return instance.getDetailView();
-        };
-        
-        /**
-         * Gets the attached view.
-         * 
-         * @returns {CRUDView.getObserverObject.getView}
-         */
-        instance.getObserverInterface().getMasterView = function () {
-            return instance.getMasterView();
-        };
     }
 
     if (instance.getObserverObject() !== null &&
@@ -695,33 +324,6 @@ function CRUDView(options) {
                 instance.delete(record);
             }
         };
-
-        /**
-         * Gets contextual master key record for views resolution.
-         * 
-         * @returns {undefined}
-         */
-        instance.getObserverObject().getContextualMasterKeyRecord = function () {
-            instance.getContextualMasterKeyRecord();
-        };
-        
-        /**
-         * Gets the attached view.
-         * 
-         * @returns {CRUDView.getObserverObject.getView}
-         */
-        instance.getObserverObject().getDetailView = function () {
-            return instance.getDetailView();
-        };
-        
-        /**
-         * Gets the attached view.
-         * 
-         * @returns {CRUDView.getObserverObject.getView}
-         */
-        instance.getObserverObject().getMasterView = function () {
-            return instance.getMasterView();
-        };
     }
 
     if (options.events !== null && options.events !== undefined) {
@@ -730,12 +332,6 @@ function CRUDView(options) {
         }
     } else {
         instance.subscribeEvents();
-    }
-    
-    if (options.contextpath !== null && options.contextpath !== undefined) {
-        if (options.contextpath === 'load') {
-            instance.loadContextPath();
-        }
     }
     
     if (options.instance !== null && options.instance !== undefined) {

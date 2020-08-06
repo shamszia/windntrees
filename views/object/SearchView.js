@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -82,149 +82,7 @@ function SearchView(options) {
     };
 
     /**
-     * Selects records based on provided key (views object key) and keyword (via observer keyword property) and page number.
-     * 
-     * @param {type} options
-     * @param {type} fill 
-     * @returns {undefined}
-     */
-    instance.select = function (options, fill) {
-
-        if (instance.getObjectKey() !== null && instance.getObjectKey() !== undefined) {
-
-            if (instance.getObjectKey().length === 0) {
-
-                instance.setObjectKey(null);
-                instance.find(options, fill);
-
-            } else {
-
-                if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-
-                    instance.getObserverInterface().displayProcessingActivity();
-                }
-
-                if (typeof (options) === "object") {
-
-                    options.uri = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
-                    options.keyword = (options.keyword !== null && options.keyword !== undefined) ? options.keyword : instance.getObserverInterface().getKeyword();
-                    options.fill = fill;
-                    instance.getCRUDProcessor().select(options);
-
-                } else {
-
-                    instance.getCRUDProcessor().select({
-                        'uri': instance.URI,
-                        'key': instance.getObjectKey(),
-                        'keyword': instance.getObserverInterface().getKeyword(),
-                        'size': instance.getObserverInterface().getListSize(),
-                        'page': options,
-                        'fill': fill
-                    });
-                }
-            }
-
-        } else {
-
-            instance.find(options, fill);
-        }
-    };
-
-    /**
-     * Selects records based on provided key (views object key) and keyword (via observer keyword property) and page number.
-     * 
-     * @param {type} options
-     * @param {type} fill 
-     * @returns {undefined}
-     */
-    instance.selectList = function (options, fill) {
-
-        if (instance.getObjectKey() !== null && instance.getObjectKey() !== undefined) {
-
-            if (instance.getObjectKey().length === 0) {
-
-                instance.setObjectKey(null);
-                instance.list(options, fill);
-
-            } else {
-
-                if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-
-                    instance.getObserverInterface().displayProcessingActivity();
-                }
-
-                if (typeof (options) === "object") {
-
-                    options.uri = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
-                    options.keyword = (options.keyword !== null && options.keyword !== undefined) ? options.keyword : instance.getObserverInterface().getKeyword();
-                    options.fill = fill;
-                    instance.getCRUDProcessor().selectList(options);
-
-                } else {
-
-                    instance.getCRUDProcessor().selectList({
-                        'uri': instance.URI,
-                        'key': instance.getObjectKey(),
-                        'keyword': instance.getObserverInterface().getKeyword(),
-                        'fill': fill
-                    });
-                }
-            }
-
-        } else {
-
-            instance.list(options, fill);
-        }
-    };
-    
-    /**
-     * Find records based on provided keyword (via observer keyword property) and page number.
-     * 
-     * @param {type} options
-     * @param {type} fill 
-     * @returns {undefined}
-     */
-    instance.find = function (options, fill) {
-
-        if (instance.getObjectKey() !== null && instance.getObjectKey() !== undefined) {
-
-            if (instance.getObjectKey().length === 0) {
-
-                instance.setObjectKey(null);
-                instance.find(options, fill);
-
-            } else {
-                instance.select(options, fill);
-            }
-        } else {
-
-            if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-
-                instance.getObserverInterface().displayProcessingActivity();
-            }
-
-            if (typeof (options) === "object") {
-
-                options.uri = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
-                options.keyword = (options.keyword !== null && options.keyword !== undefined) ? options.keyword : instance.getObserverInterface().getKeyword();
-                options.fill = fill;
-                instance.getCRUDProcessor().find(options);
-
-            } else {
-
-                instance.getCRUDProcessor().find({
-                    'uri': instance.URI,
-                    'keyword': instance.getObserverInterface().getKeyword(),
-                    'size': instance.getObserverInterface().getListSize(),
-                    'page': options,
-                    'fill': fill
-                });
-            }
-        }
-    };
-
-    /**
-     * Find records based on provided keyword (via observer keyword property) and page number.
+     * Lists records based on provided keyword (via observer keyword property) and page number.
      * 
      * @param {type} options
      * @param {type} fill 
@@ -232,89 +90,40 @@ function SearchView(options) {
      */
     instance.list = function (options, fill) {
 
-        if (instance.getObjectKey() !== null && instance.getObjectKey() !== undefined) {
-
-            if (instance.getObjectKey().length === 0) {
-
-                instance.setObjectKey(null);
-                instance.list(options, fill);
-
-            } else {
-                instance.selectList(options, fill);
-            }
-        } else {
-
-            if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-
-                instance.getObserverInterface().displayProcessingActivity();
-            }
-
-            if (typeof (options) === "object") {
-
-                options.uri = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
-                options.keyword = (options.keyword !== null && options.keyword !== undefined) ? options.keyword : instance.getObserverInterface().getKeyword();
-                options.fill = fill;
-
-                instance.getCRUDProcessor().list(options);
-
-            } else {
-
-                instance.getCRUDProcessor().list({
-                    'uri': instance.URI,
-                    'keyword': instance.getObserverInterface().getKeyword(),
-                    'fill': fill
-                });
-            }
-        }
-    };
-
-    /**
-     * Find records based on provided keyword (via observer keyword property) and page number.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
-    instance.findRequest = function (options) {
-
-        var newOptions = Object.create(options);
-
+        var _keyword = null;
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-
             instance.getObserverInterface().displayProcessingActivity();
+            _keyword = instance.getObserverInterface().getKeyword();
         }
+        
+        if (typeof (options) === "object") {
 
-        newOptions.contentType = instance.extendContentMethods(newOptions);
-        newOptions.scopeObject = options.scopeObject;
+            var _options = Object.create(options);
 
-        newOptions.uri = (newOptions.uri !== null && newOptions.uri !== undefined) ? newOptions.uri : instance.newOptions().uri;
-        newOptions.keyword = (newOptions.keyword !== null && newOptions.keyword !== undefined) ? newOptions.keyword : ((instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) ? instance.getObserverInterface().getKeyword() : null);
-        newOptions.size = (newOptions.size !== null && newOptions.size !== undefined) ? newOptions.size : instance.getObserverInterface().getListSize(); 
+            if (options.contentType !== null && options.contentType !== undefined) {
+                _options.contentType = instance.extendContentMethods(_options);
+            }
+            
+            _options.scopeObject = options.scopeObject;
 
-        instance.getCRUDProcessor().find(newOptions);
-    };
+            _options.key = (options.key !== null && options.key !== undefined) ? options.key : instance.getObjectKey();
+            _options.uri = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
+            _options.keyword = (options.keyword !== null && options.keyword !== undefined) ? options.keyword : _keyword;
+            _options.fill = fill;
 
-    /**
-     * List records based on provided keyword (via observer keyword property) and page number.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
-    instance.listRequest = function (options) {
-
-        var newOptions = Object.create(options);
-
-        if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-
-            instance.getObserverInterface().displayProcessingActivity();
+            instance.getCRUDProcessor().list(_options);
         }
+        else {
 
-        newOptions.contentType = instance.extendContentMethods(newOptions);
-        newOptions.scopeObject = options.scopeObject;
-
-        newOptions.uri = (newOptions.uri !== null && newOptions.uri !== undefined) ? newOptions.uri : instance.newOptions().uri; //instance.newOptions() referes to view constructing options. 
-        newOptions.keyword = (newOptions.keyword !== null && newOptions.keyword !== undefined) ? newOptions.keyword : ((instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) ? instance.getObserverInterface().getKeyword() : null);
-
-        instance.getCRUDProcessor().list(newOptions);
+            instance.getCRUDProcessor().list({
+                'uri': instance.URI,
+                'key': instance.getObjectKey(),
+                'keyword': instance.getObserverInterface().getKeyword(),
+                'size': instance.getObserverInterface().getListSize(),
+                'page': options,
+                'fill': fill
+            });
+        }
     };
 
     /**
@@ -328,7 +137,7 @@ function SearchView(options) {
     instance.load = function (options, fill) {
 
         instance.LoadFields(options);
-        instance.find(1, fill);
+        instance.list(1, fill);
     };
     
     if (instance.getObserverInterface() !== null &&
@@ -344,36 +153,6 @@ function SearchView(options) {
         };
 
         /** 
-         * Observer select function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().select = function (page) {
-            instance.select(page);
-        };
-
-        /** 
-         * Observer selectList function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().selectList = function (page) {
-            instance.selectList(page);
-        };
-
-        /** 
-         * Observer find function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().find = function (page, fill) {
-            instance.find(page, fill);
-        };
-
-        /** 
          * Observer list function definition.
          * 
          * @param {type} page
@@ -381,27 +160,6 @@ function SearchView(options) {
          */
         instance.getObserverInterface().list = function (page) {
             instance.list(page);
-        };
-
-
-        /** 
-         * Observer findRequest function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().findRequest = function (options) {
-            instance.findRequest(options);
-        };
-
-        /** 
-         * Observer listRequest function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().listRequest = function (options) {
-            instance.listRequest(options);
         };
 
         /** 
@@ -426,36 +184,6 @@ function SearchView(options) {
         instance.getObserverObject().clearRecords = function () {
             instance.clearRecords();
         };
-        
-        /** 
-         * Observer select function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverObject().select = function (page) {
-            instance.select(page);
-        };
-
-        /** 
-         * Observer selectList function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverObject().selectList = function (page) {
-            instance.selectList(page);
-        };
-
-        /** 
-         * Observer find function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverObject().find = function (page, fill) {
-            instance.find(page, fill);
-        };
 
         /** 
          * Observer list function definition.
@@ -465,27 +193,6 @@ function SearchView(options) {
          */
         instance.getObserverObject().list = function (page) {
             instance.list(page);
-        };
-
-
-        /** 
-         * Observer findRequest function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverObject().findRequest = function (options) {
-            instance.findRequest(options);
-        };
-
-        /** 
-         * Observer listRequest function definition.
-         * 
-         * @param {type} page
-         * @returns {undefined}
-         */
-        instance.getObserverObject().listRequest = function (options) {
-            instance.listRequest(options);
         };
 
         /** 
@@ -560,8 +267,7 @@ function SearchView(options) {
             eventData.data.callback(eventData.result);
         } else {
             
-            if (eventData.request === 'get' ||
-                    eventData.request === 'post') {
+            if (eventData.request === 'read') {
                 
                 if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
 
@@ -621,8 +327,6 @@ function SearchView(options) {
                             instance.getObserverInterface().displaySuccessActivity();
                             instance.getObserverInterface().displayFormSuccessActivity();
                         }
-
-                        
 
                         //attach observer type information within event
                         eventData.observerType = instance.getObserverInterface().getType();
@@ -843,8 +547,6 @@ function SearchView(options) {
 
         eventData.event = "records.after.rendering.view.CRUD.WindnTrees";
         instance.notify(eventData);
-
-        $(window).trigger('view-direction-change');
     };
 
     /**
@@ -922,12 +624,6 @@ function SearchView(options) {
         }
     } else {
         instance.subscribeEvents();
-    }
-    
-    if (options.contextpath !== null && options.contextpath !== undefined) {
-        if (options.contextpath === 'load') {
-            instance.loadContextPath();
-        }
     }
     
     if (options.instance !== null && options.instance !== undefined) {

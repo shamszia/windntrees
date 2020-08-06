@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ function CRUDSList(options) {
         'field': 'CRUDS',
         'value': ((options.cruds !== null && options.cruds !== undefined) ? options.cruds : [])
     }));
+
     instance = extender.extendObjectInterface({'instance': instance, 'field': 'Current'});
     
     /**

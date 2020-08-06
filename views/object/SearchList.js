@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -55,12 +55,7 @@ function SearchList(options) {
      * construction in order.
      */
     instance.SubListViews = (options.sublistviews !== null && options.sublistviews !== undefined) ? options.sublistviews : [];
-    
-    instance.Key = options.key;
-    instance.URI = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
-    
-    instance.ReferenceKey = options.referenceKey;
-    instance.ReferenceSource = options.referenceSrouce;
+
     instance.LoadState = true;
     
     /**
@@ -84,25 +79,6 @@ function SearchList(options) {
      */
     instance.getSubListViews = function () {
         return instance.SubListViews;
-    };
-    
-    /**
-     * Sets the reference key.
-     * 
-     * @param {type} key
-     * @returns {undefined}
-     */
-    instance.setReferenceKey = function (key) {
-        instance.ReferenceKey = key;
-    };
-    
-    /**
-     * Gets the reference key.
-     * 
-     * @returns {type.referenceKey}
-     */
-    instance.getReferenceKey = function () {
-        return instance.ReferenceKey;
     };
     
     /**
@@ -134,8 +110,7 @@ function SearchList(options) {
         var newObserver = listView.getObserverInterface().newInstance();
         var newOptions =  { 'key': listView.Key,
             'uri': listView.URI,
-            'observer': newObserver,
-            'contextpath': listView.CRUDContextPath
+            'observer': newObserver
         };
         
         var newRecord = instance.getObserverInterface().getFormStringifiedObject();
@@ -191,100 +166,12 @@ function SearchList(options) {
     };
     
     /**
-     * Loads CRUD/Find Views based on the list source provided during initialization.
-     * 
-     * options.keyword 
-     * options.page
-     * options.size
-     * 
-     * @param {type} options   
-     * @returns {undefined}
-     */
-    instance.load = function (options) {
-
-        instance.getObserverInterface().displayProcessingActivity();
-
-        if (instance.ReferenceKey === null || instance.ReferenceKey === undefined) {
-
-            if (options.referencekey !== null
-                    && options.referencekey !== undefined) {
-                
-                if (options.referencekey === 'continue') {
-                    var listNo = (options.page !== null && options.page !== undefined) ? options.page : instance.getObserverInterface().getCurrentList();
-                    var fillType = options.fill;
-                    instance.find(listNo, fillType);
-                } else {
-                    instance.ReferenceKey = options.referencekey;
-                    instance.ReferenceSource = options.source;
-
-                    instance.getCRUDProcessor().select({'uri': instance.URI,
-                        'key': options.referencekey,
-                        'source': options.source,
-                        'fill': options.fill,
-                        'keyword': (options.keyword !== null && options.keyword !== undefined) ? options.keyword : instance.getObserverInterface().getKeyword(),
-                        'size': (options.size !== null && options.size !== undefined) ? options.size : instance.getObserverInterface().getListSize(),
-                        'page': (options.page !== null && options.page !== undefined) ? options.page : instance.getObserverInterface().getCurrentList()
-                    });
-                }
-
-            } else {
-
-                var listNo = (options.page !== null && options.page !== undefined) ? options.page : instance.getObserverInterface().getCurrentList();
-                var fillType = options.fill;
-                instance.find(listNo, fillType);
-            }
-
-        } else {
-
-            if (options.referencekey !== null &&
-                    options.referencekey !== undefined) {
-
-                if (options.referencekey === 'continue') {
-
-                    options.referencekey = instance.ReferenceKey;
-                    options.source = instance.ReferenceSource;
-                } else {
-
-                    instance.ReferenceKey = options.referencekey;
-                    instance.ReferenceSource = options.source;
-                }
-
-                instance.getCRUDProcessor().select({'uri': instance.URI,
-                    'key': options.referencekey,
-                    'source': options.source,
-                    'fill': options.fill,
-                    'keyword': (options.keyword !== null && options.keyword !== undefined) ? options.keyword : instance.getObserverInterface().getKeyword(),
-                    'size': (options.size !== null && options.size !== undefined) ? options.size : instance.getObserverInterface().getListSize(),
-                    'page': (options.page !== null && options.page !== undefined) ? options.page : instance.getObserverInterface().getCurrentList()
-                });
-
-            } else {
-                
-                instance.getCRUDProcessor().select({'uri': instance.URI,
-                    'key': instance.ReferenceKey,
-                    'source': instance.ReferenceSource,
-                    'fill': options.fill,
-                    'keyword': (options.keyword !== null && options.keyword !== undefined) ? options.keyword : instance.getObserverInterface().getKeyword(),
-                    'size': (options.size !== null && options.size !== undefined) ? options.size : instance.getObserverInterface().getListSize(),
-                    'page': (options.page !== null && options.page !== undefined) ? options.page : instance.getObserverInterface().getCurrentList()
-                });
-                
-                /*
-                var listNo = (options.page !== null && options.page !== undefined) ? options.page : instance.getObserverInterface().getCurrentList();
-                var fillType = options.fill;
-                instance.find(listNo, fillType);*/
-            }
-        }
-    };
-    
-    /**
      * Unloads the contents of list.
      * 
      * @returns {undefined}
      */
     instance.unload = function () {
-        
-        instance.setReferenceKey(null);
+        instance.getObserverInterface().setRecords([]);
         instance.getObserverInterface().displayClearActivity();
     };
     
@@ -371,7 +258,7 @@ function SearchList(options) {
             
             if (detailRecord.getDetail().LoadState) {
                 options.keyword = instance.getObserverInterface().getKeyword();
-                detailRecord.getDetail().load(options);
+                detailRecord.getDetail().list(options);
             } else {
                 detailRecord.getDetail().unload();
             }
@@ -470,48 +357,8 @@ function SearchList(options) {
          * @param {type} page
          * @returns {undefined}
          */
-        instance.getObserverInterface().find = function (page) {
-            instance.find(page);
-        };
-        
-        /**
-         * Sets reference key for inner lists in order to load respective list 
-         * records.
-         * 
-         * @param {type} key
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().setReferenceKey = function (key) {
-            instance.setReferenceKey(key);
-        };
-        
-        /**
-         * Gets reference key to inner lists.
-         * 
-         * @returns {type.referenceKey}
-         */
-        instance.getObserverInterface().getReferenceKey = function () {
-            return instance.getReferenceKey();
-        };
-        
-        /** 
-         * Observer integration of getLists functionality.
-         * 
-         * @param {type} index
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().getList = function (index) {
-            instance.getList(index);
-        };
-        
-        /**
-         * Load/Select records.
-         * 
-         * @param {type} options 
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().load = function (options) {
-            instance.load(options);
+        instance.getObserverInterface().list = function (page,fill) {
+            instance.list(page,fill);
         };
         
         /**
@@ -599,49 +446,10 @@ function SearchList(options) {
          * @param {type} page
          * @returns {undefined}
          */
-        instance.getObserverObject().find = function (page) {
-            instance.find(page);
+        instance.getObserverObject().list = function (page,fill) {
+            instance.list(page,fill);
         };
         
-        /**
-         * Sets reference key for inner lists in order to load respective list 
-         * records.
-         * 
-         * @param {type} key
-         * @returns {undefined}
-         */
-        instance.getObserverObject().setReferenceKey = function (key) {
-            instance.setReferenceKey(key);
-        };
-        
-        /**
-         * Gets reference key to inner lists.
-         * 
-         * @returns {type.referenceKey}
-         */
-        instance.getObserverObject().getReferenceKey = function () {
-            return instance.getReferenceKey();
-        };
-        
-        /** 
-         * Observer integration of getLists functionality.
-         * 
-         * @param {type} index
-         * @returns {undefined}
-         */
-        instance.getObserverObject().getList = function (index) {
-            instance.getList(index);
-        };
-        
-        /**
-         * Load/Select records.
-         * 
-         * @param {type} options 
-         * @returns {undefined}
-         */
-        instance.getObserverObject().load = function (options) {
-            instance.load(options);
-        };
         
         /**
          * Loads sublist for the selected record.
@@ -722,8 +530,7 @@ function SearchList(options) {
                 if (eventData.data.fill === 'continue') {
                     var currentList = instance.getObserverInterface().getCurrentList();
                     var existingRecords = instance.getObserverInterface().getRecords();
-                    var newRecords = instance.getRecordDetailList(eventData.result);
-                    //var newRecords = instance.getRecordDetailList(instance.getContentTypeObjects({'simpleObjects': eventData.result}));
+                    var newRecords = instance.getRecordDetailList(eventData.result);                    
 
                     if (eventData.data.page <= currentList) {
                         var listSize = instance.getObserverInterface().getListSize();
@@ -746,12 +553,10 @@ function SearchList(options) {
 
                 } else {
                     instance.getObserverInterface().setRecords(instance.getRecordDetailList(eventData.result));
-                    //instance.getObserverInterface().setRecords(instance.getRecordDetailList(instance.getContentTypeObjects({'simpleObjects': eventData.result})));
                 }
 
             } else {
-                instance.getObserverInterface().setRecords(instance.getRecordDetailList(eventData.result));
-                //instance.getObserverInterface().setRecords(instance.getRecordDetailList(instance.getContentTypeObjects({'simpleObjects': eventData.result})));
+                instance.getObserverInterface().setRecords(instance.getRecordDetailList(eventData.result));                
             }
             
             instance.getObserverInterface().composeNavigator({
@@ -759,8 +564,6 @@ function SearchList(options) {
                 'responseData': instance.getCRUDProcessor().responseData()
             });
         }
-
-        $(window).trigger('view-direction-change');
     };
 
     /**

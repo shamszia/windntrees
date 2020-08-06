@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -138,7 +138,7 @@ function CRUDProcessor(options) {
      * Gets processed record. Note that record is only available when the request
      * has been completed and processed.
      * 
-     * @returns {result|type.data.content|.eventData.result.contents}
+     * @returns {result|type.data.content|.eventData.result.content}
      */
     instance.getRecord = function () {
         return instance.Record;
@@ -155,140 +155,6 @@ function CRUDProcessor(options) {
     };
 
     /**
-     * Gets the server side context path for the requested URI.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
-    instance.getContextPath = function (data) {
-        instance.Record = null;
-        instance.Errors = [];
-
-        instance.getController().getContextPath(data);
-    };
-
-    /**
-     * Get and extract data object by key from the specified URL. 
-     * 
-     * data.uri
-     * data.key
-     * 
-     * @param {type} data 
-     * @returns {Window.Record}
-     */
-    instance.get = function (data) {
-        instance.Record = null;
-        instance.Errors = [];
-
-        instance.getController().get(data);
-    };
-
-    /**
-     * Get and extract data object by composite key from the specified URL.
-     * 
-     * data.uri
-     * data.compsiteKey
-     * 
-     * @param {type} data 
-     * @returns {Window.Record}
-     */
-    instance.post = function (data) {
-        instance.Record = null;
-        instance.Errors = [];
-
-        instance.getController().post(data);
-    };
-
-    /**
-     * Find and extract paged data objects (usuallay detail records) referenced
-     * by keyword (primary key) from the specified URL.
-     * 
-     * data.uri
-     * data.key
-     * data.keyword
-     * data.size
-     * data.page
-     * 
-     * @param {type} data 
-     * @returns {Array|Window.Records}
-     */
-    instance.select = function (data) {
-        instance.Records = [];
-        instance.Errors = [];
-
-        instance.getController().select(data);
-    };
-
-    /**
-     * Selects list objects (usuallay detail records) referenced
-     * by keyword (primary key) from the specified URL.
-     *
-     * data.uri
-     * data.key
-     * data.keyword
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
-    instance.selectList = function (data) {
-        instance.Records = [];
-        instance.Errors = [];
-
-        instance.getController().selectList(data);
-    };
-
-    /**
-     * Find and extract paged data objects by keyword from the specified URL .
-     * 
-     * data.uri
-     * data.keyword
-     * data.size
-     * data.page
-     * 
-     * @param {type} data 
-     * @returns {Array|Window.Records}
-     */
-    instance.find = function (data) {
-        instance.Records = [];
-        instance.Errors = [];
-
-        instance.getController().find(data);
-    };
-
-    /**
-     * Sends list request based on keyword related entities.
-     * 
-     * data.uri - Web resource identifier
-     * data.keyword - Search keyword data value
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
-    instance.list = function (data) {
-        instance.Records = [];
-        instance.Errors = [];
-
-        instance.getController().list(data);
-    };
-
-    /**
-     * Sends list all entities request.
-     * 
-     * data.uri - Web resource identifier
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
-    instance.listAll = function (data) {
-        instance.Records = [];
-        instance.Errors = [];
-
-        instance.getController().listAll(data);
-    };
-
-    /**
      * Create new entity object and process its response.
      * 
      * data.uri
@@ -302,6 +168,22 @@ function CRUDProcessor(options) {
         instance.Errors = [];
 
         instance.getController().create(data);
+    };
+
+    /**
+     * Read data object by key from the specified URL. 
+     * 
+     * data.uri
+     * data.key
+     * 
+     * @param {type} data 
+     * @returns {Window.Record}
+     */
+    instance.read = function (data) {
+        instance.Record = null;
+        instance.Errors = [];
+
+        instance.getController().read(data);
     };
 
     /**
@@ -334,6 +216,28 @@ function CRUDProcessor(options) {
         instance.Errors = [];
 
         instance.getController().delete(data);
+    };
+
+    /**
+     * List records based on search key fields.
+     * 
+     * data.uri
+     * data.target
+     * data.source
+     * data.key
+     * data.keyword
+     * data.size
+     * data.page
+     * data.query
+     * 
+     * @param {type} data
+     * @returns {undefined}
+     */
+    instance.list = function (data) {
+        instance.Records = [];
+        instance.Errors = [];
+
+        instance.getController().list(data);
     };
 
     /**
@@ -411,7 +315,7 @@ function CRUDProcessor(options) {
                 } else {
 
                     var objectReady = false;
-                    var contentObject = (result.contents !== null && result.contents !== undefined) ? result.contents : ((result.contents === null || result.contents === undefined) ? null : result);
+                    var contentObject = (result.content !== null && result.content !== undefined) ? result.content : ((result.content === null || result.content === undefined) ? null : result);
 
                     if (contentObject !== null && contentObject !== undefined) {
 
@@ -587,20 +491,17 @@ function CRUDProcessor(options) {
      */
     instance.notify = function (eventData) {
         $(instance).trigger(eventData.event, eventData);
-        if (instance.Key !== null && instance.Key !== undefined) {
-            $(instance.Key).trigger(eventData.event, eventData);
-        }
     };
     
     /**
-     * Events and notifications subscriptions.
+     * Event Handlers.
      * 
      * 
      * @returns {Boolean}
      */
 
     /**
-     * Processes request before processing.
+     * Event handler, processes request before processing.
      * 
      * @param {type} event
      * @param {type} eventData
@@ -612,7 +513,7 @@ function CRUDProcessor(options) {
     };
 
     /**
-     * Processes request successful event.
+     * Event handler, processes request successful event.
      * 
      * @param {type} event
      * @param {type} eventData
@@ -632,7 +533,7 @@ function CRUDProcessor(options) {
     };
 
     /**
-     * Processes request failure event.
+     * Event handler, processes request failure event.
      * 
      * @param {type} event
      * @param {type} eventData
@@ -647,7 +548,7 @@ function CRUDProcessor(options) {
     };
 
     /**
-     * Subscribes on a CRUD controller event.
+     * Subscribes a callback handler on a CRUD controller instance event.
      * 
      * @param {type} event
      * @param {type} callback

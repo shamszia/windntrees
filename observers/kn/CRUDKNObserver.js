@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -455,12 +455,9 @@ function CRUDKNObserver(options) {
 
             if (data.order !== null && data.order !== undefined) {
                 if (data.order === 'first') {
-                    var oldRecords = instance.Records();
-                    instance.Records([]);
-                    instance.Records.push(newRecord);
-                    for (var i = 0; i < oldRecords.length; i++) {
-                        instance.Records.push(oldRecords[i]);
-                    }
+
+                    //adds a new (observable) value at the begining of array.
+                    instance.Records.unshift(newRecord);
                 } else {
                     instance.Records.push(newRecord);
                 }
@@ -470,7 +467,6 @@ function CRUDKNObserver(options) {
         }
 
         instance.performRefObjectAction(data);
-        $('.modal').trigger('apply-form-locale');
     };
 
     /**
@@ -504,13 +500,14 @@ function CRUDKNObserver(options) {
 
                     } else {
                         if (itemRecord.getKey() === data.record.getKey()) {
+                            
                             instance.Records.replace(item, data.record);
                         }
-
                     }
 
                 } catch (e) {
                     if (itemRecord.getKey() === data.record.getKey()) {
+                        
                         instance.Records.replace(item, data.record);
                     }
 
@@ -527,8 +524,6 @@ function CRUDKNObserver(options) {
         }
         
         instance.performRefObjectAction(data);
-
-        $('.modal').trigger('apply-form-locale');
     };
 
     /**
@@ -544,25 +539,21 @@ function CRUDKNObserver(options) {
 
             var deletedRecord = new (instance.getContentTypeObjectPrototype()).constructor(JSON.parse(ko.toJSON(data.record)));
 
-            for (var i = 0; i < instance.Records().length; i++) {
-                var item = instance.Records()[i];
-                var itemRecord = item;
+            instance.Records.remove(function (item) {
 
                 try {
+                    if (item.getType() === 'DetailKNObserver' ||
+                        item.getType() === 'DetailObserver') {
 
-                    if (itemRecord.getType() === 'DetailKNObserver' ||
-                            itemRecord.getType() === 'DetailObserver') {
-
-                        itemRecord = itemRecord.getRecord();
+                        return item.getRecord().getKey() === deletedRecord.getKey();
                     }
-
-                } catch (e) {
+                }
+                catch (e) {
+                    console.log('Its not DetailKNObserver object');
                 }
 
-                if (itemRecord.getKey() === deletedRecord.getKey()) {
-                    instance.Records.remove(item);
-                }
-            }
+                return item.getKey() === deletedRecord.getKey();
+            });
         }
         
         instance.performRefObjectAction(data);

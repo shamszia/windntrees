@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ function ObjectView(options) {
     instance.Fields = options.fields;
     instance.Views = options.views;
     instance.ListCounter = 0;
-    instance.AuthorizationCode = options.authorizationCode
+    instance.AuthorizationCode = options.authorizationCode;
     
     //reference to document component node in DOM tree.
     instance.ContentNode = options.contentnode;
@@ -436,15 +436,6 @@ function ObjectView(options) {
     };
     
     /**
-     * Returns loaded context path.
-     * 
-     * @returns {type.contextpath}
-     */
-    instance.getContextPath = function () {
-        return instance.CRUDContextPath;
-    };
-    
-    /**
      * Gets message repository attached to observer.
      * 
      * @returns {type.messages}
@@ -566,19 +557,6 @@ function ObjectView(options) {
         }
         return null;
     };
-    
-    /**
-     * Gets the CRUD context path.
-     * 
-     * @returns {undefined}
-     */
-    instance.loadContextPath = function () {
-        instance.getCRUDProcessor().getContextPath({'uri': instance.URI,
-            'callback': function (result) {
-                instance.CRUDContextPath = result;
-            }
-        });
-    };
 
     /**
      * Clears (resets) observer records list and view.
@@ -601,58 +579,34 @@ function ObjectView(options) {
     };
    
     /**
-     * Gets record based on key value.
+     * Reads record based on key value.
      * 
-     * @param {type} key 
+     * data.uri
+     * data.key
+     * data.target
+     * 
+     * @param {type} data
      * @returns {undefined}
      */
-    instance.get = function (key) {
+    instance.read = function (data) {
         
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
             instance.getObserverInterface().displayProcessingActivity();
             instance.getObserverInterface().displayFormProcessingActivity();
-
         }
 
-        if (typeof (key) === "object") {
+        if (typeof (data) === "object") {
 
             //update uri
-            key.uri = (key.uri !== null && key.uri !== undefined) ? key.uri : instance.URI;
-            instance.getCRUDProcessor().get(key);
+            data.uri = (data.uri !== null && data.uri !== undefined) ? data.uri : instance.URI;
+            instance.getCRUDProcessor().read(data);
 
         } else {
 
-            instance.getCRUDProcessor().get({
+            //assume data as key
+            instance.getCRUDProcessor().read({
                 'uri': instance.URI,
-                'key': (key !== null && key !== undefined) ? key : instance.getObjectKey()
-            });
-        }
-    };
-    
-    /**
-     * Gets record based on key value via post.
-     * 
-     * @param {type} key 
-     * @returns {undefined}
-     */
-    instance.post = function (key) {
-
-        if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-            instance.getObserverInterface().displayProcessingActivity();
-            instance.getObserverInterface().displayFormProcessingActivity();
-        }
-
-        if (typeof (key) === "object") {
-
-            //update uri
-            key.uri = (key.uri !== null && key.uri !== undefined) ? key.uri : instance.URI;
-            instance.getCRUDProcessor().post(key);
-
-        } else {
-
-            instance.getCRUDProcessor().post({
-                'uri': instance.URI,
-                'key': (key !== null && key !== undefined) ? key : { 'key': instance.getObjectKey() }
+                'key': (data !== null && data !== undefined) ? data : instance.getObjectKey()
             });
         }
     };
@@ -665,7 +619,7 @@ function ObjectView(options) {
      */
     instance.load = function (options) {
 
-        instance.get(options);
+        instance.read(options);
         instance.LoadFields(options);
     };
 
@@ -690,7 +644,7 @@ function ObjectView(options) {
 
                     new SearchView({
                         'uri': uri
-                    }).listRequest({
+                    }).list({
                         'target': options.target,
                         'contentType': options.contentType,
                         'query': { "key": options.key, "keyword": keyword },
@@ -1176,7 +1130,7 @@ function ObjectView(options) {
 
                             new SearchView({
                                 'uri': listView.uri
-                            }).listRequest({
+                            }).list({
                                 'target': listView.target,
                                 'contentType': listView.contentType,
                                 'query': listView.query,
@@ -1203,7 +1157,7 @@ function ObjectView(options) {
                         
                         new SearchView({
                             'uri': fieldsObject.uri
-                        }).listRequest({
+                        }).list({
                             'target': fieldsObject.target,
                             'contentType': listView.contentType,
                             'query': listView.query,
@@ -1402,24 +1356,6 @@ function ObjectView(options) {
         }
         
         /**
-        * Returns loaded context path.
-        * 
-        * @returns {type.contextpath}
-        */
-        instance.getObserverInterface().getContextPath = function () {
-            return instance.getContextPath();
-        };
-        
-        /**
-        * Gets the CRUD context path.
-        * 
-        * @returns {undefined}
-        */
-        instance.getObserverInterface().loadContextPath = function () {
-            return instance.loadContextPath();
-        };
-        
-        /**
          * Gets view
          * 
          * @returns {SearchView}
@@ -1463,18 +1399,8 @@ function ObjectView(options) {
          * @param {type} key
          * @returns {undefined}
          */
-        instance.getObserverInterface().get = function (key) {
-            instance.get(key);
-        };
-        
-        /** 
-         * Observer post function definition.
-         * 
-         * @param {type} key
-         * @returns {undefined}
-         */
-        instance.getObserverInterface().post = function (key) {
-            instance.post(key);
+        instance.getObserverInterface().read = function (key) {
+            instance.read(key);
         };
 
         /** 
@@ -1490,24 +1416,6 @@ function ObjectView(options) {
     
     if (instance.getObserverObject() !== null &&
             instance.getObserverObject() !== undefined) {
-        
-        /**
-        * Returns loaded context path.
-        * 
-        * @returns {type.contextpath}
-        */
-        instance.getObserverObject().getContextPath = function () {
-            return instance.getContextPath();
-        };
-        
-        /**
-        * Gets the CRUD context path.
-        * 
-        * @returns {undefined}
-        */
-        instance.getObserverObject().loadContextPath = function () {
-            return instance.loadContextPath();
-        };
         
         /**
          * Gets view.
@@ -1553,18 +1461,8 @@ function ObjectView(options) {
          * @param {type} key
          * @returns {undefined}
          */
-        instance.getObserverObject().get = function (key) {
-            instance.get(key);
-        };
-        
-        /** 
-         * Observer post function definition.
-         * 
-         * @param {type} key
-         * @returns {undefined}
-         */
-        instance.getObserverObject().post = function (key) {
-            instance.post(key);
+        instance.getObserverObject().read = function (key) {
+            instance.read(key);
         };
 
         /** 
@@ -1907,12 +1805,6 @@ function ObjectView(options) {
         if (options.progressEvent) {
 
             instance.getCRUDProcessor().subscribeCRUDControllerEvent('progress.request.CRUD.WindnTrees', instance.displayProgress);
-        }
-    }
-    
-    if (options.contextpath !== null && options.contextpath !== undefined) {
-        if (options.contextpath === 'load') {
-            instance.loadContextPath();
         }
     }
     

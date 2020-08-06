@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@
 function MessageRepository(options) {
     var instance = this;
     instance.Records = [];
+
+    options = (options === null || options === undefined) ? {} : options;
 
     /**
      * Gets locale message (LocaleMessage) from repository based on key value.
@@ -64,8 +66,7 @@ function MessageRepository(options) {
                 record = instance.Records[i];
                 if (record !== null && record !== undefined) {
                     if (message.getKey() === record.getKey()) {
-                        record.setValue(message.getValue());
-                        //instance.Records.splice(i,message);
+                        record.setValue(message.getValue());                        
                         return;
                     }
                 }
@@ -124,22 +125,8 @@ function MessageRepository(options) {
         instance.add(new LocaleMessage("standard.listloaderr.text", 'List load failed.'));
     };
 
-    if (options !== null && options !== undefined) {
+    if (options.fill !== null && options.fill !== undefined) {
 
-        if (options.fill !== null && options.fill !== undefined) {
-
-            if (options.fill) {
-
-                instance.fill();
-            }
-        }
-        else {
-
-            instance.fill();
-        }
-    }
-    else
-    {
         instance.fill();
     }
 }

@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -94,8 +94,7 @@ function InstanceExtender(options) {
         var instance = options.instance;
 
         if (options.field !== null && options.field !== undefined) {
-            if (options.value !== null && options.value !== undefined) {
-                //instance[options.field] = (typeof (options.value) === 'function') ? options.value() : options.value;
+            if (options.value !== null && options.value !== undefined) {                
                 instance[options.field] = options.value;
             }
             

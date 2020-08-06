@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,8 +35,7 @@ function Alternator(options) {
     /**
      * Represents Current object (One / Zero).
      */
-    
-    //new ObjectKNObserver({'object': options.zero})
+
     if (options.observer !== null && options.observer !== undefined) {
         if (options.object !== null && options.object !== undefined) {
             options.observer.setObject(options.object);

@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -86,44 +86,6 @@ function CRUDController(options) {
     };
     
     /**
-     * Gets the server side context path for the requested URI.
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
-    instance.getContextPath = function (data, callback) {
-        instance.Processing = true;
-        instance.ResponseData = null;
-        instance.ResponseError = null;
-
-        var token = $('[name=__RequestVerificationToken]').val();
-        var headers = {};
-        headers['__RequestVerificationToken'] = token;
-
-        var eventData = {'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': 'getContextPath', 'data': data};
-        instance.notify(eventData);
-
-        $.ajax({
-            headers: headers,
-            type: "GET",
-            data: null,
-            url: data.uri + "/contextpath",
-            contentType: "application/json; charset=utf-8"})
-                .done(function (data, textStatus, jqXHR) {
-                    instance.notifyDone(data, textStatus, jqXHR, eventData);
-                })
-                .fail(function (data, textStatus, jqXHR) {
-                    instance.notifyFail(data, textStatus, jqXHR, eventData);
-                })
-                .always(function (data, textStatus, jqXHR) {
-                    if (callback !== null && callback !== undefined) {
-                        callback(data);
-                    }
-                });
-    };
-    
-    /**
      * Sends ajax request.
      * 
      * @param {type} options
@@ -152,7 +114,7 @@ function CRUDController(options) {
 
         options.data = JSON.stringify(data);
 
-        if (options.eventData.target === 'CreateContent' || options.eventData.target === 'UpdateContent') {
+        if (options.eventData.target === 'CreateFileContent' || options.eventData.target === 'UpdateFileContent') {
 
             var uploadForm = (options.eventData.form !== null && options.eventData.form !== undefined) ? options.eventData.form : '__uploadform';
 
@@ -232,295 +194,6 @@ function CRUDController(options) {
     };
 
     /**
-     * Sends detail records selection request on a specified URI address.
-     * It takes a URI address, a key value and optionally a keyword, size and 
-     * list (page) number parameters.
-     * 
-     * data.uri - Web resource identifier
-     * data.key - Data key value
-     * data.keyword - Search keyword
-     * data.size - Page size numeric value
-     * data.page - Page number numeric value
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
-    instance.select = function (data, callback) {
-        instance.Processing = true;
-        instance.ResponseData = null;
-        instance.ResponseError = null;
-
-        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "select", 'target': data.target, 'form': data.form, 'data': data };
-
-        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "select";
-        
-        instance.notify(eventData);
-
-        data.source = (data.source !== null && data.source !== undefined) ? data.source : "referential";
-
-        if (data.method === "GET") {
-            
-            instance.sendRequest({
-                'headers': {},
-                'method': "GET",
-                'data': null,
-                'url': data.uri + "/" + request + "/" + data.key + "/" + data.source + "/" + data.keyword + "/" + data.page + "/" + data.size ,
-                'eventData': eventData }, callback);
-            
-        } else {
-
-            var queryObject = (data.query !== null && data.query !== undefined) ? data.query : { "key": data.key, "source": data.source, "keyword": data.keyword, "size": data.size, "page": data.page };
-            
-            instance.sendRequest({
-                'headers': {},
-                'data': JSON.stringify(queryObject),
-                'url': data.uri + "/" + request,
-                'eventData': eventData
-            }, callback);
-        }
-    };
-    
-    /**
-     * Sends detail records selection request on a specified URI address.
-     * It takes a URI address, a key value and optionally a keyword, size and 
-     * list (page) number parameters.
-     * 
-     * data.uri - Web resource identifier
-     * data.key - Data key value
-     * data.keyword - Search keyword
-     * data.size - Page size numeric value
-     * data.page - Page number numeric value
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
-    instance.selectList = function (data, callback) {
-        instance.Processing = true;
-        instance.ResponseData = null;
-        instance.ResponseError = null;
-
-        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "selectlist", 'target': data.target, 'form': data.form, 'data': data };
-
-        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "selectlist";
-        
-        instance.notify(eventData);
-
-        data.source = (data.source !== null && data.source !== undefined) ? data.source : "referential";
-
-        if (data.method === "GET") {
-            
-            instance.sendRequest({
-                'headers': {},
-                'method': "GET",
-                'data': null,
-                'url': data.uri + "/" + request + "/" + data.key + "/" + data.source + "/" + data.keyword ,
-                'eventData': eventData }, callback);
-            
-        } else {
-
-            var queryObject = (data.query !== null && data.query !== undefined) ? data.query : { "key": data.key, "source": data.source, "keyword": data.keyword };
-
-            instance.sendRequest({
-                'headers': {},
-                'data': JSON.stringify(queryObject),
-                'url': data.uri + "/" + request,
-                'eventData': eventData
-            }, callback);
-        }
-    };
-
-    /**
-     * Sends find request based on keyword related entities using size and page number.
-     * 
-     * data.uri - Web resource identifier
-     * data.keyword - Search data keyword value
-     * data.size - Page size numeric value
-     * data.page - Page number numeric value
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
-    instance.find = function (data, callback) {
-        instance.Processing = true;
-        instance.ResponseData = null;
-        instance.ResponseError = null;
-
-        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "find", 'target': data.target, 'form': data.form, 'data': data };
-
-        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "find";
-        
-        instance.notify(eventData);
-        
-        if (data.method === "GET") {
-            
-            instance.sendRequest({
-                'headers': {},
-                'method': "GET",
-                'data': null,
-                'url': data.uri + "/" + request + "/" + data.keyword + "/" + data.page + "/" + data.size,
-                'eventData': eventData }, callback);
-            
-        } else {
-
-            var queryObject = (data.query !== null && data.query !== undefined) ? data.query : { "keyword": data.keyword, "size": data.size, "page": data.page };
-
-            instance.sendRequest({
-                'headers': {},
-            'data': JSON.stringify(queryObject),
-            'url': data.uri + "/" + request,
-            'eventData': eventData}, callback);
-        }
-        
-        
-    };
-
-    /**
-     * Sends list request based on keyword related entities.
-     * 
-     * data.uri - Web resource identifier
-     * data.keyword - Search keyword data value
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
-    instance.list = function (data, callback) {
-        instance.Processing = true;
-        instance.ResponseData = null;
-        instance.ResponseError = null;
-
-        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "list", 'target': data.target, 'form': data.form, 'data': data };
-
-        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "list";
-        
-        instance.notify(eventData);
-        
-        if (data.method === "GET") {
-            
-            instance.sendRequest({
-                'headers': {},
-                'method': "GET",
-                'data': null,
-                'url': data.uri + "/" + request + "/" + data.keyword,
-                'eventData': eventData }, callback);
-            
-        } else {
-
-            var queryObject = (data.query !== null && data.query !== undefined) ? data.query : { "keyword": data.keyword };
-
-            instance.sendRequest({
-                'headers': {},
-                'data': JSON.stringify(queryObject),
-                'url': data.uri + "/" + request,
-                'eventData': eventData
-            }, callback);
-        }
-    };
-
-    /**
-     * Sends list all entities request.
-     * 
-     * data.uri - Web resource identifier
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
-    instance.listAll = function (data, callback) {
-        instance.Processing = true;
-        instance.ResponseData = null;
-        instance.ResponseError = null;
-
-        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "listall", 'target': data.target, 'form': data.form, 'data': data };
-        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "listall";
-        
-        instance.notify(eventData);
-        
-        if (data.method === "GET") {
-            
-            instance.sendRequest({
-                'headers': {},
-                'method': "GET",
-                'data': null,
-                'url': data.uri + "/" + request,
-                'eventData': eventData }, callback);
-            
-        } else {
-            
-            instance.sendRequest({
-                'headers': {},
-            'data': null,
-            'url': data.uri + "/" + request,
-            'eventData': eventData}, callback);
-        }
-    };
-
-    /**
-     * Sends get entity object request by key using GET method.
-     * 
-     * data.uri - Web resource identifier
-     * data.key - Key value
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
-    instance.get = function (data, callback) {
-        instance.Processing = true;
-        instance.ResponseData = null;
-        instance.ResponseError = null;
-
-        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "get", 'target': data.target, 'form': data.form, 'data': data };
-        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "get";
-        
-        instance.notify(eventData);
-        
-        instance.sendRequest({
-            'headers': {},
-            'method': 'GET',
-            'data': null,
-            'url': encodeURI(data.uri + "/" + request + "/" + ((data.key !== null && data.key !== undefined) ? data.key : "")),
-            'eventData': eventData}, callback);
-    };
-
-    /**
-     * Sends get entity object request by composite key using POST method.
-     * 
-     * data.uri - Web resource identifier
-     * data.compsiteKey - Composite key entity data object
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
-    instance.post = function (data, callback) {
-        instance.Processing = true;
-        instance.ResponseData = null;
-        instance.ResponseError = null;
-
-        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "post", 'target': data.target, 'form': data.form, 'data': data };
-        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "post";
-        
-        instance.notify(eventData);
-        
-        instance.sendRequest({
-            'headers': {},
-            'data': (data.key !== null && data.key !== undefined) ? (typeof (data.key) === "string" ? data.key : JSON.stringify(data.key)) : "{}",
-            'url': data.uri + "/" + request,
-            'eventData': eventData}, callback);
-    };
-
-    /**
      * Sends new entity request at sepcified URL.
      * 
      * data.uri - Web resource identifier
@@ -546,6 +219,36 @@ function CRUDController(options) {
             'data': (typeof(data.content) === "string" ? data.content : JSON.stringify(data.content)),
             'url': data.uri + "/" + request,
             'eventData': eventData}, callback);
+    };
+
+    /**
+     * Sends read entity object request by key using GET method.
+     * 
+     * data.uri - Web resource identifier
+     * data.key - Key value
+     * callback - Callback function
+     * 
+     * @param {type} data
+     * @param {type} callback
+     * @returns {undefined}
+     */
+    instance.read = function (data, callback) {
+        instance.Processing = true;
+        instance.ResponseData = null;
+        instance.ResponseError = null;
+
+        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "read", 'target': data.target, 'form': data.form, 'data': data };
+        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "read";
+
+        instance.notify(eventData);
+
+        instance.sendRequest({
+            'headers': {},
+            'method': 'GET',
+            'data': null,
+            'url': encodeURI(data.uri + "/" + request + "/" + ((data.key !== null && data.key !== undefined) ? data.key : "")),
+            'eventData': eventData
+        }, callback);
     };
 
     /**
@@ -604,7 +307,74 @@ function CRUDController(options) {
             'url': data.uri + "/" + request,
             'eventData': eventData}, callback);
     };
-    
+
+    /**
+     * Sends list request based on keyword related entities.
+     * 
+     * data.uri - Web resource identifier
+     * data.keyword - Search keyword data value
+     * callback - Callback function
+     * 
+     * @param {type} data
+     * @param {type} callback
+     * @returns {undefined}
+     */
+    instance.list = function (data, callback) {
+        instance.Processing = true;
+        instance.ResponseData = null;
+        instance.ResponseError = null;
+
+        var eventData = { 'event': 'before.request.CRUD.WindnTrees', 'key': instance.Key, 'request': (data.request !== null && data.request !== undefined) ? data.request : "list", 'target': data.target, 'form': data.form, 'data': data };
+
+        var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "list";
+
+        instance.notify(eventData);
+
+        if (data.method === "GET") {
+
+            var url = data.uri + "/" + request;
+
+            if (data.key !== null && data.key !== undefined) {
+                url = (url + "/" + data.key);
+            }
+
+            if (data.source !== null && data.source !== undefined) {
+                url = (url + "/" + data.source);
+            }
+
+            if (data.keyword !== null && data.keyword !== undefined) {
+                url = (url + "/" + data.keyword);
+            }
+
+            if (data.page !== null && data.page !== undefined) {
+                url = (url + "/" + data.page);
+            }
+
+            if (data.size !== null && data.size !== undefined) {
+                url = (url + "/" + data.size);
+            }
+
+            instance.sendRequest({
+                'headers': {},
+                'method': "GET",
+                'data': null,
+                'url': url,
+                'eventData': eventData
+            }, callback);
+
+        } else {
+
+            var queryObject = (data.query !== null && data.query !== undefined) ? data.query : { "key": data.key, "source": data.source, "keyword": data.keyword, "size": data.size, "page": data.page };
+
+            instance.sendRequest({
+                'headers': {},
+                'data': JSON.stringify(queryObject),
+                'url': data.uri + "/" + request,
+                'eventData': eventData
+            }, callback);
+        }
+    };
+
     /**
      * Events publishing and processing section.
      * 

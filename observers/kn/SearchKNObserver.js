@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -481,15 +481,15 @@ function SearchKNObserver(options) {
             }
         } else {
             
-            //totalRecords, currentList, listSize
+            //total, currentList, listSize
             data.responseData = typeof (data.responseData) === "string" ? JSON.parse(data.responseData) : data.responseData;
 
             if (data.responseData !== null && data.responseData !== undefined) {
 
                 if (data.responseData.contents !== null && data.responseData.contents !== undefined) {
 
-                    instance.RecordCount(data.responseData.totalRecords);
-                    var pagesNavigator = new ListNavigator({ 'currentList': instance.CurrentList(), 'listSize': instance.ListSize(), 'totalRecords': data.responseData.totalRecords, 'scrollSize': instance.ListingScrollSize(), 'listsource': instance.ListSource});
+                    instance.RecordCount(data.responseData.total);
+                    var pagesNavigator = new ListNavigator({ 'currentList': instance.CurrentList(), 'listSize': instance.ListSize(), 'totalRecords': data.responseData.total, 'scrollSize': instance.ListingScrollSize(), 'listsource': instance.ListSource});
                     instance.ListNavigator(pagesNavigator);
                     instance.CurrentList(data.page);
 
@@ -502,11 +502,11 @@ function SearchKNObserver(options) {
 
                         } else {
 
-                            instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.responseData.totalRecords + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
+                            instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
                         }
                     } else {
 
-                        instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.responseData.totalRecords + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
+                        instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
                     }
                 }
             }
@@ -528,11 +528,11 @@ function SearchKNObserver(options) {
             if (options.responseData.contents !== null && options.responseData.contents !== undefined) {
                 
                 instance.CurrentList(options.currentList);
-                instance.RecordCount(options.responseData.totalRecords);
+                instance.RecordCount(options.responseData.total);
 
-                var pagesNavigator = new ListNavigator({ 'currentList': instance.CurrentList(), 'listSize': instance.ListSize(), 'totalRecords': options.responseData.totalRecords, 'scrollSize': instance.ListingScrollSize(), 'listsource': instance.ListSource });
+                var pagesNavigator = new ListNavigator({ 'currentList': instance.CurrentList(), 'listSize': instance.ListSize(), 'totalRecords': options.responseData.total, 'scrollSize': instance.ListingScrollSize(), 'listsource': instance.ListSource });
                 instance.ListNavigator(pagesNavigator);
-                instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + options.responseData.totalRecords + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
+                instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + options.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
             }
         }
     };

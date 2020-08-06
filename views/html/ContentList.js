@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -71,39 +71,45 @@ function ContentList(options) {
     };
 
     /**
-     * Find records based on provided keyword (via observer keyword property) and page number.
-     * if observer is not available then finds records based on options.keyword, 
-     * options.size, options.page and options.fill.
+     * List records based on provided keyword, page and size.
      * 
      * @param {type} options
+     * @param {type} fill
      * @returns {undefined}
      */
-    instance.find = function (options) {
+    instance.list = function (options, fill) {
+
+        options = (options !== null && options !== undefined) ? options : {};
+        var keyword = options.keyword;
         
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-            
             instance.getObserverInterface().displayProcessingActivity();
-            instance.getCRUDProcessor().find({
+            keyword = instance.getObserverInterface().getKeyword();
+        }
+
+        if (typeof (options) === "object") {
+
+            options.key = (options.key !== null && options.key !== undefined) ? options.key : instance.getObjectKey();
+            options.uri = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
+            options.target = (options.target !== null && options.target !== undefined) ? options.target : 'list';
+            options.keyword = keyword;
+            options.method = (options.method !== null && options.method !== undefined) ? options.method : 'POST';
+            options.fill = fill;
+
+            instance.getCRUDProcessor().list(options);
+        }
+        else {
+
+            instance.getCRUDProcessor().list({
                 'uri': instance.URI,
-                'contentType': options.contentType,
-                'keyword': (options.keyword !== null && options.keyword !== undefined) ? options.keyword : instance.getObserverInterface().getKeyword(),
-                'size': (options.size !== null && options.size !== undefined) ? options.size : (instance.getObserverInterface().getListSize() !== null && instance.getObserverInterface().getListSize() !== undefined) ? instance.getObserverInterface().getListSize() : 10,
-                'page': options.page,
-                'fill': options.fill
-            });
-            
-        } else {
-            
-            instance.getCRUDProcessor().find({
-                'uri': instance.URI,
-                'contentType': options.contentType,
-                'keyword': options.keyword,
-                'size': options.size,
-                'page': options.page,
-                'fill': options.fill
+                'key': instance.getObjectKey(),
+                'keyword': keyword,
+                'size': 10,
+                'page': options,
+                'fill': fill
             });
         }
-    };
+    };  
     
     /**
      * Get component from record.
@@ -115,7 +121,6 @@ function ContentList(options) {
         
         var component;
         var recordOptions = Object.create(instance.newOptions());
-        recordOptions.objectkey = record.getKey();
 
         if (instance.newOptions().subjectf !== null
                 && instance.newOptions().subjectf !== undefined) {
@@ -351,8 +356,8 @@ function ContentList(options) {
          * @param {type} options
          * @returns {undefined}
          */
-        instance.getObserverInterface().find = function (options) {
-            instance.find(options);
+        instance.getObserverInterface().list = function (options) {
+            instance.list(options);
         };
         
         /** 
@@ -384,8 +389,8 @@ function ContentList(options) {
          * @param {type} options
          * @returns {undefined}
          */
-        instance.getObserverObject().find = function (options) {
-            instance.find(options);
+        instance.getObserverObject().list = function (options) {
+            instance.list(options);
         };
         
         /** 
@@ -501,8 +506,6 @@ function ContentList(options) {
                 }
             }
         }
-
-        $(window).trigger('view-direction-change');
     };
 
     /**
@@ -565,7 +568,6 @@ function ContentList(options) {
      * @returns {undefined}
      */
     instance.unSubscribeEvents = function (eventsInstance) {
-        
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
         $(instance.getCRUDProcessor()).off('errors.processor.CRUD.WindnTrees', eventsInstance.presentErrors);
@@ -579,12 +581,6 @@ function ContentList(options) {
         }
     } else {
         instance.subscribeEvents();
-    }
-    
-    if (options.contextpath !== null && options.contextpath !== undefined) {
-        if (options.contextpath === 'load') {
-            instance.loadContextPath();
-        }
     }
     
     if (options.instance !== null && options.instance !== undefined) {

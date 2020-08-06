@@ -1,4 +1,4 @@
-/*  Copyright [2018] [Invincible Technologies]
+/*  Copyright [2017-2020] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ function FlexView(options) {
      * @param {type} key 
      * @returns {undefined}
      */
-    instance.getFlex = function (key) {
+    instance.readFlex = function (key) {
         
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
             instance.getObserverInterface().displayProcessingActivity();
@@ -83,78 +83,53 @@ function FlexView(options) {
         //checks on key value if present then use the key value, otherwise get object key
         key = (key !== null && key !== undefined) ? key : ((instance.ObjectKey !== null && instance.ObjectKey !== undefined) ? instance.ObjectKey : key);
 
-        instance.getCRUDProcessor().get({
+        instance.getCRUDProcessor().read({
             'uri': instance.URI,
-            'request': 'flexget',
+            'request': (options.request !== null && options.request !== undefined) ? options.request : 'readflex',
             'key': key
         });
     };
     
     /**
-     * Gets record based on key value via post.
+     * List records based on key value.
      * 
-     * @param {type} key 
+     * @param {type} options
+     * @param {type} fill
      * @returns {undefined}
      */
-    instance.postFlex = function (key) {
+    instance.listFlex = function (options, fill) {
 
-        if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-            instance.getObserverInterface().displayProcessingActivity();
-        }
-
-        //checks on key value if present then use the key value, otherwise get object key
-        key = (key !== null && key !== undefined) ? key : ((instance.ObjectKey !== null && instance.ObjectKey !== undefined) ? instance.ObjectKey : key);
-
-        instance.getCRUDProcessor().post({
-            'uri': instance.URI,
-            'request': 'flexpost',
-            'key': key
-        });
-    };
-    
-    /**
-     * Gets record based on key value.
-     * 
-     * @param {type} keyword
-     * @returns {undefined}
-     */
-    instance.listFlex = function (keyword) {
+        options = (options !== null && options !== undefined) ? options : {};
+        var keyword = options.keyword;
         
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
             instance.getObserverInterface().displayProcessingActivity();
+            keyword = instance.getObserverInterface().getKeyword();
         }
 
-        //checks for keyword value if present then use the keyword value, otherwise observers keyword value
-        keyword = (keyword !== null && keyword !== undefined) ? keyword : ((instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) ? instance.getObserverInterface().getKeyword() : keyword);
+        if (typeof (options) === "object") {
 
-        instance.getCRUDProcessor().list({
-            'uri': instance.URI,
-            'method': 'GET',
-            'request': 'flexlist',
-            'keyword': keyword
-        });
-    };
-    
-    /**
-     * Gets record based on key value via post.
-     * 
-     * @param {type} keyword
-     * @returns {undefined}
-     */
-    instance.listFlexPost = function (keyword) {
+            options.key = (options.key !== null && options.key !== undefined) ? options.key : instance.getObjectKey();
+            options.uri = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
+            options.target = (options.target !== null && options.target !== undefined) ? options.target : 'listflex';
+            options.keyword = keyword;
+            options.method = (options.method !== null && options.method !== undefined) ? options.method : 'POST';
+            options.fill = fill;
 
-        if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
-            instance.getObserverInterface().displayProcessingActivity();
+            instance.getCRUDProcessor().list(options);
         }
+        else {
 
-        //checks for keyword value if present then use the keyword value, otherwise observers keyword value
-        keyword = (keyword !== null && keyword !== undefined) ? keyword : ((instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) ? instance.getObserverInterface().getKeyword() : keyword);
-
-        instance.getCRUDProcessor().list({
-            'uri': instance.URI,
-            'request': 'flexlist',
-            'keyword': keyword
-        });
+            instance.getCRUDProcessor().list({
+                'uri': instance.URI,
+                'target': 'listflex',
+                'key': instance.getObjectKey(),
+                'keyword': keyword,
+                'size': 10,
+                'page': options,
+                'fill': fill
+            });
+        }
     };
     
     /**
@@ -193,21 +168,13 @@ function FlexView(options) {
     if (instance.getObserverInterface() !== null &&
             instance.getObserverInterface() !== undefined) {
         
-        instance.getObserverInterface().getFlex = function (options) {
-            instance.getFlex(options);
-        };
-        
-        instance.getObserverInterface().postFlex = function (options) {
-            instance.postFlex(options);
+        instance.getObserverInterface().readFlex = function (options) {
+            instance.readFlex(options);
         };
         
         instance.getObserverInterface().listFlex = function (options) {
             instance.listFlex(options);
-        };
-        
-        instance.getObserverInterface().listFlexPost = function (options) {
-            instance.listFlexPost(options);
-        };
+        };        
         
         instance.getObserverInterface().presentView = function (options) {
             instance.presentView(options);
@@ -217,20 +184,12 @@ function FlexView(options) {
     if (instance.getObserverObject() !== null &&
             instance.getObserverObject() !== undefined) {
         
-        instance.getObserverObject().getFlex = function (options) {
-            instance.getFlex(options);
-        };
-        
-        instance.getObserverObject().postFlex = function (options) {
-            instance.postFlex(options);
+        instance.getObserverObject().readFlex = function (options) {
+            instance.readFlex(options);
         };
         
         instance.getObserverObject().listFlex = function (options) {
             instance.listFlex(options);
-        };
-        
-        instance.getObserverObject().listFlexPost = function (options) {
-            instance.listFlexPost(options);
         };
         
         instance.getObserverObject().presentView = function (options) {
@@ -381,12 +340,12 @@ function FlexView(options) {
      * @returns {undefined}
      */
     instance.subscribeEvents = function (eventsInstance) {
+
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
         $(instance.getCRUDProcessor()).on('errors.processor.CRUD.WindnTrees', eventsInstance.presentErrors);
         $(instance.getCRUDProcessor()).on('record.processor.CRUD.WindnTrees', eventsInstance.presentRecord);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
-
     };
     
     /**
