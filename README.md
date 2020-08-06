@@ -25,8 +25,14 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
 <p>CRUDS expects server side content response presented in following JSON format :</p>
 <pre>
 {
-      errors: [],
-      contents: []
+      content: object,
+      errors: [] 
+}
+</pre>
+<pre>
+{
+      contents: [],
+      errors: []
 }
 </pre>
         <p>
@@ -56,3 +62,5 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
         <version>version-0.0.1</version>
     </dependency>
 </pre>
+
+<p>Note: windntrees-1.2.3.js updates are not applicable to com.invincibletec.windntrees as of now, repository will be updated soon.</p>
