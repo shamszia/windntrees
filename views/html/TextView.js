@@ -13,30 +13,9 @@
  *  limitations under the License.
  */
 
-/* global Util */
-
-/**
- * TextView presents subject and description values in provided html format 
- * and css styles. TextView is capable of extracting information from a remote 
- * web service using GET / POST calls and display using observer or by directly
- * writing into node's innerHTML content. In case of observer less scenario 
- * the type of content, content node and error node must be defined.
- * 
- * options.contentnode
- * options.errornode
- * 
- * options.subject
- * options.description
- * options.url
- * options.html
- * options.css
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// TextView presents subject and description values in provided html format and css styles. TextView is capable of extracting information from a remote web service using read calls and display using observer or by directly writing into node's innerHTML content. In case of direct method the type of content, content node and error node must be defined.
+/// </summary>
 function TextView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -51,133 +30,118 @@ function TextView(options) {
     extOptions.events = false;
     instance = ObjectView(extOptions);
     
-    //content fields
+    /// <summary>
+    /// Subject, data member property.
+    /// </summary>
     instance.Subject = options.subject;
+    /// <summary>
+    /// Description, data member property.
+    /// </summary>
     instance.Description = options.description;
+    /// <summary>
+    /// URL, data member property.
+    /// </summary>
     instance.URL = options.url;
+    /// <summary>
+    /// URLTitle, data member property.
+    /// </summary>
     instance.URLTitle = options.urltitle;
+    /// <summary>
+    /// HTML, data member property.
+    /// </summary>
     instance.HTML = options.html;
+    /// <summary>
+    /// CSS, data member property.
+    /// </summary>
     instance.CSS = options.css;
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "TextView";
     };
-    
-    /**
-     * Gets subject.
-     * 
-     * @returns {TextView.subject}
-     */
+
+    /// <summary>
+    /// Gets subject.
+    /// </summary>
     instance.getSubject = function () {
         return instance.Subject;
     };
-    
-    /**
-     * Sets subject value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets subject value.
+    /// </summary>
     instance.setSubject = function (value) {
         instance.Subject = value;
     };
-    
-    /**
-     * Gets description value.
-     * 
-     * @returns {TextView.description}
-     */
+
+    /// <summary>
+    /// Gets description value.
+    /// </summary>
     instance.getDescription = function () {
         return instance.Description;
     };
-    
-    /**
-     * Sets description value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets description value.
+    /// </summary>
     instance.setDescription = function (value) {
         instance.Description = value;
     };
-    
-    /**
-     * Gets URL value.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets URL value.
+    /// </summary>
     instance.getURL = function () {
         return instance.URL;
     };
-    
-    /**
-     * Sets URL value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets URL value.
+    /// </summary>
     instance.setURL = function (value) {
         instance.URL = value;
     };
-    
-    /**
-     * Gets HTML value.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets HTML value.
+    /// </summary>
     instance.getHTML = function () {
         return instance.HTML;
     };
-    
-    /**
-     * Sets HTML value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets HTML value.
+    /// </summary>
     instance.setHTML = function (value) {
         instance.HTML = value;
     };
-    
-    /**
-     * Gets CSS value.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets CSS value.
+    /// </summary>
     instance.getCSS = function () {
         return instance.CSS;
     };
-    
-    /**
-     * Sets CSS value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets CSS value.
+    /// </summary>
     instance.setCSS = function (value) {
         instance.CSS = value;
     };
-    
-    /**
-     * Gets content node value.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets content node value.
+    /// </summary>
     instance.getContentNode = function () {
         return instance.ContentNode;
     };
-    
-    /**
-     * Present view with input values and html format.
-     * 
-     * @param {type} options
-     * @returns {String|TextView.present.htmlFormat}
-     */
+
+    /// <summary>
+    /// Present view with input values and html format.
+    /// </summary>
     instance.presentView = function (options) {
         
         var htmlFormat = instance.HTML;
@@ -287,14 +251,10 @@ function TextView(options) {
             instance.presentView(options);
         };
     }
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -338,14 +298,10 @@ function TextView(options) {
             }
         }
     };
-    
-    /**
-     * Record processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Record processing and presenting event subscription.
+    /// </summary>
     instance.presentRecord = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -392,13 +348,9 @@ function TextView(options) {
         }
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -431,12 +383,9 @@ function TextView(options) {
         }
     };
 
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
@@ -444,13 +393,10 @@ function TextView(options) {
         $(instance.getCRUDProcessor()).on('record.processor.CRUD.WindnTrees', eventsInstance.presentRecord);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
     };
-    
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// un-subscribe CRUDProcessor events.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
         
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;

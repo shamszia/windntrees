@@ -13,18 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * Edit View provides observer indepedent data handling and communication 
- * capability using GET / POST calls to a hosted webservice / web api composed 
- * arround an entity object. Edit view extends functionality of ObjectView and 
- * allows to edit existing objects.
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// EditView provides data handling and communication capability using read and update calls to a hosted webservice or API controller and gets typed content objects based on input object. EditView extends ObjectView and allows editing of existing objects.
+/// </summary>
 function EditView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -38,29 +29,20 @@ function EditView(options) {
     extOptions.instance = instance;
     instance = ObjectView(extOptions);
 
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "EditView";
     };
 
-    /**
-     * Updates new record based on form view object.
-     * 
-     * options.content - entity instance
-     * options.callback - reference to callback function.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Updates existing content at designated URI address with input object.
+    /// </summary>
     instance.update = function (options) {
         options = (options === null || options === undefined) ? {} : options;
         options.action = 'update';
         
-        //options.content = (options.content === null || options.content === undefined) ? (instance.getObserverInterface().getFormStringifiedObject()) : instance.getObserverInterface().getStringifiedObject(options.content);
         options.content = instance.formatContent(options);
 
         instance.createOrUpdateOrDelete(options);

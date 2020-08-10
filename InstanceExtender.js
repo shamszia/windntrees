@@ -13,30 +13,21 @@
  *  limitations under the License.
  */
 
-/**
- * InstanceExtender extends instances with common functions.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// InstanceExtender extends instances with common and useful functions.
+/// </summary>
 function InstanceExtender(options) {
     var instance = this;
     
-    /**
-     * Extends instance with newInstance functionality.
-     * 
-     * @param {type} extoptions
-     * @returns {InstanceExtender.NewObject.instance}
-     */
+    /// <summary>
+    /// Extends instance with new instance creation functionality.
+    /// </summary>
     instance.extendNewInstance = function (extoptions) {
         var instance = extoptions.instance;
 
-        /**
-         * Integrates new instance functionality with provided instance.
-         * 
-         * @param {type} options 
-         * @returns {Function}
-         */
+        /// <summary>
+        /// Integrates new instance functionality with provided instance.
+        /// </summary>
         instance.newInstance = function (options) {
             
             var instanceOptions = (options !== null && options !== undefined) ? options : instance.newOptions();
@@ -71,11 +62,9 @@ function InstanceExtender(options) {
             return new (Object.getPrototypeOf(instance)).constructor(instanceOptions);
         };
         
-        /**
-         * Returns object instantiation options.
-         * 
-         * @returns {type.options}
-         */
+        /// <summary>
+        /// Returns object instantiation options.
+        /// </summary>
         instance.newOptions = function () {
             
             return extoptions.options;
@@ -84,12 +73,9 @@ function InstanceExtender(options) {
         return Object.create(instance);
     };
     
-    /**
-     * Extends instance with field and related setter and getter functions.
-     * 
-     * @param {type} options
-     * @returns {InstanceExtender.extendField.instance}
-     */
+    /// <summary>
+    /// Extends instance with field and related setter and getter functions.
+    /// </summary>
     instance.extendField = function (options) {
         var instance = options.instance;
 
@@ -98,12 +84,9 @@ function InstanceExtender(options) {
                 instance[options.field] = options.value;
             }
             
-            /**
-             * Field setter function.
-             * 
-             * @param {type} object
-             * @returns {undefined}
-             */
+            /// <summary>
+            /// Field setter function.
+            /// </summary>
             instance["set" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)] = function (object) {
                 if (typeof (instance[options.field]) === 'function') {
                     instance[options.field](object);
@@ -113,11 +96,9 @@ function InstanceExtender(options) {
                 }
             };
 
-            /**
-             * Field getter function.
-             * 
-             * @returns {InstanceExtender|InstanceExtender.instance}
-             */
+            /// <summary>
+            /// Field getter function.
+            /// </summary>
             instance["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)] = function () {
                 if (typeof (instance[options.field]) === 'function') {
                     return instance[options.field]();
@@ -127,20 +108,18 @@ function InstanceExtender(options) {
                 }
             };
 
-            /**
-             * Observable getter function.
-             * 
-             * @returns {InstanceExtender|InstanceExtender.instance}
-             */
+
+            /// <summary>
+            /// Observable getter function.
+            /// </summary>
             instance["getObservable" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)] = function () {
                 return instance[options.field];
             };
 
-            /**
-             * Gets field stringified object.
-             * 
-             * @returns {String}
-             */
+
+            /// <summary>
+            /// Gets field stringified object.
+            /// </summary>
             instance["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1) + "StringifiedJSONObject"] = function () {
                 if (typeof (instance[options.field]) === 'function') {
                     return JSON.stringify(instance[options.field]());
@@ -150,11 +129,9 @@ function InstanceExtender(options) {
                 }
             };
 
-            /**
-             * Gets field JSON object.
-             * 
-             * @returns {Array|Object}
-             */
+            /// <summary>
+            /// Gets field JSON object.
+            /// </summary>
             instance["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1) + "JSONObject"] = function () {
                 if (typeof (instance[options.field]) === 'function') {
                     return JSON.parse(JSON.stringify(instance[options.field]()));
@@ -167,62 +144,49 @@ function InstanceExtender(options) {
         
         return instance;
     };
-    
-    /**
-     * Extends instance with field observer interface and related setter and getter functions.
-     * 
-     * @param {type} options
-     * @returns {InstanceExtender.extendField.instance}
-     */
+
+    /// <summary>
+    /// Extends instance with field observer interface and related setter and getter functions.
+    /// </summary>
     instance.extendFieldObserver = function (options) {
         var instance = options.instance;
         
         var observer = options.observer;
 
         if (options.field !== null && options.field !== undefined) {
-            
-            /**
-             * Field setter function.
-             * 
-             * @param {type} object
-             * @returns {undefined}
-             */
+
+            /// <summary>
+            /// Field setter function.
+            /// </summary>
             instance["set" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)] = function (object) {
                 observer["set" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)](object);
             };
 
-            /**
-             * Field getter function.
-             * 
-             * @returns {InstanceExtender|InstanceExtender.instance}
-             */
+            /// <summary>
+            /// Field getter function.
+            /// </summary>
             instance["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)] = function () {
                 return observer["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)]();
             };
 
-            /**
-             * Observable getter function.
-             * 
-             * @returns {InstanceExtender|InstanceExtender.instance}
-             */
+
+            /// <summary>
+            /// Observable getter function.
+            /// </summary>
             instance["getObservable" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)] = function () {
                 return observer["getObservable" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1)]();
             };
 
-            /**
-             * Gets field stringified object.
-             * 
-             * @returns {String}
-             */
+            /// <summary>
+            /// Gets field stringified object.
+            /// </summary>
             instance["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1) + "StringifiedJSONObject"] = function () {
                 return observer["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1) + "StringifiedJSONObject"]();
             };
 
-            /**
-             * Gets field JSON object.
-             * 
-             * @returns {Array|Object}
-             */
+            /// <summary>
+            /// Gets field JSON object.
+            /// </summary>
             instance["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1) + "JSONObject"] = function () {
                 return observer["get" + options.field.substr(0, 1).toUpperCase() + options.field.substr(1, options.field.length - 1) + "JSONObject"]();
             };
@@ -230,24 +194,18 @@ function InstanceExtender(options) {
         
         return instance;
     };
-    
-    /**
-     * Extends instance with Object Interface.
-     * 
-     * @param {type} options
-     * @returns {InstanceExtender.extendObjectInterface.instance}
-     */
+
+    /// <summary>
+    /// Extends instance with Object Interface.
+    /// </summary>
     instance.extendObjectInterface = function (options) {
         var instance = options.instance;
 
         if (options.field !== null && options.field !== undefined) {
 
-            /**
-             * Sets field with object.
-             * 
-             * @param {type} object
-             * @returns {undefined}
-             */
+            /// <summary>
+            /// Sets field with object.
+            /// </summary>
             instance.setObject = function (object) {
                 if (typeof (instance[options.field]) === 'function') {
                     instance[options.field](object);
@@ -257,11 +215,9 @@ function InstanceExtender(options) {
                 }
             };
 
-            /**
-             * Gets field object.
-             * 
-             * @returns {type.instance|InstanceExtender.extendObjectInterface.instance}
-             */
+            /// <summary>
+            /// Gets field object.
+            /// </summary>
             instance.getObject = function () {
                 if (typeof (instance[options.field]) === 'function') {
                     return instance[options.field]();
@@ -270,12 +226,10 @@ function InstanceExtender(options) {
                     return instance[options.field];
                 }
             };
-            
-            /**
-             * Gets field observer object.
-             * 
-             * @returns {type.instance|InstanceExtender.extendObjectInterface.instance}
-             */
+
+            /// <summary>
+            /// Gets field observer object.
+            /// </summary>
             instance.getObserverObject = function () {
                 if (typeof (instance[options.field]) === 'function') {
                     return instance[options.field]();
@@ -285,20 +239,16 @@ function InstanceExtender(options) {
                 }
             };
 
-            /**
-             * Gets observable field.
-             * 
-             * @returns {type.instance|InstanceExtender.extendObjectInterface.instance}
-             */
+            /// <summary>
+            /// Gets observable field.
+            /// </summary>
             instance.getObservableObject = function () {
                 return instance[options.field];
             };
 
-            /**
-             * Gets stringified field object.
-             * 
-             * @returns {String}
-             */
+            /// <summary>
+            /// Gets stringified field object.
+            /// </summary>
             instance.getStringifiedObject = function () {
                 if (typeof (instance[options.field]) === 'function') {
                     return JSON.stringify(instance[options.field]());
@@ -308,11 +258,9 @@ function InstanceExtender(options) {
                 }
             };
 
-            /**
-             * Gets JSON field object.
-             * 
-             * @returns {Array|Object}
-             */
+            /// <summary>
+            /// Gets JSON field object.
+            /// </summary>
             instance.getJSONObject = function () {
                 if (typeof (instance[options.field]) === 'function') {
                     return JSON.parse(JSON.stringify(instance[options.field]()));
@@ -325,13 +273,10 @@ function InstanceExtender(options) {
         
         return Object.create(instance);
     };
-    
-    /**
-     * Extends observer with Observer Interface.
-     * 
-     * @param {type} options
-     * @returns {InstanceExtender.extendObserverInterface.instance}
-     */
+
+    /// <summary>
+    /// Extends observer with Observer Interface.
+    /// </summary>
     instance.extendObserverInterface = function (options) {
         var instance = options.instance;
         
@@ -340,76 +285,59 @@ function InstanceExtender(options) {
         if (instance !== null && instance !== undefined) {
 
             if (observer !== null && observer !== undefined) {
-                
-                /**
-                 * Sets object using observer interface.
-                 * 
-                 * @param {type} object
-                 * @returns {undefined}
-                 */
+
+                /// <summary>
+                /// Sets object using observer interface.
+                /// </summary>
                 instance.setObject = function (object) {
                     observer.setObject(object);
                 };
 
-                /**
-                 * Gets object using observer interface.
-                 * 
-                 * @returns {unresolved}
-                 */
+                /// <summary>
+                /// Gets object using observer interface.
+                /// </summary>
                 instance.getObject = function () {
                     return observer.getObject();
                 };
 
-                /**
-                 * Gets object using observer interface.
-                 * 
-                 * @returns {unresolved}
-                 */
+                /// <summary>
+                /// Gets object using observer interface.
+                /// </summary>
                 instance.getObserverObject = function () {
                     return observer.getObject();
                 };
 
-                /**
-                 * Gets observable object using observer interface.
-                 * 
-                 * @returns {unresolved}
-                 */
+                /// <summary>
+                /// Gets observable object using observer interface.
+                /// </summary>
                 instance.getObservableObject = function () {
                     return observer.getObservableObject();
                 };
 
-                /**
-                 * Gets stringified JSON object using observer interface.
-                 * 
-                 * @returns {unresolved}
-                 */
+                /// <summary>
+                /// Gets stringified JSON object using observer interface.
+                /// </summary>
                 instance.getStringifiedObject = function () {
                     return observer.getStringifiedObject();
                 };
 
-                /**
-                 * Gets JSON object using observer interface.
-                 * 
-                 * @returns {unresolved}
-                 */
+                /// <summary>
+                /// Gets JSON object using observer interface.
+                /// </summary>
                 instance.getJSONObject = function () {
                     return observer.getJSONObject();
                 };
-                
-                /**
-                 * Gets concrete observer type using observer interface.
-                 * 
-                 * @returns {unresolved}
-                 */
+
+                /// <summary>
+                /// Gets concrete observer type using observer interface.
+                /// </summary>
                 instance.getObserverType = function () {
                     return observer.getType();
                 };
-                
-                /**
-                 * Gets concrete observer using observer interface.
-                 * 
-                 * @returns {type.observer|InstanceExtender.extendObserverInterface.observer}
-                 */
+
+                /// <summary>
+                /// Gets concrete observer using observer interface.
+                /// </summary>
                 instance.getObserver = function () {
                     return observer;
                 };
@@ -418,33 +346,29 @@ function InstanceExtender(options) {
         
         return Object.create(instance);
     };
-    
-    /**
-     * Extends instance with content information.
-     * 
-     * @param {type} options
-     * @returns {InstanceExtender.extendContentObject.instance}
-     */
+
+    /// <summary>
+    /// Extends instance with content information.
+    /// </summary>
     instance.extendContentTypeObject = function (options) {
         var instance = options.instance;
-        
-        //type information
+
+        /// <summary>
+        /// ContentType data member.
+        /// </summary>
         instance.ContentType = options.contentType;
 
-        /**
-         * Gets content object.
-         * 
-         * @returns {instance.ContentType|.options.instance.ContentType}
-         */
+
+        /// <summary>
+        /// Gets content object.
+        /// </summary>
         instance.getContentTypeObject = function () {
             return instance.ContentType;
         };
 
-        /**
-         * Gets content object prototype.
-         * 
-         * @returns {Object}
-         */
+        /// <summary>
+        /// Gets content object prototype.
+        /// </summary>
         instance.getContentTypeObjectPrototype = function () {
             if (instance.ContentType !== null && instance.ContentType !== undefined) {
                 return Object.getPrototypeOf(instance.ContentType);
@@ -454,13 +378,10 @@ function InstanceExtender(options) {
 
         return Object.create(instance);
     };
-    
-    /**
-     * Extends instance with content observer.
-     * 
-     * @param {type} options
-     * @returns {InstanceExtender.extendContentObserver.instance}
-     */
+
+    /// <summary>
+    /// Extends instance with content observer.
+    /// </summary>
     instance.extendContentObserver = function (options) {
         var instance = options.instance;
         

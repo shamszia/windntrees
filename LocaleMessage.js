@@ -13,53 +13,47 @@
  *  limitations under the License.
  */
 
-/**
- * Locale message to represent localized messages in a key/value store.
- * 
- * @param {type} key
- * @param {type} value
- * @returns {undefined}
- */
+/// <summary>
+/// Locale message to represent localized messages in a key/value store.
+/// </summary>
 function LocaleMessage(key, value) {
     var instance = this;
-    
+
+    /// <summary>
+    /// key data member.
+    /// </summary>
     instance.key = key;
+
+    /// <summary>
+    /// value data member.
+    /// </summary>
     instance.value = value;
-    
-    /**
-     * Gets the key.
-     * 
-     * @returns {Window.key|type}
-     */
+
+    /// <summary>
+    /// Gets the key.
+    /// </summary>
     instance.getKey = function () {
       return instance.key;  
     };
-    
-    /**
-     * Sets the key.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+
+    /// <summary>
+    /// Sets the key.
+    /// </summary>
     instance.setKey = function (data) {
         instance.key = data;
     };
-    
-    /**
-     * Gets the value.
-     * 
-     * @returns {Window.value|type}
-     */
+
+    /// <summary>
+    /// Gets the value.
+    /// </summary>
     instance.getValue = function () {
         return instance.value;
     };
-    
-    /**
-     * Sets the value.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets the value.
+    /// </summary>
     instance.setValue = function (data) {
         instance.value = data;
     };

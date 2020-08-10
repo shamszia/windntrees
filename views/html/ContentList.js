@@ -13,21 +13,9 @@
  *  limitations under the License.
  */
 
-/* global Util */
-
-/**
- * ContentList provides observer independent data handling and communication 
- * capability using get, post and find calls to a hosted web service or web API 
- * and gets typed content objects. 
- * 
- * ContentList extends functionality from ObjectView.
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// ContentList provides data handling and communication capability using read and list calls to a hosted web service or API controller and gets typed content objects based on input object. 
+/// </summary>
 function ContentList(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -41,21 +29,17 @@ function ContentList(options) {
     extOptions.instance = instance;
     extOptions.events = false;
     instance = ObjectView(extOptions);
-    
-    /**
-     * Gets the type of view.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Gets the type of view.
+    /// </summary>
     instance.getType = function () {
         return 'ContentList';
     };
-    
-    /**
-     * Clears (resets) observer records list and view.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Clears (resets) observer records list and view.
+    /// </summary>
     instance.clearRecords = function () {
 
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
@@ -70,13 +54,9 @@ function ContentList(options) {
         }
     };
 
-    /**
-     * List records based on provided keyword, page and size.
-     * 
-     * @param {type} options
-     * @param {type} fill
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// List records based on provided keyword, page and size.
+    /// </summary>
     instance.list = function (options, fill) {
 
         options = (options !== null && options !== undefined) ? options : {};
@@ -110,13 +90,10 @@ function ContentList(options) {
             });
         }
     };  
-    
-    /**
-     * Get component from record.
-     * 
-     * @param {type} record
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Get component from record.
+    /// </summary>
     instance.getRecordComponent = function (record) {
         
         var component;
@@ -304,13 +281,10 @@ function ContentList(options) {
         
         return component;
     };
-    
-    /**
-     * Present view with input values and html format.
-     * 
-     * @param {type} options
-     * @returns {String|TextView.present.htmlFormat}
-     */
+
+    /// <summary>
+    /// Present view with input values and html format.
+    /// </summary>
     instance.presentView = function (options) {
         var htmlOutput = "";
         var records = [];
@@ -403,14 +377,10 @@ function ContentList(options) {
             instance.presentView(options);
         };
     }
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -455,13 +425,9 @@ function ContentList(options) {
         }
     };
 
-    /**
-     * Multiple records processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Multiple records processing and presenting event subscription.
+    /// </summary>
     instance.presentRecords = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -508,13 +474,9 @@ function ContentList(options) {
         }
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -547,12 +509,9 @@ function ContentList(options) {
         }
     };
 
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
@@ -560,13 +519,10 @@ function ContentList(options) {
         $(instance.getCRUDProcessor()).on('records.processor.CRUD.WindnTrees', eventsInstance.presentRecords);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
     };
-    
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         

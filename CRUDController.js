@@ -13,85 +13,83 @@
  *  limitations under the License.
  */
 
-/**
- * Entities / Objects
- * 
- * AJAX based CRUD controller that provides create, read, update and delete 
- * requests functionality and response notifications. All requests takes a 
- * URI (address) and or related data entity object(s).
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// CRUDController is a CRUD component that enables create, read, update, delete and list requests 
+/// functionality using AJAX. All requests take a URI (address) with or without resulting 
+/// content type object and produces response event notifications 
+/// with resulting data or contents. CRUDController component operates on top 
+/// of a CRUDSource and is responsible for data extraction and reporting to 
+/// other components. Usually a CRUDController deals with a CRUDSource and a 
+/// CRUDProcessor. 
+/// </summary>
 function CRUDController(options) {
     var instance = this;
 
+    /// <summary>
+    /// Key is unique identifier to differentiate between CRUD controllers and is optional.
+    /// </summary>
     instance.Key = options !== undefined ? options.key : null;
+
+    /// <summary>
+    /// Processing is request status monitoring data member, true status value tells that request is in -process.
+    /// </summary>
     instance.Processing = false;
+
+    /// <summary>
+    /// ResponseData is the response result received after successful request completion.
+    /// </summary>
     instance.ResponseData = null;
+
+    /// <summary>
+    /// ResponseError is the response result received after failed request completion.
+    /// </summary>
     instance.ResponseError = null;
 
-    /**
-     * Gets controller key.
-     * 
-     * @returns {type.key}
-     */
+    /// <summary>
+    /// Gets controller key.
+    /// </summary>
     instance.getKey = function () {
         return instance.Key;
     };
     
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets function construct type information.
+    /// </summary>
     instance.getType = function () {
         return "CRUDController";
     };
 
-    /**
-     * Request processing status.
-     * 
-     * @returns {Boolean}
-     */
+    /// <summary>
+    /// Gets request processing status.
+    /// </summary>
     instance.processing = function () {
         return instance.Processing;
     };
 
-    /**
-     * Reference function to CRUD controller response data.
-     * 
-     * @returns {CRUDController.ResponseData|CRUDProcessor.controller.ResponseData}
-     */
+    /// <summary>
+    /// Gets requested response data.
+    /// </summary>
     instance.responseData = function () {
         return instance.ResponseData;
     };
 
-    /**
-     * Reference function to CRUD controller response error.
-     * 
-     * @returns {CRUDProcessor.controller.ResponseError|CRUDController.ResponseError}
-     */
+    /// <summary>
+    /// Gets response error.
+    /// </summary>
     instance.responseError = function () {
         return instance.ResponseError;
     };
 
-    /**
-     * Reference function to CRUD controller to check for response error.
-     * 
-     * @returns {Boolean}
-     */
+    /// <summary>
+    /// Checks whether request yields in response error.
+    /// </summary>
     instance.isResponseError = function () {
         return instance.ResponseError !== null;
     };
     
-    /**
-     * Sends ajax request.
-     * 
-     * @param {type} options
-     * @param {type} callback 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sends ajax request.
+    /// </summary>
     instance.sendRequest = function (options, callback) {
 
         //initialize headers and set __RequestVerificationToken for request authorization.
@@ -193,17 +191,9 @@ function CRUDController(options) {
         }
     };
 
-    /**
-     * Sends new entity request at sepcified URL.
-     * 
-     * data.uri - Web resource identifier
-     * data.content - Data entity object
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Creates new content object using POST method and notify result in after event.
+    /// </summary>
     instance.create = function (data, callback) {
         instance.Processing = true;
         instance.ResponseData = null;
@@ -221,17 +211,10 @@ function CRUDController(options) {
             'eventData': eventData}, callback);
     };
 
-    /**
-     * Sends read entity object request by key using GET method.
-     * 
-     * data.uri - Web resource identifier
-     * data.key - Key value
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Read response based on a key value using GET method and notify content in 
+    /// after event.
+    /// </summary>
     instance.read = function (data, callback) {
         instance.Processing = true;
         instance.ResponseData = null;
@@ -251,17 +234,9 @@ function CRUDController(options) {
         }, callback);
     };
 
-    /**
-     * Sends existing entity update request at specified URL.
-     * 
-     * data.uri - Web resource identifier
-     * data.content - Entity data object
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Updates existing content object using POST method and notify result in after event.
+    /// </summary>
     instance.update = function (data, callback) {
         instance.Processing = true;
         instance.ResponseData = null;
@@ -280,17 +255,9 @@ function CRUDController(options) {
             'eventData': eventData}, callback);
     };
 
-    /**
-     * Sends existing entity deletion request at specified URL.
-     * 
-     * data.uri -  Web resource identifier
-     * data.content - Entity data object
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Deletes existing content object using POST method and notify result in after event.
+    /// </summary>
     instance.delete = function (data, callback) {
         instance.Processing = true;
         instance.ResponseData = null;
@@ -308,17 +275,11 @@ function CRUDController(options) {
             'eventData': eventData}, callback);
     };
 
-    /**
-     * Sends list request based on keyword related entities.
-     * 
-     * data.uri - Web resource identifier
-     * data.keyword - Search keyword data value
-     * callback - Callback function
-     * 
-     * @param {type} data
-     * @param {type} callback
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// List records based on key, keyword, list number and list size at 
+    /// specified URI address and notify request data in before.request.CRUD.WindnTrees event. 
+    /// After successfull processing, a list of records is notified in after.request.CRUD.WindnTrees event.
+    /// </summary>
     instance.list = function (data, callback) {
         instance.Processing = true;
         instance.ResponseData = null;
@@ -375,32 +336,16 @@ function CRUDController(options) {
         }
     };
 
-    /**
-     * Events publishing and processing section.
-     * 
-     * @param {type} eventData
-     * @returns {undefined}
-     */
-    
-    /**
-     * Notify event subscribers with event information.
-     * 
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Makes event notification call.
+    /// </summary>
     instance.notify = function (eventData) {
         $(instance).trigger(eventData.event, eventData);
     };
     
-    /**
-     * Processes successfull response.
-     * 
-     * @param {type} data
-     * @param {type} textStatus
-     * @param {type} jqXHR
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Processes successfull response event and notify data in after.request.CRUD.WindnTrees event.
+    /// </summary>
     instance.notifyDone = function (data, textStatus, jqXHR, eventData) {
         instance.Processing = false;
         instance.ResponseData = data;
@@ -409,15 +354,9 @@ function CRUDController(options) {
         $(instance).trigger('after.request.CRUD.WindnTrees', eventData);
     };
     
-    /**
-     * Processes failure response.
-     * 
-     * @param {type} jqXHR
-     * @param {type} textStatus
-     * @param {type} errorThrown
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Processes failure response event and notify data in fail.request.CRUD.WindnTrees event.
+    /// </summary>
     instance.notifyFail = function (jqXHR, textStatus, errorThrown, eventData) {
         instance.Processing = false;
         instance.ResponseError = errorThrown;

@@ -13,13 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * ObjectKNObserver observer provides data, statuses, messages and view synchronization 
- * functionality for a particular object source.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// ObjectKNObserver observer provides data, statuses, messages and view synchronization functionality for a particular object source.
+/// </summary>
 function ObjectKNObserver(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -107,71 +103,53 @@ function ObjectKNObserver(options) {
             }
         }
     }
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "ObjectKNObserver";
     };
 
-    /**
-     * Sets form observer object with optional original key.
-     * 
-     * data.content
-     * data.originalKey
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets input form object with optional original key.
+    /// </summary>
     instance.setFormObject = function (data) {
         var newObject = (data.content !== null && data.content !== undefined) ? data.content : data;
         instance.InputObject(newObject);
     };
 
-    /**
-     * Gets form object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets form (input) object.
+    /// </summary>
     instance.getFormObject = function () {
         return instance.InputObject();
     };
 
-    /**
-     * Gets observable form object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets observable form (input) object.
+    /// </summary>
     instance.getObservableFormObject = function () {
         return instance.InputObject;
     };
 
-    /**
-     * Gets form's stringified JSON object.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets stringified text from input object.
+    /// </summary>
     instance.getFormStringifiedObject = function () {
         return ko.toJSON(instance.InputObject());
     };
 
-    /**
-     * Gets form's JSON object.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets form's JSON object.
+    /// </summary>
     instance.getFormJSONObject = function () {
         return JSON.parse(ko.toJSON(instance.InputObject()));
     };
 
-    /**
-     * Validate form object.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Validates form object.
+    /// </summary>
     instance.validateFormObject = function () {
         var errors = ko.validation.group(instance.getFormObject(), { deep: true });
         errors.showAllMessages();
@@ -182,13 +160,9 @@ function ObjectKNObserver(options) {
         return true;
     };
 
-    /**
-     * Synchronizes observer with view.
-     * 
-     * @param {type} options
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Synchronizes observer with view.
+    /// </summary>
     instance.synchronizeView = function (options) {
 
         options = options === null || options === undefined ? {} : options;
@@ -287,13 +261,9 @@ function ObjectKNObserver(options) {
         }
     };
 
-    /**
-     * Resets form object and view mode.
-     * 
-     * @param {type} options 
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Resets form object and view mode.
+    /// </summary>
     instance.resetForm = function (options) {
         instance.displayFormClearActivity();
 

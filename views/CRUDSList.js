@@ -13,12 +13,10 @@
  *  limitations under the License.
  */
 
-/**
- * Selects between CRUDS (or View Sources).
- * 
- * @param {type} options
- * @returns {undefined}
- */
+
+/// <summary>
+/// CRUDSList provide list of CRUD or Search views for a view template and switch between them based on user interaction using observers.
+/// </summary>
 function CRUDSList(options) {
     var instance = this;
     var extender = new InstanceExtender();
@@ -29,36 +27,31 @@ function CRUDSList(options) {
     }));
 
     instance = extender.extendObjectInterface({'instance': instance, 'field': 'Current'});
-    
-    /**
-     * Its current / selected CRUD index from CRUDS list.
-     */
+
+    /// <summary>
+    /// Currently selected CRUD index data member property.
+    /// </summary>    
     instance.CRUDIndex = 0;
     
     if (options.observer !== null && options.observer !== undefined) {
         options.observer.setObject(instance.CRUDS[instance.CRUDIndex]);
     }
-    
-    /**
-     * Represents Current object (One / Zero).
-     */
+
+    /// <summary>
+    /// Represents current object (One / Zero).
+    /// </summary>
     instance.Current = options.observer;
-    
-    /**
-     * Get array of CRUDS.
-     * 
-     * @returns {Array|type.cruds}
-     */
+
+    /// <summary>
+    /// Get array of CRUDS.
+    /// </summary>
     instance.getCRUDS = function () {
         return instance.CRUDS;
     };
-    
-    /**
-     * Selects CRUD based on key or index value.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Selects CRUD based on key or index value.
+    /// </summary>
     instance.selectCRUD = function (options) {
 
         if (options.crudindex !== null && options.crudindex !== undefined) {
@@ -81,12 +74,11 @@ function CRUDSList(options) {
             }
         }
     };
-    
-    /**
-     * Gets next CRUD view.
-     * 
-     * @returns {undefined}
-     */
+
+
+    /// <summary>
+    /// Gets next CRUD view.
+    /// </summary>
     instance.nextCRUD = function () {
         instance.CRUDIndex += 1;
         if (instance.CRUDIndex >= instance.CRUDS.length) {
@@ -97,11 +89,10 @@ function CRUDSList(options) {
         
         instance.Current.setObject(instance.CRUDS[instance.CRUDIndex]);
     };
-    
-    /**
-     * Gets previous CRUD view.
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Gets previous CRUD view.
+    /// </summary>
     instance.prevCRUD = function () {
         instance.CRUDIndex -= 1;
         if (instance.CRUDIndex > instance.CRUDS.length) {
@@ -112,12 +103,10 @@ function CRUDSList(options) {
         
         instance.Current.setObject(instance.CRUDS[instance.CRUDIndex]);
     };
-    
-    /**
-     * Gets the currently selected object.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets the currently selected object.
+    /// </summary>
     instance.getCurrent = function () {
         return instance.Current;
     };

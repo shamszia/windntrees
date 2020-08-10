@@ -13,19 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * SearchView provides observer independent data handling and communication 
- * capability using get, post and find calls to a hosted web service or web API 
- * and gets typed content objects. 
- * 
- * SearchView extends functionality from ObjectView.
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// SearchView provides data handling and communication capability using read and list calls to a hosted web service or API controller and gets typed content objects based on input object. SearchView extends from ObjectView and allows reading and listing.
+/// </summary>
 function SearchView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -39,21 +29,17 @@ function SearchView(options) {
     extOptions.instance = instance;
     extOptions.events = false;
     instance = ObjectView(extOptions);
-    
-    /**
-     * Gets the type of view.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Gets the type of view.
+    /// </summary>
     instance.getType = function () {
         return 'SearchView';
     };
-    
-    /**
-     * Clears (resets) observer records list and view.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Clears (resets) observer records list and view.
+    /// </summary>
     instance.clearRecords = function () {
 
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
@@ -81,13 +67,9 @@ function SearchView(options) {
         }
     };
 
-    /**
-     * Lists records based on provided keyword (via observer keyword property) and page number.
-     * 
-     * @param {type} options
-     * @param {type} fill 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Lists records based on provided keyword (via observer keyword property) and page number.
+    /// </summary>
     instance.list = function (options, fill) {
 
         var _keyword = null;
@@ -126,14 +108,9 @@ function SearchView(options) {
         }
     };
 
-    /**
-     * Loads view and related lists.
-     * 
-     * @param {type} options
-     * @param {type} fill
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Loads view and related lists.
+    /// </summary>
     instance.load = function (options, fill) {
 
         instance.LoadFields(options);
@@ -205,14 +182,10 @@ function SearchView(options) {
             instance.load(options, fill);
         };
     }
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -228,14 +201,10 @@ function SearchView(options) {
             }
         }
     };
-    
-    /**
-     * Record processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Record processing and presenting event subscription.
+    /// </summary>
     instance.presentRecord = function (event, eventData) {
 
         eventData.event = "record.before.rendering.view.CRUD.WindnTrees";
@@ -391,13 +360,9 @@ function SearchView(options) {
         instance.notify(eventData);
     };
 
-    /**
-     * Multiple records processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Multiple records processing and presenting event subscription.
+    /// </summary>
     instance.presentRecords = function (event, eventData) {
 
         eventData.event = "records.before.rendering.view.CRUD.WindnTrees";
@@ -549,13 +514,9 @@ function SearchView(options) {
         instance.notify(eventData);
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -587,12 +548,9 @@ function SearchView(options) {
         }
     };
 
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
@@ -601,13 +559,10 @@ function SearchView(options) {
         $(instance.getCRUDProcessor()).on('records.processor.CRUD.WindnTrees', eventsInstance.presentRecords);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
     };
-    
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
         
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;

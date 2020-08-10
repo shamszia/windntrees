@@ -14,17 +14,17 @@
  */
 
 
-/**
- * FlexObject contains information about typed objects in integral way.
- * 
- * items[0] - key information
- * items[1] - type information / html or text or function 
- * items[2] - type / object that is a string value or a function to be evaluated.
- * items[3] - content info (object or non-object value)
- * 
- * @param {type} options
- * @returns {FlexObject|Object}
- */
+/// <summary>
+/// FlexObject represents information or typed objects in collection of items in 
+/// a type less manner. FlexObject in normal format is a collection (or array) 
+/// of key, evaluator, result, content information and content objects composed 
+/// in a format as explained in following sections. 
+/// FlexObject in output format is composed of only one item with already processed result.
+/// In normal format first 10 FlexObject items in array or collection defines 
+/// configurational and or content evaluation information while remaining items 
+/// are content objects that are processed either in a form view or yields in 
+/// a function output.
+/// </summary>
 function FlexObject(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -32,7 +32,10 @@ function FlexObject(options) {
     if (options.instance === null || options.instance === undefined) {
         instance = extender.extendNewInstance({ 'instance': instance, 'options': options});
     }
-    
+
+    /// <summary>
+    /// Flex object items.
+    /// </summary>
     instance.items = options.items;
     
     if (options.instance !== null && options.instance !== undefined) {

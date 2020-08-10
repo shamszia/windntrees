@@ -13,24 +13,9 @@
  *  limitations under the License.
  */
 
-/* global Util */
-
-/**
- * FlexHTML forms flexible HTML view based on provided HTML format and list of
- * FlexObjects. FlexHTML is capable of extracting information from a remote 
- * web service using GET / POST calls and display using observer or by directly
- * writing into node's innerHTML content. In case of observer less scenario 
- * the type of content, content node and error node must be defined.
- * 
- * options.contentnode
- * options.errornode
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// FlexHTML forms flexible HTML view based on provided HTML format and list of FlexObjects. FlexHTML is capable of extracting information from a remote web service using read calls and display using observer or by directly writing in node's innerHTML content. In case of direct scenario the type of content, content node and error node must be defined.
+/// </summary>
 function FlexHTML(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -44,35 +29,39 @@ function FlexHTML(options) {
     extOptions.instance = instance;
     extOptions.events = false;
     instance = ObjectView(extOptions);
-    
+
+    /// <summary>
+    /// Key, data member property.
+    /// </summary>
     instance.Key = options.key;
+
+    /// <summary>
+    /// HTMLFormat, data member property.
+    /// </summary>
     instance.HTMLFormat = options.htmlformat;
+
+    /// <summary>
+    /// FlexHTML, data member property.
+    /// </summary>
     instance.FlexHTML = options.flexhtml;
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "FlexView";
     };
-    
-    /**
-     * Gets content node value.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets content node value.
+    /// </summary>
     instance.getContentNode = function () {
         return instance.ContentNode;
     };
-    
-    /**
-     * Present view with input values and html format.
-     * 
-     * @param {type} options
-     * @returns {String|TextView.present.htmlFormat}
-     */
+
+    /// <summary>
+    /// Present view with input values and html format.
+    /// </summary>
     instance.presentView = function (options) {
         
         //check for flexrecord
@@ -141,14 +130,10 @@ function FlexHTML(options) {
             instance.presentView(options);
         };
     }
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -192,14 +177,10 @@ function FlexHTML(options) {
             }
         }
     };
-    
-    /**
-     * Record processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Record processing and presenting event subscription.
+    /// </summary>
     instance.presentRecord = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -239,13 +220,9 @@ function FlexHTML(options) {
         }
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -278,12 +255,9 @@ function FlexHTML(options) {
         }
     };
 
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
@@ -291,13 +265,10 @@ function FlexHTML(options) {
         $(instance.getCRUDProcessor()).on('record.processor.CRUD.WindnTrees', eventsInstance.presentRecord);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
     };
-    
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Un-subscribe CRUDProcessor events.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
         
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;

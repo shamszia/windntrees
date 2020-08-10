@@ -13,9 +13,15 @@
  *  limitations under the License.
  */
 
+/// <summary>
+/// Adds format support for localized date and time resolution.
+/// </summary>
 function DateParser () {
     var instance = Object.create({});
 
+    /// <summary>
+    /// Extracts date time value in milliseconds with support of following date time format / Date("YYYY-MM-DDTHH:MM:SS") /.
+    /// </summary>
     instance.parseMilliSeconds = function(value) {
 
         if (value !== null && value !== undefined) {
@@ -44,6 +50,9 @@ function DateParser () {
         return value;
     };
 
+    /// <summary>
+    /// Gets localized date time instance from following date time  format / Date("YYYY-MM-DDTHH:MM:SS") /.
+    /// </summary>
     instance.parseDate = function(value, local) {
 
         var milliSeconds = instance.parseMilliSeconds(value);
@@ -64,6 +73,9 @@ function DateParser () {
         }
     };
 
+    /// <summary>
+    /// Gets local date time instance represented in milliseconds since 1970.
+    /// </summary>
     instance.getLocalTime = function(milliseconds) {
 
         if (milliseconds !== null && milliseconds !== undefined) {

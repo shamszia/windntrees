@@ -13,12 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * Processes array of objects.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// Provides array processing functionality.
+/// </summary>
 function ArrayProcessor(options) {
     var instance = this;
     
@@ -32,20 +29,16 @@ function ArrayProcessor(options) {
         instance.Objects = options.objects;
     }
     
-    /**
-     * Gets the type of function construct.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets the type of function construct.
+    /// </summary>
     instance.getType = function () {
         return "ArrayProcessor";
     };
     
-    /**
-     * Gets array of objects.
-     * 
-     * @returns {type.objects|ArrayProcessor|ArrayProcessor.instance}
-     */
+    /// <summary>
+    /// Gets array of objects.
+    /// </summary>
     instance.getObjects = function () {
         
         if (options.field !== null && options.field !== undefined) {
@@ -55,12 +48,9 @@ function ArrayProcessor(options) {
         return instance.Objects;
     };
     
-    /**
-     * Gets Object from Objects list based on key value.
-     * 
-     * @param {type} key
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets object from list based on key value.
+    /// </summary>
     instance.get = function (key) {
 
         if (key !== null && key !== undefined) {
@@ -77,13 +67,9 @@ function ArrayProcessor(options) {
         return null;
     };
     
-    /**
-     * Add object in objects repository. If object exists
-     * its value will be replaced by provided object.
-     * 
-     * @param {type} object
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Add object in repository. If object exists its value will be replaced by provided object.
+    /// </summary>
     instance.add = function (object) {
         
         if (object !== null && object !== undefined) {
@@ -102,12 +88,9 @@ function ArrayProcessor(options) {
         }
     };
     
-    /**
-     * Removes an object from the objects repository.
-     * 
-     * @param {type} object
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Removes object from repository.
+    /// </summary>
     instance.remove = function (object) {
         
         if (object !== null && object !== undefined) {
@@ -125,11 +108,9 @@ function ArrayProcessor(options) {
         }
     };
     
-    /**
-     * 
-     * 
-     * @returns {Boolean}
-     */
+    /// <summary>
+    /// In instance extension scenario following checks whether instance is extended with array processor.
+    /// </summary>
     instance.hasArrayProcessor = function () {
         return true;
     };

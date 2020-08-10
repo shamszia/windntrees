@@ -13,23 +13,22 @@
  *  limitations under the License.
  */
 
-/**
- * Locale messages repository to save locale messages.
- * 
- * @returns {undefined}
- */
+/// <summary>
+/// Locale messages repository to save locale messages.
+/// </summary>
 function MessageRepository(options) {
     var instance = this;
+
+    /// <summary>
+    /// Records data member array.
+    /// </summary>
     instance.Records = [];
 
     options = (options === null || options === undefined) ? {} : options;
 
-    /**
-     * Gets locale message (LocaleMessage) from repository based on key value.
-     * 
-     * @param {type} key
-     * @returns {Window.Records.value|String}
-     */
+    /// <summary>
+    /// Gets locale message (LocaleMessage) from repository based on key value.
+    /// </summary>
     instance.get = function (key) {
         if (key !== null && key !== undefined) {
             for (var i = 0; i < instance.Records.length; i++) {
@@ -43,22 +42,16 @@ function MessageRepository(options) {
         return "key is not defined";
     };
 
-    /**
-     * Get all locale messages;
-     * 
-     * @returns {Array|Repository.Records}
-     */
+    /// <summary>
+    /// Get all locale messages;
+    /// </summary>
     instance.getAll = function () {
         return Records;
     };
 
-    /**
-     * Add locale message (LocaleMessage) to the repository. If message exists
-     * its value will be replaced by provided message value.
-     * 
-     * @param {type} message
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Add locale message (LocaleMessage) in repository. If message exists its value will be replaced by provided message value.
+    /// </summary>
     instance.add = function (message) {
         if (message !== null && message !== undefined) {
             var record = null;
@@ -75,12 +68,9 @@ function MessageRepository(options) {
         }
     };
 
-    /**
-     * Removes locale message (LocaleMessage) from the repository.
-     * 
-     * @param {type} message
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Remove locale message (LocaleMessage) from the repository.
+    /// </summary>
     instance.remove = function (message) {
         if (message !== null && message !== undefined) {
             var record = null;
@@ -96,15 +86,16 @@ function MessageRepository(options) {
         }
     };
 
-    /**
-     * Clears the repository.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Clear repository.
+    /// </summary>
     instance.clean = function () {
         instance.Records = [];
     };
 
+    /// <summary>
+    /// Initialize repository with default messages.
+    /// </summary>
     instance.fill = function () {
         instance.add(new LocaleMessage("form.new.text", 'New'));
         instance.add(new LocaleMessage("form.edit.text", 'Edit'));

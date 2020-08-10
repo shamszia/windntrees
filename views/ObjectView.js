@@ -13,18 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * ObjectView provides observer independent data handling and communication 
- * capability using get (GET) and post (POST) calls to a hosted web service or
- * web API and is able to produce typed objects (contents) based on provided 
- * content object.
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// ObjectView provides data handling and communication capability using read call to a hosted web service or web API and is able to produce typed object based on input content object.
+/// </summary>
 function ObjectView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -32,203 +23,222 @@ function ObjectView(options) {
     if (options.instance === null || options.instance === undefined) {
         instance = extender.extendNewInstance({ 'instance': instance, 'options': options});
     }
-    
+
+    /// <summary>
+    /// Name, data member property.
+    /// </summary>
     instance.Name = options.name;
+    /// <summary>
+    /// Title, data member property.
+    /// </summary>
     instance.Title = options.title;
+    /// <summary>
+    /// Options, data member property.
+    /// </summary>
     instance.Options = options;
+    /// <summary>
+    /// Key, data member property.
+    /// </summary>
     instance.Key = options.key;
+    /// <summary>
+    /// ObjectKey, data member property.
+    /// </summary>
     instance.ObjectKey = options.objectkey;
+    /// <summary>
+    /// KeyField, data member property.
+    /// </summary>
     instance.KeyField = options.keyfield;
+    /// <summary>
+    /// Objects, data member property.
+    /// </summary>
     instance.Objects = options.objects;
+    /// <summary>
+    /// URI, data member property.
+    /// </summary>
     instance.URI = options.uri;
+    /// <summary>
+    /// ViewScope, data member property.
+    /// </summary>
     instance.ViewScope = options.viewscope;
+    /// <summary>
+    /// ContentProcessor, data member property.
+    /// </summary>
     instance.ContentProcessor = null;
+    /// <summary>
+    /// ContentType, data member property.
+    /// </summary>
     instance.ContentType = options.contentType;
+    /// <summary>
+    /// Observer, data member property.
+    /// </summary>
     instance.Observer = options.observer;
+    /// <summary>
+    /// CRUDContextPath, data member property.
+    /// </summary>
     instance.CRUDContextPath = options.contextpath;
+    /// <summary>
+    /// MessageRepository, data member property.
+    /// </summary>
     instance.MessageRepository = options.messages;
+    /// <summary>
+    /// Fields, data member property.
+    /// </summary>
     instance.Fields = options.fields;
+    /// <summary>
+    /// Views, data member property.
+    /// </summary>
     instance.Views = options.views;
+    /// <summary>
+    /// ListCounter, data member property.
+    /// </summary>
     instance.ListCounter = 0;
+    /// <summary>
+    /// AuthorizationCode, data member property.
+    /// </summary>
     instance.AuthorizationCode = options.authorizationCode;
     
     //reference to document component node in DOM tree.
+    /// <summary>
+    /// , data member property.
+    /// </summary>
     instance.ContentNode = options.contentnode;
+    /// <summary>
+    /// ErrorNode, data member property.
+    /// </summary>
     instance.ErrorNode = options.errornode;
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "ObjectView";
     };
-    
-    /**
-     * Sets CRUD user friendly name.
-     * 
-     * @param {type} name
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets CRUD user friendly name.
+    /// </summary>
     instance.setName = function (name) {
         instance.Name = name;
     };
-    
-    /**
-     * Gets CRUD user friendly name.
-     * 
-     * @returns {type.name}
-     */
+
+    /// <summary>
+    /// Gets CRUD user friendly name.
+    /// </summary>
     instance.getName = function () {
         return instance.Name;
     };
-    
-    /**
-     * Sets CRUD title.
-     * 
-     * @param {type} title
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets CRUD title.
+    /// </summary>
     instance.setTitle = function (title) {
         instance.Title = title;
     };
-    
-    /**
-     * Gets CRUD title.
-     * 
-     * @returns {type.title}
-     */
+
+    /// <summary>
+    /// Gets CRUD title.
+    /// </summary>
     instance.getTitle = function() {
         return instance.Title;
     };
-    
-    /**
-     * Get object options.
-     * 
-     * @returns {type}
-     */
+
+    /// <summary>
+    /// Get object options.
+    /// </summary>
     instance.getOptions = function () {
         return instance.Options;
     };
 
-    /**
-     * Gets a view key.
-     * 
-     * @returns {type.key}
-     */
+    /// <summary>
+    /// Gets a view key.
+    /// </summary>
     instance.getKey = function () {
         return instance.Key;
     };
-    
-    /**
-     * Gets object key.
-     * 
-     * @returns {type.key}
-     */
+
+    /// <summary>
+    /// Gets object key.
+    /// </summary>
     instance.getObjectKey = function () {
         return instance.ObjectKey;
     };
-    
-    /**
-     * Sets object key value.
-     * 
-     * @param {type} value 
-     * @returns {type.key}
-     */
+
+    /// <summary>
+    /// Sets object key value.
+    /// </summary>
     instance.setObjectKey = function (value) {
         instance.ObjectKey = value;
         
         instance.notify({ event: "objectKey.fields.view.CRUD.WindnTrees", value: value });
     };
 
-    /**
-     * Gets object key.
-     * 
-     * @returns {type.key}
-     */
+    /// <summary>
+    /// Gets object key.
+    /// </summary>
     instance.getKeyField = function () {
         return instance.KeyField;
     };
 
-    /**
-     * Sets object key value.
-     * 
-     * @param {type} value 
-     * @returns {type.key}
-     */
+    /// <summary>
+    /// Sets object key value.
+    /// </summary>
     instance.setKeyField = function (value) {
         instance.KeyField = value;
 
         instance.notify({ event: "keyField.fields.view.CRUD.WindnTrees", value: value });
     };
-    
-    /**
-     * Sets reference objects.
-     * 
-     * @param {type} value 
-     */
+
+    /// <summary>
+    /// Sets reference objects.
+    /// </summary>
     instance.setObjects = function (value) {
         instance.Objects = value;
         instance.notify({event: "objects.fields.view.CRUD.WindnTrees", value: value});
     };
-    
-    /**
-     * Gets reference objects.
-     * 
-     * @returns {type.key}
-     */
+
+    /// <summary>
+    /// Gets reference objects.
+    /// </summary>
     instance.getObjects = function () {
         return instance.Objects;
     };
-    
-    /**
-     * Gets content value.
-     * 
-     * @returns {type.content}
-     */
+
+    /// <summary>
+    /// Gets content value.
+    /// </summary>
     instance.getContentType = function (){
         return instance.ContentType;
     };
-    
-    /**
-     * Sets content value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets content value.
+    /// </summary>
     instance.setContentType = function (value) {
         instance.ContentType = value;
 
         instance.notify({ event: "contentType.fields.view.CRUD.WindnTrees", value: value });
     };
 
-    /**
-     * Gets authorization code.
-     * 
-     * @returns {type.AuthorizationCode}
-     */
+    /// <summary>
+    /// Gets authorization code.
+    /// </summary>
     instance.getAuthorizationCode = function () {
         return instance.AuthorizationCode;
     };
 
-    /**
-     * Sets authorization code.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets authorization code.
+    /// </summary>
     instance.setAuthorizationCode = function (value) {
         instance.AuthorizationCode = value;
 
         instance.notify({ event: "authorizationCode.fields.view.CRUD.WindnTrees", value: value });
     };
 
-    /**
-     * Reference function to CRUD controller.
-     * 
-     * @returns {CRUDProcessor}
-     */
+    /// <summary>
+    /// Reference function to CRUD controller.
+    /// </summary>
     instance.getCRUDProcessor = function () {
         if (instance.ContentProcessor === null) {
             
@@ -246,136 +256,102 @@ function ObjectView(options) {
         return instance.ContentProcessor;
     };
 
-    /**
-     * Gets URI.
-     * 
-     * @returns {Window.URI|CRUDView.URI}
-     */
+    /// <summary>
+    /// Gets URI.
+    /// </summary>
     instance.getURI = function () {
         return instance.URI;
     };
 
-    /**
-     * Sets view scope.
-     * 
-     * @param {type} value 
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Sets view scope.
+    /// </summary>
     instance.setViewScope = function (value) {
 
         instance.ViewScope = value;
     };
 
-    /**
-     * Gets view scope.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets view scope.
+    /// </summary>
     instance.getViewScope = function () {
 
         return instance.ViewScope;
     };
 
-    /**
-     * Request processing status.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Request processing status.
+    /// </summary>
     instance.processing = function () {
         return instance.getCRUDProcessor().processing();
     };
 
-    /**
-     * Reference function to CRUD controller response data.
-     * 
-     * @returns {Window.ResponseData|CRUDController.ResponseData|CRUDProcessor.getController.ResponseData|CRUDProcessor.ResponseData}
-     */
+    /// <summary>
+    /// Reference function to CRUD controller response data.
+    /// </summary>
     instance.responseData = function () {
         return instance.getCRUDProcessor().responseData();
     };
 
-    /**
-     * Reference function to CRUD controller to check for response error.
-     * 
-     * @returns {Boolean}
-     */
+    /// <summary>
+    /// Reference function to CRUD controller to check for response error.
+    /// </summary>
     instance.isResponseError = function () {
         return instance.getCRUDProcessor().isResponseError();
     };
 
-    /**
-     * Reference function to CRUD controller response error.
-     * 
-     * @returns {CRUDProcessor.getController.ResponseError|CRUDProcessor.ResponseError|Window.ResponseError|CRUDController.ResponseError}
-     */
+    /// <summary>
+    /// Reference function to CRUD controller response error.
+    /// </summary>
     instance.responseError = function () {
         return instance.getCRUDProcessor().responseError();
     };
 
-    /**
-     * Reference function to check if there were input errors.
-     * 
-     * @returns {Boolean}
-     */
+    /// <summary>
+    /// Reference function to check if there were input errors.
+    /// </summary>
     instance.isInputError = function () {
         return instance.getCRUDProcessor().isInputError();
     };
 
-    /**
-     * Reference function to extract input errors.
-     * 
-     * @returns {Array|Window.Errors}
-     */
+    /// <summary>
+    /// Reference function to extract input errors.
+    /// </summary>
     instance.getErrors = function () {
         return instance.getCRUDProcessor().getErrors();
     };
-    
-    /**
-     * Sets content node.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets content node.
+    /// </summary>
     instance.setContentNode = function (value) {
         instance.ContentNode = value;
     };
-    
-    /**
-     * Gets error node value.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets error node value.
+    /// </summary>
     instance.getErrorNode = function () {
         return instance.ErrorNode;
     };
-    
-    /**
-     * Sets error node.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets error node.
+    /// </summary>
     instance.setErrorNode = function (value) {
         instance.ErrorNode = value;
     };
 
-    /**
-     * Observer interface reference to the actual observer.
-     * 
-     * @returns {Window.Observer|CRUDView.Observer}
-     */
+    /// <summary>
+    /// Observer interface reference to the actual observer.
+    /// </summary>
     instance.getObserverInterface = function () {
         return instance.Observer;
     };
 
-    /**
-     * Synchronize or excute provided script within a specific context.
-     * 
-     * @param {type} options 
-     * 
-     * @returns {Window.Observer|CRUDView.Observer}
-     */
+    /// <summary>
+    /// Synchronize or excute input script within a specific context.
+    /// </summary>
     instance.synchronizeScript = function(options) {
 
         options = (options !== null && options !== undefined) ? options : {};
@@ -386,13 +362,9 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Gets view's actual underlying observer.
-     * 
-     * @param {type} options
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets view's actual observer.
+    /// </summary>
     instance.getObserverObject = function (options) {
         var observerInterface = instance.Observer;
         try {
@@ -404,17 +376,10 @@ function ObjectView(options) {
 
         return observerInterface;
     };
-    
-    /**
-     * return content objects from simple objects array based on provided
-     * prototype definition.
-     * 
-     * options.simpleObjects - array of simple objects
-     * options.contentPrototype - concrete object prototype definition
-     * 
-     * @param {type} options
-     * @returns {Array}
-     */
+
+    /// <summary>
+    /// Returns content objects from simple objects array converted into input content type definition.
+    /// </summary>
     instance.getContentTypeObjects = function (options) {
         var entityObjects = [];
         if (options.simpleObjects !== null &&
@@ -434,33 +399,25 @@ function ObjectView(options) {
         }
         return entityObjects;
     };
-    
-    /**
-     * Gets message repository attached to observer.
-     * 
-     * @returns {type.messages}
-     */
+
+    /// <summary>
+    /// Gets message repository.
+    /// </summary>
     instance.getMessageRepository = function() {
         return instance.MessageRepository;
     };
 
-
-    /**
-     * Gets instance list counter value.
-     *
-     */
+    /// <summary>
+    /// Gets instance list counter value.
+    /// </summary>
     instance.getListCounter = function () {
 
         return instance.ListCounter;
     };
 
-    /**
-     * Sets referential views.
-     * 
-     * @param {type} views 
-     * 
-     * @returns {type.messages}
-     */
+    /// <summary>
+    /// Sets referential views.
+    /// </summary>
     instance.setReferentialViews = function (views) {
 
         if (instance.Views !== null && instance.Views !== undefined) {
@@ -484,22 +441,16 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Gets referential views.
-     * 
-     * @returns {type.messages}
-     */
+    /// <summary>
+    /// Gets referential views.
+    /// </summary>
     instance.getReferentialViews = function () {
         return instance.Views;
     };
 
-    /**
-     * Gets referential view based on key value.
-     * 
-     * @param {type} key 
-     * 
-     * @returns {type.messages}
-     */
+    /// <summary>
+    /// Gets referential view based on key value.
+    /// </summary>
     instance.getReferentialView = function (key) {
 
         if (instance.Views !== null && instance.Views !== undefined) {
@@ -558,11 +509,9 @@ function ObjectView(options) {
         return null;
     };
 
-    /**
-     * Clears (resets) observer records list and view.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Clears (resets) observer object.
+    /// </summary>    
     instance.clearRecord = function () {
 
         if (instance.getObserverInterface().getType() === "ObjectObserver" ||
@@ -577,17 +526,10 @@ function ObjectView(options) {
 
         instance.getObserverInterface().displayProcessing(false);
     };
-   
-    /**
-     * Reads record based on key value.
-     * 
-     * data.uri
-     * data.key
-     * data.target
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Reads record based on key value.
+    /// </summary>
     instance.read = function (data) {
         
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
@@ -611,24 +553,18 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Loads view and related lists.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Loads view and related lists.
+    /// </summary>
     instance.load = function (options) {
 
         instance.read(options);
         instance.LoadFields(options);
     };
 
-    /**
-     * Loads result and place it withing provided memory reference.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Loads list result in observable.
+    /// </summary>
     instance.loadListResult = function (options) {
 
         try {
@@ -804,9 +740,9 @@ function ObjectView(options) {
         }
     };
 
-    /*
-    * Format the content object time fields.
-    */
+    /// <summary>
+    /// Format the content object time fields.
+    /// </summary>
     instance.formatContent = function (options) {
 
         //if update have time fields then format them in proper order.
@@ -830,20 +766,10 @@ function ObjectView(options) {
 
         return content;
     }
-    
-    /**
-     * Sends create, update and deletion record requests based on action and 
-     * provided record.
-     * 
-     * options.action - create, update or delete
-     * options.content - record object / instance
-     * options.validate - true / false (validate form or not)
-     * options.placement - 'first' or 'last'
-     * callback - reference callback function
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sends create, update and deletion record requests based on action and provided record.
+    /// </summary>
     instance.createOrUpdateOrDelete = function (options) {
         var formInputErrors = true;
         instance.getObserverInterface().setErrors([]);
@@ -892,13 +818,9 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Extend view related field by integrating observable field with observer object.
-     * 
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Extend view related field by integrating observable field with observer object.
+    /// </summary>
     instance.ExtendField = function (options) {
 
         options = (options !== null && options !== undefined) ? options : {};
@@ -953,13 +875,9 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Extends view related fields by integrating field observables with observer object.
-     * 
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Extends view related fields by integrating field observables with observer object.
+    /// </summary>
     instance.ExtendFields = function (options) {
 
         options = (options !== null && options !== undefined) ? options : {};
@@ -1042,13 +960,9 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Loads view related fields consisting of either single object or array of objects
-     * 
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Loads view related fields consisting of either single object or array of objects
+    /// </summary>
     instance.LoadFields = function (options) {
 
         options = (options !== null && options !== undefined) ? options : {};
@@ -1174,15 +1088,9 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Processes and present field response.
-     * 
-     * 
-     * @param {type} data
-     * @param {type} scopeObject
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Processes and present field response.
+    /// </summary>
     instance.ProcessFieldResponse = function (data, scopeObject) {
 
         if (data !== null && data !== undefined) {
@@ -1244,14 +1152,9 @@ function ObjectView(options) {
 
     };
 
-
-    /**
-     * Extends content type object with get, getKey and newObject.
-     * 
-     * 
-     * @param {type} functionOptions
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Extends content type object with get, getKey and newObject.
+    /// </summary>
     instance.extendContentMethods = function (functionOptions) {
 
         var contentTypeObject = (functionOptions.contentType !== null && functionOptions.contentType !== undefined ? functionOptions.contentType : (options.contentType !== null && options.contentType !== undefined) ? options.contentType : (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined ? instance.getObserverInterface().getContentTypeObject() : null));
@@ -1294,8 +1197,11 @@ function ObjectView(options) {
         return contentTypeObject;
     };
 
-    //extends content methods
-    instance.ContentType = options.contentType = instance.extendContentMethods({});
+    /// <summary>
+    /// ContentType, data member property with extended content methods.
+    /// </summary>
+    instance.ContentType = instance.extendContentMethods({});
+    options.contentType = instance.ContentType;
     
     if (instance.getObserverInterface() !== null &&
             instance.getObserverInterface() !== undefined) {
@@ -1363,7 +1269,7 @@ function ObjectView(options) {
         instance.getObserverInterface().getView = function () {
             return instance;
         };
-
+        
         /** 
          * Observer view getType() function definition.
          * 
@@ -1392,7 +1298,7 @@ function ObjectView(options) {
         instance.getObserverInterface().getReferentialView = function (key) {
             return instance.getReferentialView(key);
         };
-        
+
         /** 
          * Observer get function definition.
          * 
@@ -1402,7 +1308,7 @@ function ObjectView(options) {
         instance.getObserverInterface().read = function (key) {
             instance.read(key);
         };
-
+        
         /** 
          * Observer load function definition.
          * 
@@ -1476,23 +1382,16 @@ function ObjectView(options) {
         };
     }
 
-    /**
-     * Notify event subscribers with event information.
-     * 
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Notify event subscribers with event information.
+    /// </summary>
     instance.notify = function (eventData) {
         $(instance).trigger(eventData.event, eventData);
     };
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -1523,14 +1422,10 @@ function ObjectView(options) {
             }
         }
     };
-    
-    /**
-     * Record processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Record processing and presenting event subscription.
+    /// </summary>
     instance.presentRecord = function (event, eventData) {
 
         eventData.event = "record.before.rendering.view.CRUD.WindnTrees";
@@ -1651,13 +1546,9 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>    
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -1688,79 +1579,52 @@ function ObjectView(options) {
         }
     };
 
-    /**
-     * Subscribes on a CRUD processor event.
-     * 
-     * @param {type} event
-     * @param {type} callback
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribes on CRUDProcessor event.
+    /// </summary>
     instance.subscribeCRUDProcessorEvent = function (event, callback) {
 
         $(instance.getCRUDProcessor()).on(event, callback);
     };
 
-    /**
-     * Subscribes off a CRUD processor  event.
-     * 
-     * @param {type} event
-     * @param {type} callback
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribes off CRUDProcessor event.
+    /// </summary>
     instance.unSubscribeCRUDProcessorEvent = function (event, callback) {
 
         $(instance.getCRUDProcessor()).off(event, callback);
     };
 
-    /**
-     * Subscribes on a view event.
-     * 
-     * @param {type} event
-     * @param {type} callback
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribes on a view instance event.
+    /// </summary>
     instance.subscribeEvent = function (event, callback) {
 
         $(instance).on(event, callback);
     };
 
-    /**
-     * Subscribes off a view event.
-     * 
-     * @param {type} event
-     * @param {type} callback
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribes off a view event.
+    /// </summary>
     instance.unSubscribeEvent = function (event, callback) {
 
         $(instance).off(event, callback);
     };
 
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
         $(instance.getCRUDProcessor()).on('errors.processor.CRUD.WindnTrees', eventsInstance.presentErrors);
         $(instance.getCRUDProcessor()).on('record.processor.CRUD.WindnTrees', eventsInstance.presentRecord);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
-
     };
-    
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Un-subscribe CRUDProcessor events.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
         
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
@@ -1778,13 +1642,9 @@ function ObjectView(options) {
         instance.subscribeEvents();
     }
 
-    /**
-     * Record processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Display progress status.
+    /// </summary>
     instance.displayProgress = function (event, eventData) {
 
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {

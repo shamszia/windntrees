@@ -13,27 +13,9 @@
  *  limitations under the License.
  */
 
-/* global Util */
-
-/**
- * FlexView presents list values in provided HTML format. This operates on a 
- * FlexObject record that contain information and its output or evaluation method.
- * FlexView extracts HTML, styling and content objects information from FlexObject 
- * and produces output as defined by evaluation function and result output.
- * FlexView is capable of extracting information from a remote 
- * web service using GET / POST calls and display using observer or by directly
- * writing into node's innerHTML content. In case of observer less scenario 
- * the type of content, content node and error node must be defined.
- * 
- * options.contentnode
- * options.errornode
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// FlexView presents list values in provided HTML format. This operates on a FlexObject record that contain information and its output or evaluation method. FlexView extracts HTML, styling and content objects information from FlexObject and produces output as defined by evaluation function and result output. FlexView is capable of extracting information from a remote web service using readflex and listflex calls and display using observer or by directly writing into node's innerHTML content. In case of observer less scenario the type of content, content node and error node must be defined.
+/// </summary>
 function FlexView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -47,33 +29,29 @@ function FlexView(options) {
     extOptions.instance = instance;
     extOptions.events = false;
     instance = ObjectView(extOptions);
-    
+
+    /// <summary>
+    /// FlexRecord, data member property.
+    /// </summary>
     instance.FlexRecord = options.flexrecord;
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of function construct.
+    /// </summary>
     instance.getType = function () {
         return "FlexView";
     };
-    
-    /**
-     * Gets content node value.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets content node value.
+    /// </summary>
     instance.getContentNode = function () {
         return instance.ContentNode;
     };
-    
-    /**
-     * Gets record based on key value.
-     * 
-     * @param {type} key 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Gets record based on key value.
+    /// </summary>
     instance.readFlex = function (key) {
         
         if (instance.getObserverInterface() !== null && instance.getObserverInterface() !== undefined) {
@@ -89,14 +67,10 @@ function FlexView(options) {
             'key': key
         });
     };
-    
-    /**
-     * List records based on key value.
-     * 
-     * @param {type} options
-     * @param {type} fill
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// List records based on key value.
+    /// </summary>
     instance.listFlex = function (options, fill) {
 
         options = (options !== null && options !== undefined) ? options : {};
@@ -131,13 +105,10 @@ function FlexView(options) {
             });
         }
     };
-    
-    /**
-     * Present view with input values and html format.
-     * 
-     * @param {type} options
-     * @returns {String|TextView.present.htmlFormat}
-     */
+
+    /// <summary>
+    /// Present view with input values and html format.
+    /// </summary>
     instance.presentView = function (options) {
         
         var htmlFormat = "";
@@ -196,14 +167,10 @@ function FlexView(options) {
             instance.presentView(options);
         };
     }
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -247,14 +214,10 @@ function FlexView(options) {
             }
         }
     };
-    
-    /**
-     * Record processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Record processing and presenting event subscription.
+    /// </summary>
     instance.presentRecord = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -294,13 +257,9 @@ function FlexView(options) {
         }
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -333,12 +292,9 @@ function FlexView(options) {
         }
     };
 
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
 
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
@@ -347,13 +303,10 @@ function FlexView(options) {
         $(instance.getCRUDProcessor()).on('record.processor.CRUD.WindnTrees', eventsInstance.presentRecord);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
     };
-    
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Un-subscribe CRUDProcessor events.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
         
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;

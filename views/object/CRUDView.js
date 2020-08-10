@@ -13,19 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * CRUDView provides observer independent data handling and communication 
- * capability using get, post, find, create, update and delete calls to a 
- * hosted web service or web API and gets typed content objects.
- * 
- * CRUDView extends functionality from SearchView.
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// CRUDView provides data handling and communication capability using create, read, update, delete and list calls to a hosted web service or API controller and gets typed content objects based on input object. CRUDView extends from SearchView and allows CRUD operations.
+/// </summary>
 function CRUDView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -39,29 +29,17 @@ function CRUDView(options) {
     extOptions.instance = instance;
     extOptions.events = false;
     instance = SearchView(extOptions);
-    
-    /**
-     * Gets the type of view.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Gets the type of view.
+    /// </summary>
     instance.getType = function () {
         return 'CRUDView';
     };
-    
 
-    //CRUD Functions
-    ////////////////////////////////////////////////////////////////////////////
-    //Following includes entity related find, create, update and delete 
-    //funcionality with observer updates.
-
-    /*
-    * Format the content object time fields.
-    * 
-    * @param {type} options
-    * 
-    * @returns {undefined}
-    */
+    /// <summary>
+    /// Format the content object time fields.
+    /// </summary>
     instance.formatContent = function (options) {
 
         //get form object
@@ -139,9 +117,9 @@ function CRUDView(options) {
         return content;
     };
 
-    /*
-    * Evaluates field against form content object.
-    */
+    /// <summary>
+    /// Evaluates field against form content object.
+    /// </summary>
     instance.evaluateOption = function (field) {
 
         var formObject = instance.getObserverInterface().getFormObject();
@@ -157,18 +135,9 @@ function CRUDView(options) {
         return field;
     };
 
-    /**
-     * Creates new record based on form view object.
-     * 
-     * options.action - create, update or delete
-     * options.content - record object / instance
-     * options.validate - true / false (validate form or not)
-     * options.placement - 'first' or 'last'
-     * callback - reference callback function
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Creates new content at designated URI address with input object.
+    /// </summary>
     instance.create = function (options) {
         options = (options === null || options === undefined) ? {} : options;
         options.action = 'create';
@@ -180,15 +149,9 @@ function CRUDView(options) {
         instance.createOrUpdateOrDelete(options);
     };
 
-    /**
-     * Updates new record based on form view object.
-     * 
-     * options.content - entity instance
-     * options.callback - reference to callback function.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Updates existing content at designated URI address with input object.
+    /// </summary>
     instance.update = function (options) {
         options = (options === null || options === undefined) ? {} : options;
         options.action = 'update';
@@ -198,15 +161,9 @@ function CRUDView(options) {
         instance.createOrUpdateOrDelete(options);
     };
 
-    /**
-     * Deletes exisiting record based on provided record.
-     * 
-     * options.content - entity record instance
-     * callback - reference callback function
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Deletes exisiting content at designated URI address with input object.
+    /// </summary>
     instance.delete = function (options) {
         options = (options === null || options === undefined) ? {} : options;
         options.action = 'delete';
@@ -228,13 +185,6 @@ function CRUDView(options) {
         //options.content = (options.content === null || options.content === undefined) ? (instance.getObserverInterface().getFormStringifiedObject()) : instance.getObserverInterface().getStringifiedObject(options.content);
         instance.createOrUpdateOrDelete(options);
     };
-
-    /**
-     * CRUD - Observer Connectivity
-     * *************************************************************************
-     * Following connects observer to CRUD functionality when participating
-     * in a CRUD view.
-     */
 
     if (instance.getObserverInterface() !== null &&
             instance.getObserverInterface() !== undefined) {

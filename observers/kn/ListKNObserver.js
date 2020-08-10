@@ -13,16 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * ListKNObserver provides list objects, source and target view synchronization 
- * functionality for a particular list source.
- * 
- * options.content - entity object to form concrete objects of the list items.
- * options.list - array of item objects.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// ListObserver provide multiple source and target items view synchronization functionality in a list of observers.
+/// </summary>
 function ListKNObserver(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -30,14 +23,21 @@ function ListKNObserver(options) {
     if (options.instance === null || options.instance === undefined) {
         instance = extender.extendNewInstance({ 'instance': instance, 'options': options });
     }
-    
+
+    /// <summary>
+    /// ListObject, data member property.
+    /// </summary>
     instance.ListObject = options.object;
+
     instance = extender.extendField({'instance': instance,
         'field': 'List',
         'value': (options.list !== null && options.list !== undefined) ? ko.observableArray(options.list) : ko.observableArray([]) });
     instance = extender.extendObjectInterface({'instance': instance,
         'field': 'List' });
 
+    /// <summary>
+    /// ListReady, data member property.
+    /// </summary>
     instance.ListReady = ko.observable(false);
 
     //if not extending from existing instance, this will ensure that instance is provided.
@@ -45,30 +45,24 @@ function ListKNObserver(options) {
     activityOptions.instance = instance;
     //extends from ActivityKNObserver
     instance = ActivityKNObserver(activityOptions);
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "ListKNObserver";
     };
 
-    /**
-     * Gets list object.
-     * 
-     * @returns {Window.EntityObject|CRUDKNObserver.EntityObject}
-     */
+    /// <summary>
+    /// Gets list object.
+    /// </summary>
     instance.getListObject = function () {
         return instance.ListObject;
     };
 
-    /**
-     * Gets list object prototype.
-     * 
-     * @returns {type}
-     */
+    /// <summary>
+    /// Gets list object prototype.
+    /// </summary>
     instance.getListObjectPrototype = function () {
         if (instance.ListObject !== null && instance.ListObject !== undefined) {
             return Object.getPrototypeOf(instance.ListObject);
@@ -76,12 +70,9 @@ function ListKNObserver(options) {
         return null;        
     };
 
-    /**
-     * Gets indexed stringified JSON object.
-     * 
-     * @param {type} index 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets stringified text of indexed JSON object.
+    /// </summary>
     instance.getIndexedStringifiedObject = function (index) {
         if (index !== null && index !== undefined) {
             if (index >= 0) {
@@ -91,34 +82,24 @@ function ListKNObserver(options) {
         return null;
     };
 
-    /**
-     * Gets indexed JSON object.
-     * 
-     * @param {type} index 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets indexed JSON object.
+    /// </summary>
     instance.getIndexedJSONObject = function (index) {
         return JSON.parse(instance.getIndexedStringifiedObject(index));
     };
 
-    /**
-     * Empty/Clears the list.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Empty or Clears list of records.
+    /// </summary>
     instance.clearList = function (readyStatus) {
         instance.ListReady(readyStatus);
         instance.List([]);
     };
 
-    /**
-     * Fill list records.
-     * 
-     * data.objects - 
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets list of records and status.
+    /// </summary>
     instance.fillList = function (data,readyStatus) {
 
         if (data.objects !== null && data.objects !== undefined) {
@@ -127,32 +108,25 @@ function ListKNObserver(options) {
         }
     };
 
-    /**
-     * Gets status if observable item object exists.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Gets list ready status.
+    /// </summary>
     instance.isListReady = function () {
 
         return instance.ListReady();
     };
 
-    /**
-     * Sets list fill status to ready.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets list ready status.
+    /// </summary>
     instance.setListReady = function (status) {
 
         instance.ListReady(status);
     };
 
-    /**
-     * Gets list item based on key value.
-     * 
-     * @param {type} key
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Gets list item based on key value.
+    /// </summary>
     instance.getItem = function (key) {
 
         for (var i = 0; i < instance.List().length; i++) {
@@ -170,15 +144,9 @@ function ListKNObserver(options) {
         return null;
     };
 
-    /**
-     * Add new object item in list.
-     * 
-     * data.object - entity records
-     * data.order - 'first' or 'last'
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Add new item in list.
+    /// </summary>
     instance.newItem = function (data) {
         if (data.object !== null && data.object !== undefined) {
             var newObject = data.object;
@@ -215,12 +183,9 @@ function ListKNObserver(options) {
         }
     };
 
-    /**
-     * Update existing list object.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Update existing item in list.
+    /// </summary>
     instance.updateItem = function (data) {
         if (data !== null && data !== undefined) {
             
@@ -249,12 +214,9 @@ function ListKNObserver(options) {
         }
     };
 
-    /**
-     * Removes list object.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Removes item from list.
+    /// </summary>
     instance.removeItem = function (data) {
         if (data !== null && data !== undefined) {
             
@@ -283,16 +245,9 @@ function ListKNObserver(options) {
         }
     };
 
-    /**
-     * Updates list by adding, updating and removing list objects.
-     * 
-     * data.action - create / update / delete
-     * data.object - the object that is required to be observed.
-     * data.placement - placement
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Updates list by adding, updating and removing list objects.
+    /// </summary>
     instance.update = function (data) {
         if (data.action === undefined) {
             if (data.placement !== null && data.placement !== undefined) {

@@ -13,46 +13,9 @@
  *  limitations under the License.
  */
 
-/* global Util */
-
-/**
- * AVView presents video, image, subject and description values in provided html 
- * format and css styles. ImageView is capable of extracting information from a 
- * remote web service using GET / POST calls and display using observer or by 
- * directly writing into node's innerHTML content. In case of observer less 
- * scenario the type of content, content node and error node must be defined.
- * 
- * options.contentnode
- * options.errornode
- * 
- * options.subject
- * options.description
- * options.url
- * options.html
- * options.css
- * 
- * options.imagename
- * options.imagepath
- * options.imagetitle
- * 
- * options.videosrc
- * options.crossorigin
- * options.poster
- * options.preload
- * options.autoplay
- * options.mediagroup
- * options.loop
- * options.muted
- * options.controls
- * options.width
- * options.height
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// AVView presents video, image, subject and description values in provided html format and css styles. ImageView is capable of extracting information from a remote web service using read calls and display using observer or by directly writing in node's innerHTML content. In case of observer less scenario the type of content, content node and error node must be defined.
+/// </summary>
 function AVView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -66,243 +29,226 @@ function AVView(options) {
     extOptions.instance = instance;
     extOptions.events = false;
     instance = ImageView(extOptions);
-    
-    instance.VideoSrc = options.videosrc; // Address of the resource
-    instance.CrossOrigin = options.crossorigin; // How the element handles crossorigin requests
-    instance.Poster = options.poster; // Poster frame to show prior to video playback
-    instance.Preload = options.preload  ; // Hints how much buffering the media resource will likely need
-    instance.Autoplay = options.autoplay; // Hint that the media resource can be started automatically when the page is loaded
-    instance.MediaGroup = options.mediagroup; // Groups media elements together with an implicit MediaController
-    instance.Loop = options.loop; // Whether to loop the media resource
-    instance.Muted = options.muted; // Whether to mute the media resource by default
-    instance.Controls = options.controls; // Show user agent controls
-    instance.VideoWidth = options.videowidth; // Horizontal dimension
-    instance.VideoHeight = options.videoheight; // Vertical dimension
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// VideoSrc, address of the resource data member property.
+    /// </summary>
+    instance.VideoSrc = options.videosrc; 
+
+    /// <summary>
+    /// CrossOrigin, how the element handles crossorigin requests, data member property.
+    /// </summary>
+    instance.CrossOrigin = options.crossorigin;
+
+    /// <summary>
+    /// Poster, poster frame to show prior to video playback, data member property.
+    /// </summary>
+    instance.Poster = options.poster;
+
+    /// <summary>
+    /// Preload, hints how much buffering the media resource will likely need, data member property.
+    /// </summary>
+    instance.Preload = options.preload;
+
+    /// <summary>
+    /// Autoplay, hint that the media resource can be started automatically when the page is loaded, data member property.
+    /// </summary>
+    instance.Autoplay = options.autoplay;
+
+    /// <summary>
+    /// MediaGroup, groups media elements together with an implicit MediaController, data member property.
+    /// </summary>
+    instance.MediaGroup = options.mediagroup;
+
+    /// <summary>
+    /// Loop, whether to loop the media resource, data member property.
+    /// </summary>
+    instance.Loop = options.loop;
+
+    /// <summary>
+    /// Muted, whether to mute the media resource by default, data member property.
+    /// </summary>
+    instance.Muted = options.muted;
+
+    /// <summary>
+    /// Controls, show user agent controls, data member property.
+    /// </summary>
+    instance.Controls = options.controls; 
+
+    /// <summary>
+    /// VideoWidth, horizontal dimension, data member property.
+    /// </summary>
+    instance.VideoWidth = options.videowidth; 
+
+    /// <summary>
+    /// VideoHeight, vertical dimension, data member property.
+    /// </summary>
+    instance.VideoHeight = options.videoheight;
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "AVView";
     };
-    
-    /**
-     * Gets src value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets src value.
+    /// </summary>
     instance.getVideoSrc = function () {
         return instance.VideoSrc;
     };
-    
-    /**
-     * Sets src value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets src value.
+    /// </summary>
     instance.setVideoSrc = function (value) {
         instance.VideoSrc = value;
     };
-    
-    /**
-     * Gets crossorigin value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets crossorigin value.
+    /// </summary>
     instance.getCrossOrigin = function () {
         return instance.CrossOrigin;
     };
-    
-    /**
-     * Sets crossorigin value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets crossorigin value.
+    /// </summary>
     instance.setCrossOrigin = function (value) {
         instance.CrossOrigin = value;
     };
-    
-    /**
-     * Gets poster value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets poster value.
+    /// </summary>
     instance.getPoster = function () {
         return instance.Poster;
     };
-    
-    /**
-     * Sets poster value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets poster value.
+    /// </summary>
     instance.setPoster = function (value) {
         instance.Poster = value;
     };
-    
-    /**
-     * Gets preload value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets preload value.
+    /// </summary>
     instance.getPreload = function () {
         return instance.Preload;
     };
-    
-    /**
-     * Sets preload value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets preload value.
+    /// </summary>
     instance.setPreload = function (value) {
         instance.Preload = value;
     };
-    
-    /**
-     * Gets autoplay value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets autoplay value.
+    /// </summary>
     instance.getAutoplay = function () {
         return instance.Autoplay;
     };
-    
-    /**
-     * Sets autoplay value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets autoplay value.
+    /// </summary>
     instance.setAutoplay = function (value) {
         instance.Autoplay = value;
     };
-    
-    /**
-     * Gets mediagroup value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets mediagroup value.
+    /// </summary>
     instance.getMediaGroup = function () {
         return instance.MediaGroup;
     };
-    
-    /**
-     * Sets mediagroup value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets mediagroup value.
+    /// </summary>
     instance.setMediaGroup = function (value) {
         instance.MediaGroup = value;
     };
-    
-    /**
-     * Gets loop value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets loop value.
+    /// </summary>
     instance.getLoop = function () {
         return instance.Loop;
     };
-    
-    /**
-     * Sets loop value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets loop value.
+    /// </summary>
     instance.setLoop = function (value) {
         instance.Loop = value;
     };
-    
-    /**
-     * Gets muted value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets muted value.
+    /// </summary>
     instance.getMuted = function () {
         return instance.Muted;
     };
-    
-    /**
-     * Sets muted value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets muted value.
+    /// </summary>
     instance.setMuted = function (value) {
         instance.Muted = value;
     };
-    
-    /**
-     * Gets controls value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets controls value.
+    /// </summary>
     instance.getControls = function () {
         return instance.Controls;
     };
-    
-    /**
-     * Sets controls value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets controls value.
+    /// </summary>
     instance.setControls = function (value) {
         instance.Controls = value;
     };
-    
-    /**
-     * Gets width value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets width value.
+    /// </summary>
     instance.getVideoWidth = function () {
         return instance.VideoWidth;
     };
-    
-    /**
-     * Sets width value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets width value.
+    /// </summary>
     instance.setVideoWidth = function (value) {
         instance.VideoWidth = value;
     };
-    
-    /**
-     * Gets height value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets height value.
+    /// </summary>
     instance.getVideoHeight = function () {
         return instance.VideoHeight;
     };
-    
-    /**
-     * Sets height value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets height value.
+    /// </summary>
     instance.setVideoHeight = function (value) {
         instance.VideoHeight = value;
     };
-    
-    /**
-     * Present view with input values and html format.
-     * 
-     * @param {type} options
-     * @returns {String|TextView.present.htmlFormat}
-     */
+
+    /// <summary>
+    /// Present view with input values and html format.
+    /// </summary>
     instance.presentView = function (options) {
         
         var htmlFormat = instance.HTML;
@@ -579,10 +525,10 @@ function AVView(options) {
             instance.getObserverObject() !== undefined) {
         
         /**
-     * Gets src value.
-     * 
-     * @returns {name}
-     */
+         * Gets src value.
+         * 
+         * @returns {name}
+         */
         instance.getObserverObject().getVideoSrc = function () {
             return instance.getVideoSrc();
         };
@@ -797,14 +743,10 @@ function AVView(options) {
             instance.presentView(options);
         };
     }
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -848,14 +790,10 @@ function AVView(options) {
             }
         }
     };
-    
-    /**
-     * Record processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Record processing and presenting event subscription.
+    /// </summary>
     instance.presentRecord = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -923,13 +861,9 @@ function AVView(options) {
         }
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -962,12 +896,9 @@ function AVView(options) {
         }
     };
 
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
@@ -975,13 +906,10 @@ function AVView(options) {
         $(instance.getCRUDProcessor()).on('record.processor.CRUD.WindnTrees', eventsInstance.presentRecord);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
     };
-    
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
         
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;

@@ -13,19 +13,10 @@
  *  limitations under the License.
  */
 
-/**
- * NewView provides observer independent data handling and communication 
- * capability using get (GET), post (POST) and new (POST) calls to a hosted 
- * web service or web API and is able to produce typed objects (contents) 
- * based on provided content object. NewView extends functionality from 
- * ObjectView.
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+
+/// <summary>
+/// NewView provides data handling and communication capability using read and create calls to a hosted web service or API controller and gets typed content objects based on input object. NewView extends from ObjectView and allows creation of new objects.
+/// </summary>
 function NewView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -38,33 +29,21 @@ function NewView(options) {
     var extOptions = Object.create(options);
     extOptions.instance = instance;
     instance = ObjectView(extOptions);
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "NewView";
     };
-    
-    /**
-     * Sends new content request to the designated URI.
-     * 
-     * options.action - create, update or delete
-     * options.content - record object / instance
-     * options.validate - true / false (validate form or not)
-     * options.placement - 'first' or 'last'
-     * callback - reference callback function
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Creates new content at designated URI address with input object.
+    /// </summary>
     instance.create = function (options) {
         options = (options === null || options === undefined) ? {} : options;
         options.action = 'create';
 
-        //options.content = (options.content === null || options.content === undefined) ? (instance.getObserverInterface().getFormStringifiedObject()) : instance.getObserverInterface().getStringifiedObject(options.content);
         options.content = instance.formatContent(options);
         
         options.validate = (options.validate === null || options.validate === undefined) ? true : options.validate;

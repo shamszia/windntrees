@@ -13,52 +13,68 @@
  *  limitations under the License.
  */
 
-/**
- * CRUD data processor extracts and processes response data into an object 
- * or list of entity objects.
- * 
- * options.contentType
- * options.key
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// CRUDProcessor processes response data and errors returned by CRUDController 
+/// and produces content and or error object(s). Returned objects are consumed 
+/// by other components for further processing. For example, views utilize objects 
+/// for presentation. Usually a CRUDProcessor deals with a CRUDController, 
+/// a CRUDSource and or a CRUDConsumer.
+/// </summary>
 function CRUDProcessor(options) {
     var instance = this;
 
+    /// <summary>
+    /// Key is a unique identifier to differentiate between CRUDProcessor.
+    /// </summary>
     instance.Key = options !== undefined ? options.key : null;
+
+    /// <summary>
+    /// CRUDController resposible for extracting response objects.
+    /// </summary>
     instance.Controller = null;
 
+    /// <summary>
+    /// Recently extracted response object.
+    /// </summary>
     instance.Record = null;
+
+    /// <summary>
+    /// Recently extracted list of response objects.
+    /// </summary>
     instance.Records = [];
+
+    /// <summary>
+    /// Recently extracted list of response errors.
+    /// </summary>
     instance.Errors = [];
 
+    /// <summary>
+    /// Processing event information.
+    /// </summary>
     instance.ProcessingState = null;
+
+    /// <summary>
+    /// Processing status.
+    /// </summary>
     instance.ProcessingStatus = false;
 
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets type of function construct.
+    /// </summary>
     instance.getType = function () {
         return "CRUDProcessor";
     };
 
-    /**
-     * Gets controller key.
-     * 
-     * @returns {type.key}
-     */
+    /// <summary>
+    /// Gets unique identification key value.
+    /// </summary>
     instance.getKey = function () {
         return instance.Key;
     };
 
-    /**
-     * Reference function to CRUD controller.
-     * 
-     * @returns {CRUDController}
-     */
+    /// <summary>
+    /// Gets CRUDController associated with CRUDProcessor.
+    /// </summary>
     instance.getController = function () {
         if (instance.Controller === null) {
             instance.Controller = new CRUDController();
@@ -66,38 +82,30 @@ function CRUDProcessor(options) {
         return instance.Controller;
     };
 
-    /**
-     * Reference function to CRUD controller response data.
-     * 
-     * @returns {CRUDController.ResponseData|CRUDProcessor.getController.ResponseData|Window.ResponseData|CRUDProcessor.ResponseData}
-     */
+    /// <summary>
+    /// Requested response data.
+    /// </summary>
     instance.responseData = function () {
         return instance.getController().responseData();
     };
 
-    /**
-     * Reference function to CRUD controller response error.
-     * 
-     * @returns {CRUDProcessor.getController.ResponseError|CRUDProcessor.ResponseError|Window.ResponseError|CRUDController.ResponseError}
-     */
+    /// <summary>
+    /// Response errors.
+    /// </summary>
     instance.responseError = function () {
         return instance.getController().responseError();
     };
 
-    /**
-     * Reference function to CRUD controller to check for response error.
-     * 
-     * @returns {Boolean}
-     */
+    /// <summary>
+    /// Checks response for error.
+    /// </summary>
     instance.isResponseError = function () {
         return instance.getController().isResponseError();
     };
 
-    /**
-     * Reference function to check if there were input errors.
-     * 
-     * @returns {Boolean}
-     */
+    /// <summary>
+    /// Checks response for input errors.
+    /// </summary>
     instance.isInputError = function () {
         if (instance.Errors === null || instance.Errors === undefined) {
             return false;
@@ -106,63 +114,44 @@ function CRUDProcessor(options) {
         return instance.Errors.length > 0;
     };
 
-    /**
-     * Gets request processing status.
-     * 
-     * @returns {Boolean}
-     */
+    /// <summary>
+    /// Gets request processing status.
+    /// </summary>
     instance.getProcessingStatus = function () {
         return instance.ProcessingStatus;
     };
 
-    /**
-     * Gets in process request state.
-     * 
-     * @returns {CRUDProcessor.ProcessingState}
-     */
+    /// <summary>
+    /// Gets in process request state.
+    /// </summary>
     instance.getProcessingState = function () {
         return instance.ProcessingState;
     };
 
-    /**
-     * Gets list of errors. Note that the list of errors is only available when
-     * the request has been completed and processed.
-     * 
-     * @returns {Array|Window.Errors}
-     */
+    /// <summary>
+    /// Gets list of errors.Note that list of errors is only available when request has been completed and processed.
+    /// </summary>
     instance.getErrors = function () {
         return instance.Errors;
     };
 
-    /**
-     * Gets processed record. Note that record is only available when the request
-     * has been completed and processed.
-     * 
-     * @returns {result|type.data.content|.eventData.result.content}
-     */
+    /// <summary>
+    /// Gets processed record.Note that record is only available when the request has been completed and processed.
+    /// </summary>
     instance.getRecord = function () {
         return instance.Record;
     };
 
-    /**
-     * Gets processed records. Note that records are only available when request
-     * has been completed and processed. 
-     * 
-     * @returns {Array}
-     */
+    /// <summary>
+    /// Gets processed records.Note that records are only available when request has been completed and processed. 
+    /// </summary>
     instance.getRecords = function () {
         return instance.Records;
     };
 
-    /**
-     * Create new entity object and process its response.
-     * 
-     * data.uri
-     * data.content
-     * 
-     * @param {type} data 
-     * @returns {Window.Record}
-     */
+    /// <summary>
+    /// Saves new content object and processes response.
+    /// </summary>
     instance.create = function (data) {
         instance.Record = null;
         instance.Errors = [];
@@ -170,15 +159,9 @@ function CRUDProcessor(options) {
         instance.getController().create(data);
     };
 
-    /**
-     * Read data object by key from the specified URL. 
-     * 
-     * data.uri
-     * data.key
-     * 
-     * @param {type} data 
-     * @returns {Window.Record}
-     */
+    /// <summary>
+    /// Read data object by key from the specified URI. 
+    /// </summary>
     instance.read = function (data) {
         instance.Record = null;
         instance.Errors = [];
@@ -186,15 +169,9 @@ function CRUDProcessor(options) {
         instance.getController().read(data);
     };
 
-    /**
-     * Update existing entity object and process its response.
-     * 
-     * data.uri
-     * data.content
-     * 
-     * @param {type} data 
-     * @returns {Window.Record}
-     */
+    /// <summary>
+    /// Saves existing content object and processes response.
+    /// </summary>
     instance.update = function (data) {
         instance.Record = null;
         instance.Errors = [];
@@ -202,15 +179,9 @@ function CRUDProcessor(options) {
         instance.getController().update(data);
     };
 
-    /**
-     * Delete existing entity object and process its response.
-     * 
-     * data.uri
-     * data.content
-     * 
-     * @param {type} data 
-     * @returns {Window.Record}
-     */
+    /// <summary>
+    /// Delete existing content object and processes response.
+    /// </summary>
     instance.delete = function (data) {
         instance.Record = null;
         instance.Errors = [];
@@ -218,21 +189,9 @@ function CRUDProcessor(options) {
         instance.getController().delete(data);
     };
 
-    /**
-     * List records based on search key fields.
-     * 
-     * data.uri
-     * data.target
-     * data.source
-     * data.key
-     * data.keyword
-     * data.size
-     * data.page
-     * data.query
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Extracts list of data objects referenced by keyword from specified URI.
+    /// </summary>
     instance.list = function (data) {
         instance.Records = [];
         instance.Errors = [];
@@ -240,13 +199,9 @@ function CRUDProcessor(options) {
         instance.getController().list(data);
     };
 
-    /**
-     * Results processor to extract and process record data in response to create,
-     * update and delete function calls.
-     * 
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Extracted and processed record data object in response to create, update and delete request calls.
+    /// </summary>
     instance.processRecord = function (eventData) {
         var result = eventData.result;
 
@@ -384,13 +339,9 @@ function CRUDProcessor(options) {
         }
     };
 
-    /**
-     * Results processor to extract and process records in response to find and
-     * select calls.
-     * 
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Extracted and processed list of record data objects in response to select, selectList, find, list and listAll.
+    /// </summary>
     instance.processRecords = function (eventData) {
         var result = eventData.result;
 
@@ -483,42 +434,24 @@ function CRUDProcessor(options) {
         }
     };
 
-    /**
-     * Notify event subscribers with event information.
-     * 
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Notifies event subscribers with event information. 
+    /// </summary>
     instance.notify = function (eventData) {
         $(instance).trigger(eventData.event, eventData);
     };
     
-    /**
-     * Event Handlers.
-     * 
-     * 
-     * @returns {Boolean}
-     */
-
-    /**
-     * Event handler, processes request before processing.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Processes request data before making request call.
+    /// </summary>
     instance.beforeRequest = function (event, eventData) {
         instance.ProcessingState = {'event': event, 'triggerEvent': eventData};
         instance.ProcessingStatus = true;
     };
 
-    /**
-     * Event handler, processes request successful event.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Processes response data after making request call.
+    /// </summary>
     instance.afterRequest = function (event, eventData) {
         instance.ProcessingState = {'event': event, 'triggerEvent': eventData};
         instance.ProcessingStatus = false;
@@ -532,13 +465,9 @@ function CRUDProcessor(options) {
         }
     };
 
-    /**
-     * Event handler, processes request failure event.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Processes response error after making request call.
+    /// </summary>
     instance.failRequest = function (event, eventData) {
         instance.ProcessingState = {'event': event, 'triggerEvent': eventData};
         instance.ProcessingStatus = false;
@@ -547,38 +476,25 @@ function CRUDProcessor(options) {
 
     };
 
-    /**
-     * Subscribes a callback handler on a CRUD controller instance event.
-     * 
-     * @param {type} event
-     * @param {type} callback
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribes CRUDController events for processing.
+    /// </summary>
     instance.subscribeCRUDControllerEvent = function (event, callback) {
 
         $(instance.getController()).on(event, callback);
     };
 
-    /**
-     * Subscribes off a CRUD controller event.
-     * 
-     * @param {type} event
-     * @param {type} callback
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Unsubscribes CRUDController events for processing.
+    /// </summary>
     instance.unSubscribeCRUDControllerEvent = function (event, callback) {
 
         $(instance.getController()).off(event, callback);
     };
 
-    /**
-     * Subscribe CRUD/CRUDController events
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribes CRUDController events with events instance.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
 
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
@@ -588,12 +504,9 @@ function CRUDProcessor(options) {
         $(instance.getController()).on('fail.request.CRUD.WindnTrees', eventsInstance.failRequest);
     };
 
-    /**
-     * Subscribe CRUD/CRUDController events
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Unsubscribes CRUDController events with events instance.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
 
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;

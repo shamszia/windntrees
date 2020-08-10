@@ -13,12 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * Record detail observer that stores record and its detail item/list.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// Master detail record observer that displays master record and its detail items list.
+/// </summary>
 function DetailKNObserver(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -27,79 +24,68 @@ function DetailKNObserver(options) {
         instance = extender.extendNewInstance({ 'instance': instance , 'options': options});
     }
 
+    /// <summary>
+    /// Record, data member property.
+    /// </summary>
     instance.Record = ko.observable(options.record);
+
+    /// <summary>
+    /// Detail, data member property.
+    /// </summary>
     instance.Detail = ko.observable(options.detail);
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "DetailKNObserver";
     };
-    
-    /**
-     * Gets a new instance.
-     * 
-     * @returns {Function}
-     */
+
+    /// <summary>
+    /// Gets a new instance.
+    /// </summary>
     instance.newInstance = function() {
         return new (Object.getPrototypeOf(instance)).constructor(options);
     };
 
-    /**
-     * Sets record and makes it observable.
-     * 
-     * @param {type} record
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets observable record.
+    /// </summary>
     instance.setRecord = function (record) {
         instance.Record(record);
     };
 
-    /**
-     * Gets record.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets record.
+    /// </summary>
     instance.getRecord = function () {
         return instance.Record();
     };
 
-    /**
-     * Gets observable record.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets observable record.
+    /// </summary>
     instance.getObservableRecord = function () {
         return instance.Record;
     };
 
-    /**
-     * Sets detail and makes it observable.
-     * 
-     * @param {type} detail
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets observable detail.
+    /// </summary>
     instance.setDetail = function (detail) {
         instance.Detail(detail);
     };
 
-    /**
-     * Gets detail.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets detail.
+    /// </summary>
     instance.getDetail = function () {
         return instance.Detail();
     };
 
-    /**
-     * Gets observable detail.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets observable detail.
+    /// </summary>
     instance.getObservableDetail = function () {
         return instance.Detail;
     };

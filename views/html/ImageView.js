@@ -13,34 +13,9 @@
  *  limitations under the License.
  */
 
-/* global Util */
-
-/**
- * ImageView presents image, subject and description values in provided html 
- * format and css styles. ImageView is capable of extracting information from a 
- * remote web service using GET / POST calls and display using observer or by 
- * directly writing into node's innerHTML content. In case of observer less 
- * scenario the type of content, content node and error node must be defined.
- * 
- * options.contentnode
- * options.errornode
- * 
- * options.subject
- * options.description
- * options.url
- * options.html
- * options.css
- * 
- * options.imagename
- * options.imagepath
- * options.imagetitle
- * 
- * options.uri - defines the address (unique resource identifier).
- * options.observer - view's own observer instance.
- * 
- * @param {type} options 
- * @returns {undefined}
- */
+/// <summary>
+/// ImageView presents image, subject and description values in provided html format and css styles. ImageView is capable of extracting information from a remote web service using read call and display using observer or by directly writing into node's innerHTML content. In case of direct method the type of content, content node and error node must be defined.
+/// </summary>
 function ImageView(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -54,123 +29,112 @@ function ImageView(options) {
     extOptions.instance = instance;
     extOptions.events = false;
     instance = TextView(extOptions);
-    
+
+    /// <summary>
+    /// ImageName, data member property.
+    /// </summary>
     instance.ImageName = options.imagename;
+
+    /// <summary>
+    /// ImagePath, data member property.
+    /// </summary>
     instance.ImagePath = options.imagepath;
+
+    /// <summary>
+    /// ImageTitle, data member property.
+    /// </summary>
     instance.ImageTitle = options.imagetitle;
-    instance.ImageWidth = options.imagewidth; // Horizontal dimension
-    instance.ImageHeight = options.imageheight; // Vertical dimension
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// ImageWidth, horizontal dimension data member property.
+    /// </summary>
+    instance.ImageWidth = options.imagewidth;
+
+    /// <summary>
+    /// ImageHeight, vertical dimension data member property.
+    /// </summary>
+    instance.ImageHeight = options.imageheight;
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "ImageView";
     };
-    
-    /**
-     * Gets image name.
-     * 
-     * @returns {type.imageName}
-     */
+
+    /// <summary>
+    /// Gets image name.
+    /// </summary>
     instance.getImageName = function () {
         return instance.ImageName;
     };
-    
-    /**
-     * Sets image name value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets image name value.
+    /// </summary>
     instance.setImageName = function (value) {
         instance.ImageName = value;
     };
-    
-    /**
-     * Gets image path.
-     * 
-     * @returns {type.imagePath}
-     */
+
+    /// <summary>
+    /// Gets image path.
+    /// </summary>
     instance.getImagePath = function () {
         return instance.ImagePath;
     };
-    
-    /**
-     * Sets image path value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets image path value.
+    /// </summary>
     instance.setImagePath = function (value) {
         instance.ImagePath = value;
     };
-    
-    /**
-     * Gets image title.
-     * 
-     * @returns {type.imageTitle}
-     */
+
+    /// <summary>
+    /// Gets image title.
+    /// </summary>
     instance.getImageTitle = function () {
         return instance.ImageTitle;
     };
-    
-    /**
-     * Sets image title value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets image title value.
+    /// </summary>
     instance.setImageTitle = function (value) {
         instance.ImageTitle = value;
     };
-    
-    /**
-     * Gets width value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets width value.
+    /// </summary>
     instance.getImageWidth = function () {
         return instance.ImageWidth;
     };
-    
-    /**
-     * Sets width value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets width value.
+    /// </summary>
     instance.setImageWidth = function (value) {
         instance.ImageWidth = value;
     };
-    
-    /**
-     * Gets height value.
-     * 
-     * @returns {name}
-     */
+
+    /// <summary>
+    /// Gets height value.
+    /// </summary>
     instance.getImageHeight = function () {
         return instance.ImageHeight;
     };
-    
-    /**
-     * Sets height value.
-     * 
-     * @param {type} value
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets height value.
+    /// </summary>
     instance.setImageHeight = function (value) {
         instance.ImageHeight = value;
     };
-    
-    /**
-     * Present view with input values and html format.
-     * 
-     * @param {type} options
-     * @returns {String|TextView.present.htmlFormat}
-     */
+
+    /// <summary>
+    /// Present view with input values and html format.
+    /// </summary>
     instance.presentView = function (options) {
         
         var htmlFormat = instance.HTML;
@@ -349,14 +313,10 @@ function ImageView(options) {
             instance.presentView(options);
         };
     }
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -400,14 +360,10 @@ function ImageView(options) {
             }
         }
     };
-    
-    /**
-     * Record processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Record processing and presenting event subscription.
+    /// </summary>
     instance.presentRecord = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -461,13 +417,9 @@ function ImageView(options) {
         }
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -500,12 +452,9 @@ function ImageView(options) {
         }
     };
 
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.subscribeEvents = function (eventsInstance) {
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;
         
@@ -513,13 +462,10 @@ function ImageView(options) {
         $(instance.getCRUDProcessor()).on('record.processor.CRUD.WindnTrees', eventsInstance.presentRecord);
         $(instance.getCRUDProcessor()).on('fail.processor.CRUD.WindnTrees', eventsInstance.presentFailRequest);
     };
-    
-    /**
-     * Subscribe CRUDProcessor events.
-     * 
-     * @param {type} eventsInstance 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Subscribe CRUDProcessor events.
+    /// </summary>
     instance.unSubscribeEvents = function (eventsInstance) {
         
         eventsInstance = (eventsInstance !== null && eventsInstance !== undefined) ? eventsInstance : instance;

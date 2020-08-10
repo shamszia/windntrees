@@ -13,13 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * ListObserver provides concrete observer independent list objects, source and 
- * target view synchronization functionality for a particular list source.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// ListObserver interface provide multiple source and target items view synchronization functionality in a list of observers.
+/// </summary>
 function ListObserver(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -58,167 +54,117 @@ function ListObserver(options) {
     
     //extend from activity observer
     instance = ActivityObserver({'instance': instance, 'observer': instance.Observer });
-    
-    /**
-     * Gets the observer object.
-     * 
-     * @returns {type}
-     */
+
+    /// <summary>
+    /// Gets the observer object.
+    /// </summary>
     instance.getObserver = function () {
         return instance.Observer;
     };
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getObserverType = function () {
         return instance.getObserver().getType();
     };
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "ListObserver";
     };
 
-    /**
-     * Gets entity object.
-     * 
-     * @returns {Window.EntityObject|CRUDKNObserver.EntityObject}
-     */
+    /// <summary>
+    /// Gets entity object.
+    /// </summary>
     instance.getListObject = function () {
         return instance.getObserver().getListObject();
     };
 
-    /**
-     * Gets entity object prototype.
-     * 
-     * @returns {type}
-     */
+    /// <summary>
+    /// Gets entity object prototype.
+    /// </summary>
     instance.getListObjectPrototype = function () {
         return instance.getObserver().getListObjectPrototype();
     };
 
-    /**
-     * Gets indexed stringified JSON object.
-     * 
-     * @param {type} index 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets indexed stringified JSON object.
+    /// </summary>
     instance.getIndexedStringifiedObject = function (index) {
         return instance.getObserver().getIndexedStringifiedObject(index);
     };
 
-    /**
-     * Gets indexed JSON object.
-     * 
-     * @param {type} index 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets indexed JSON object.
+    /// </summary>
     instance.getIndexedJSONObject = function (index) {
         return instance.getObserver().getIndexedJSONObject(index);
     };
 
-    /**
-     * Empty/Clears the list.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Empty/Clears the list.
+    /// </summary>
     instance.clearList = function (readyStatus) {
         instance.getObserver().clearList(readyStatus);
     };
 
-    /**
-     * Fill list records.
-     * 
-     * data.objects - 
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Fill list records.
+    /// </summary>
     instance.fillList = function (data, readyStatus) {
         instance.getObserver().fillList(data, readyStatus);
     };
 
-    /**
-     * Gets list ready status.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Gets list ready status.
+    /// </summary>
     instance.isListReady = function () {
 
         return instance.getObserver().isListReady();
     };
 
-    /**
-     * Sets list fill status to ready.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets list fill status to ready.
+    /// </summary>
     instance.setListReady = function (status) {
 
         instance.getObserver().setListReady(status);
     };
 
-    /**
-     * Gets list item.
-     * 
-     * @param {type} key
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Gets list item.
+    /// </summary>
     instance.getItem = function (key) {
         return instance.getObserver().getItem(key);
     };
 
-    /**
-     * Add new object item in list.
-     * 
-     * data.object - entity records
-     * data.order - 'first' or 'last'
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Add new object item in list.
+    /// </summary>
     instance.newItem = function (data) {
         instance.getObserver().newItem(data);
     };
 
-    /**
-     * Update existing list object.
-     * 
-     * @param {type} listObject
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Update existing list object.
+    /// </summary>
     instance.updateItem = function (listObject) {
         instance.getObserver().updateItem(listObject);
     };
 
-    /**
-     * Removes list object.
-     * 
-     * @param {type} listObject
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Removes list object.
+    /// </summary>
     instance.removeItem = function (listObject) {
         instance.getObserver().removeItem(listObject);
     };
 
-    /**
-     * Updates list by adding, updating and removing list objects.
-     * 
-     * data.action - create / update / delete
-     * data.objectItem - Return result (usually entity object)
-     * data.placement - placement
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Updates list by adding, updating and removing list objects.
+    /// </summary>
     instance.update = function (data) {
         instance.getObserver().update(data);
     };

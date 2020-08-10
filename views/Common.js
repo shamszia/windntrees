@@ -13,12 +13,18 @@
  *  limitations under the License.
  */
 
+/// <summary>
+/// General purpose key, value pair function construct.
+/// </summary>
 function OptionItem(key, val) {
     var instance = this;
     instance.key = key;
     instance.val = val;
 }
 
+/// <summary>
+/// Error description function construct.
+/// </summary>
 function ErrorItem(data)
 {
     var instance = this;

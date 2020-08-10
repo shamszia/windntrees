@@ -13,17 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * SearchList is a flexible list of lists composed of (search or crud) views that
- * can load related or non-related list contents at run time.
- * 
- * options.uri
- * options.view - inheriting view
- * options.list - array of same level inner lists
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// SearchList is a flexible list of lists composed of (search or crud) views that can load referential or independent list contents at run time.
+/// </summary>
 function SearchList(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -50,19 +42,19 @@ function SearchList(options) {
         instance.unSubscribeEvents();
     }
     
-    /**
-     * Sub-list views that will be used in runtime lists and their views 
-     * construction in order.
-     */
+    /// <summary>
+    /// SubListViews, data member array property.
+    /// </summary>
     instance.SubListViews = (options.sublistviews !== null && options.sublistviews !== undefined) ? options.sublistviews : [];
 
+    /// <summary>
+    /// LoadState, data member property.
+    /// </summary>
     instance.LoadState = true;
-    
-    /**
-     * Gets the type of view.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Gets the type of view.
+    /// </summary>
     instance.getType = function () {
         
         if (options.view.getType() === 'CRUDView') {
@@ -71,28 +63,17 @@ function SearchList(options) {
             return 'SearchList';
         }
     };
-    
-    /**
-     * Gets sublists reference object.
-     * 
-     * @returns {Array|type.sublistviews}
-     */
+
+    /// <summary>
+    /// Gets sublists reference object.
+    /// </summary>
     instance.getSubListViews = function () {
         return instance.SubListViews;
     };
-    
-    /**
-     * Creates new record based on form view object.
-     * 
-     * options.action - create, update or delete
-     * options.content - record object / instance
-     * options.validate - true / false (validate form or not)
-     * options.placement - 'first' or 'last'
-     * callback - reference callback function
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Creates new record based on input object at specified URI address.
+    /// </summary>
     instance.create = function (options) {
         var listView = null;
         var subViews = [];
@@ -126,18 +107,10 @@ function SearchList(options) {
         
         Object.getPrototypeOf(instance).create(options);
     };
-    
-    /**
-    * Adds detail item in records list.
-    * 
-    * options.name - items or subitems array name within an entity 
-    * object graph
-    * 
-    * options.data - new item to insert
-    * options.order - 'first' or 'last'
-    * 
-    * @param {type} options 
-    */
+
+    /// <summary>
+    /// Adds detail item in records list.
+    /// </summary>
     instance.addDetailItem = function (options) {
 
         var parentObserverObject = instance.getObserverInterface().getSharedObject();
@@ -164,29 +137,18 @@ function SearchList(options) {
         selectedRecord[options.subitems](subitems);
         parentObserverObject.update({'content': selectedRecord, 'validate': true, 'resetForm': false, 'refObject': instance.getObserverObject(), 'refActions': ['resetForm', 'displayFormSuccessActivity']});
     };
-    
-    /**
-     * Unloads the contents of list.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Unloads the contents of list.
+    /// </summary>
     instance.unload = function () {
         instance.getObserverInterface().setRecords([]);
         instance.getObserverInterface().displayClearActivity();
     };
-    
-    /**
-     * Loads sublist for the selected record.
-     * 
-     * options.keyword
-     * options.source
-     * options.referencekey 
-     * options.page
-     * options.size
-     * 
-     * @param {type} options   
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Loads sublist for the selected record.
+    /// </summary>
     instance.loadDetail = function (options) {
         
         if (options.index !== null && options.index !== undefined) {
@@ -203,19 +165,10 @@ function SearchList(options) {
             detailRecord.getDetail().load(options);
         }
     };
-    
-    /**
-     * Loads sublist for the selected record.
-     * 
-     * options.keyword
-     * options.source
-     * options.referencekey 
-     * options.page
-     * options.size
-     * 
-     * @param {type} options   
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Loads sublist for the selected record.
+    /// </summary>
     instance.unloadDetail = function (options) {
         
         if (options.index !== null && options.index !== undefined) {
@@ -232,13 +185,10 @@ function SearchList(options) {
             detailRecord.getDetail().unload();
         }
     };
-    
-    /**
-     * Toggles between contents of a list from a list source.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Toggles between contents of a list from a list source.
+    /// </summary>
     instance.toggleDetail = function (options) {
 
         if (options.index !== null && options.index !== undefined) {
@@ -266,13 +216,10 @@ function SearchList(options) {
             detailRecord.getDetail().LoadState = !(detailRecord.getDetail().LoadState);
         }
     };
-    
-    /**
-     * Compose record and detail file list objects.
-     * 
-     * @param {type} records
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Compose record and detail file list objects.
+    /// </summary>
     instance.getRecordDetailList = function (records) {
 
         var recordLists = [];
@@ -487,14 +434,10 @@ function SearchList(options) {
             instance.toggleDetail(options);
         };
     }
-    
-    /**
-     * Error processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Error processing and presenting event subscription.
+    /// </summary>
     instance.presentErrors = function (event, eventData) {
         
         if (eventData.data.callback !== null &&
@@ -507,13 +450,9 @@ function SearchList(options) {
         }
     };
 
-    /**
-     * Multiple records processing and presenting event subscription.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Multiple records processing and presenting event subscription.
+    /// </summary>
     instance.presentRecords = function (event, eventData) {
 
         if (eventData.data.callback !== null &&
@@ -566,13 +505,9 @@ function SearchList(options) {
         }
     };
 
-    /**
-     * Presents request failure.
-     * 
-     * @param {type} event
-     * @param {type} eventData
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Presents request failure.
+    /// </summary>
     instance.presentFailRequest = function (event, eventData) {
         
         if (eventData.data.callback !== null &&

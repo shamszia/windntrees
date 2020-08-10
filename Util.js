@@ -13,9 +13,15 @@
  *  limitations under the License.
  */
 
+/// <summary>
+/// Utility helper class.
+/// </summary>
 function Util () {
     var instance = Object.create({});
-    
+
+    /// <summary>
+    /// Selects between values.
+    /// </summary>
     instance.extractValue = function (objectValue, defaultValue) {
         
         if (objectValue !== null && objectValue !== undefined) {
@@ -25,7 +31,10 @@ function Util () {
         
         return defaultValue;
     };
-    
+
+    /// <summary>
+    /// Selects between values.
+    /// </summary>
     instance.extractFieldValue = function (fieldValue, defaultValue) {
         
         var extractedValue;
@@ -53,16 +62,16 @@ function Util () {
             return defaultValue;
         }
     };
-    
-    /*
-     * This forms flex (html or functions) evaluation based on flex object items.
-     * 
-     * items[0] - key information
-     * items[1] - type information / html or text or function 
-     * items[2] - type / object that is a string value or a function to be evaluated.
-     * items[3] - content info (object or non-object value)
-     * 
-     */
+
+    /// <summary>
+    /// This forms flex (html or functions) evaluation based on flex object items.
+    /// 
+    /// items[0] - key information
+    /// items[1] - type information / html or text or function 
+    /// items[2] - type / object that is a string value or a function to be evaluated.
+    /// items[3] - content info (object or non-object value)
+    /// 
+    /// </summary>
     instance.getFlexOutput = function (options) {
 
         var output;

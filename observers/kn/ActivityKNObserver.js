@@ -13,13 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * ActivityKNObserver observer provides statuses and messages synchronization
- * with related target objects.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// ActivityKNObserver provide statuses and messages synchronization with related target view objects.
+/// </summary>
 function ActivityKNObserver(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -30,74 +26,107 @@ function ActivityKNObserver(options) {
     
     instance = extender.extendContentTypeObject({'instance': instance, 'contentType': options.contentType });
 
+    /// <summary>
+    /// Key, data member property.
+    /// </summary>
     instance.Key = options.key;
+
+    /// <summary>
+    /// Keyword, observable data member property.
+    /// </summary>
     instance.Keyword = ko.observable(options.keyword);
+
+    /// <summary>
+    /// MessageRepository, data member property.
+    /// </summary>
     instance.MessageRepository = options.messages;
+
+    /// <summary>
+    /// Errors, observable array data member property.
+    /// </summary>
     instance.Errors = ko.observableArray([]);
+
+    /// <summary>
+    /// SharedObject, observable data member property.
+    /// </summary>
     instance.SharedObject = ko.observable(null);
+
+    /// <summary>
+    /// Processing, observable data member property.
+    /// </summary>
     instance.Processing = ko.observable(false);
+
+    /// <summary>
+    /// ResultMessage, observable data member property.
+    /// </summary>
     instance.ResultMessage = ko.observable("");
+
+    /// <summary>
+    /// FormProcessing, observable data member property.
+    /// </summary>
     instance.FormProcessing = ko.observable(false);
+
+    /// <summary>
+    /// FormResultMessage, observable data member property.
+    /// </summary>
     instance.FormResultMessage = ko.observable("");
+
+    /// <summary>
+    /// RequestProgress, observable data member property.
+    /// </summary>
     instance.RequestProgress = ko.observable(0);
+
+    /// <summary>
+    /// PrintReady, observable data member property.
+    /// </summary>
     instance.PrintReady = ko.observable(false);
+
+    /// <summary>
+    /// ViewScope, observable data member property.
+    /// </summary>
     instance.ViewScope = ko.observable((options.viewscope !== null && options.viewscope !== undefined) ? options.viewscope : "view" );
     
-    //utility functions
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "ActivityKNObserver";
     };
 
-    /**
-     * Gets observer instance key value.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets observer instance key value.
+    /// </summary>
     instance.getKey = function () {
 
         return instance.Key;
     };
 
-    /**
-     * Sets observer view scope.
-     * 
-     * @param {type} value
-     */
+    /// <summary>
+    /// Sets observer view scope.
+    /// </summary>
     instance.setViewScope = function (value) {
 
         instance.ViewScope(value);
     };
 
-    /**
-     * Gets observer view scope.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets observer view scope.
+    /// </summary>    
     instance.getViewScope = function () {
 
         return instance.ViewScope();
     };
 
-    /**
-     * Get observers group type.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Get observers group type.
+    /// </summary>
     instance.getObserversGroup = function () {
         return "KN";
     };
-    
-    /**
-     * Check if the keyword has been entered.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Check if the keyword has been entered.
+    /// </summary>
     instance.isKeywordAvailable = function () {
         if (instance.Keyword() !== null && instance.Keyword() !== undefined) {
             if (instance.Keyword().length > 0) {
@@ -106,287 +135,213 @@ function ActivityKNObserver(options) {
         }
         return false;
     };
-    
-    /**
-     * Sets keyword message.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets keyword message.
+    /// </summary>
     instance.setKeyword = function (data) {
         instance.Keyword(data);
     };
-    
-    /**
-     * Gets keyword message.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets keyword message.
+    /// </summary>
     instance.getKeyword = function() {
         return instance.Keyword();
     };
-    
-    /**
-     * Gets observable keyword message.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable keyword message.
+    /// </summary>
     instance.getObservableKeyword = function() {
         return instance.Keyword;
     };
-    
-    /**
-     * Gets message repository attached to observer.
-     * 
-     * @returns {type.messages}
-     */
+
+    /// <summary>
+    /// Gets message repository attached to observer.
+    /// </summary>
     instance.getMessageRepository = function() {
         return instance.MessageRepository;
     };
-    
-    /**
-     * Sets shared observer object.
-     * 
-     * @param {type} object
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets shared observer object.
+    /// </summary>
     instance.setSharedObject = function (object) {
         instance.SharedObject(object);
     };
 
-    /**
-     * Gets shared object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets shared object.
+    /// </summary>
     instance.getSharedObject = function () {
         return instance.SharedObject();
     };
-    
-    /**
-     * Gets observable shared object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable shared object.
+    /// </summary>
     instance.getObservableSharedObject = function () {
         return instance.SharedObject;
     };
-    
-    /**
-     * Gets stringified JSON object from provided immediate data object.
-     * 
-     * @param {type} data
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets stringified JSON object from provided immediate data object.
+    /// </summary>
     instance.getStringifiedObject = function(data) {
         return ko.toJSON(data);
     };
-    
-    /**
-     * Gets JSON object from provided immediate data object.
-     * 
-     * @param {type} data
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets JSON object from provided immediate data object.
+    /// </summary>
     instance.getJSONObject = function(data) {
         return JSON.parse(ko.toJSON(data));
     };
     
-    //status functions
-    
-    /**
-     * Set errors into errors observer list.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets errors.
+    /// </summary>
     instance.setErrors = function(data) {
         instance.Errors(data);
     };
-    
-    /**
-     * Get errors from the observer errors list.
-     * 
-     * @returns {ko.observableArray.result}
-     */
+
+    /// <summary>
+    /// Gets errors.
+    /// </summary>
     instance.getErrors = function() {
         return instance.Errors();
     };
-    
-    /**
-     * Gets observerable errors list.
-     * 
-     * @returns {ko.observableArray.result}
-     */
+
+    /// <summary>
+    /// Gets observerable errors list.
+    /// </summary>
     instance.getObservableErrors = function() {
         return instance.Errors;
     };
-    
-    /**
-     * Sets processing status (true/false).
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets processing status (true/false).
+    /// </summary>
     instance.setProcessing = function(data) {
         instance.Processing(data);
     };
-    
-    /**
-     * Gets processing status.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets processing status.
+    /// </summary>
     instance.getProcessing = function() {
         return instance.Processing();
     };
-    
-    /**
-     * Gets observable processing status.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable processing status.
+    /// </summary>
     instance.getObservableProcessing = function() {
         return instance.Processing;
     };
-    
-    /**
-     * Sets result message.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets result message.
+    /// </summary>
     instance.setResultMessage = function (data) {
         instance.ResultMessage(data);
     };
-    
-    /**
-     * Gets result message.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets result message.
+    /// </summary>
     instance.getResultMessage = function () {
         return instance.ResultMessage();
     };
-    
-    /**
-     * Gets observable result message.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable result message.
+    /// </summary>
     instance.getObservableResultMessage = function () {
         return instance.ResultMessage;
     };
-    
-    /**
-     * Sets form processing status (true/false).
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets form processing status (true/false).
+    /// </summary>
     instance.setFormProcessing = function(data) {
         instance.FormProcessing(data);
     };
-    
-    /**
-     * Gets form processing status.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets form processing status.
+    /// </summary>
     instance.getFormProcessing = function() {
         return instance.FormProcessing();
     };
-    
-    /**
-     * Gets observable form processing status.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable form processing status.
+    /// </summary>
     instance.getObservableFormProcessing = function() {
         return instance.FormProcessing;
     };
-    
-    /**
-     * Sets form result message.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets form result message.
+    /// </summary>
     instance.setFormResultMessage = function (data) {
         instance.FormResultMessage(data);
     };
-    
-    /**
-     * Gets form result message.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets form result message.
+    /// </summary>
     instance.getFormResultMessage = function () {
         return instance.FormResultMessage();
     };
-    
-    /**
-     * Gets observable form result message.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable form result message.
+    /// </summary>
     instance.getObservableFormResultMessage = function () {
         return instance.FormResultMessage;
     };
 
-    /**
-     * Sets request progress.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets request progress.
+    /// </summary>
     instance.setRequestProgress = function (value) {
         instance.RequestProgress(value);
     };
 
-    /**
-     * Gets request progress.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Gets request progress.
+    /// </summary>
     instance.getRequestProgress = function () {
         return instance.RequestProgress();
     };
 
-    /**
-     * Sets print ready status.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets print ready status.
+    /// </summary>
     instance.setPrintReady = function (value) {
         instance.PrintReady(value);
     };
 
-    /**
-     * Gets print request status.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Gets print ready status.
+    /// </summary>
     instance.isPrintReady = function () {
         return instance.PrintReady();
     };
 
-    /**
-     * Display processing indicators.
-     * 
-     * @param {type} status
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Displays processing status.
+    /// </summary>
     instance.displayProcessing = function (status) {
         instance.Processing(status);
     };
 
-    /**
-     * Displays view's saved activity.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Displays view saved activity.
+    /// </summary>
     instance.displaySaved = function () {
         instance.ResultMessage(instance.getMessageRepository().get("form.saved.text"));
         instance.FormResultMessage(instance.getMessageRepository().get("form.saved.text"));
@@ -394,173 +349,137 @@ function ActivityKNObserver(options) {
         instance.FormProcessing(false);
     };
 
-    /**
-     * Displays view's failed activity.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Displays view failed activity.
+    /// </summary>
     instance.displayFailed = function () {
         instance.ResultMessage(instance.getMessageRepository().get("form.failed.text"));
         instance.FormResultMessage(instance.getMessageRepository().get("form.failed.text"));
         instance.Processing(false);
         instance.FormProcessing(false);
     };
-    
-    /**
-     * Displays view's processing activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays view processing activity.
+    /// </summary>
     instance.displayProcessingActivity = function () {
         instance.ResultMessage(instance.getMessageRepository().get("standard.processing.text"));
         instance.Processing(true);
     };
-    
-    /**
-     * Displays clear activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays clear activity.
+    /// </summary>
     instance.displayClearActivity = function () {
         instance.ResultMessage("");
         instance.Processing(false);
     };
-    
-    /**
-     * Displays no record activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays no record activity.
+    /// </summary>
     instance.displayNoRecordActivity = function () {
         instance.ResultMessage(instance.getMessageRepository().get("form.noRecord.text"));
         instance.Processing(false);
     };
-    
-    /**
-     * Displays view's successful activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays view successful activity.
+    /// </summary>
     instance.displaySuccessActivity = function () {
         instance.ResultMessage(instance.getMessageRepository().get("standard.ok.text"));
         instance.Processing(false);
     };
-    
-    /**
-     * Displays view's failure activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays view failure activity.
+    /// </summary>
     instance.displayFailureActivity = function () {
         instance.ResultMessage(instance.getMessageRepository().get("standard.err.text"));
         instance.Processing(false);
     };
-    
-    /**
-     * Display form processing status.
-     * 
-     * @param {type} status
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays form processing status.
+    /// </summary>
     instance.displayFormProcessing = function (status) {
         instance.FormProcessing(status);
     };
-    
-    /**
-     * Displays form processing activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays form processing activity.
+    /// </summary>
     instance.displayFormProcessingActivity = function () {
         instance.FormResultMessage(instance.getMessageRepository().get("standard.processing.text"));
         instance.FormProcessing(true);
     };
-    
-    /**
-     * Displays form clear activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays form clear activity.
+    /// </summary>
     instance.displayFormClearActivity = function () {
         instance.FormResultMessage("");
         instance.FormProcessing(false);
     };
-    
-    /**
-     * Displays form no record activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays form no record activity.
+    /// </summary>
     instance.displayFormNoRecordActivity = function () {
         instance.FormResultMessage(instance.getMessageRepository().get("form.noRecord.text"));
         instance.FormProcessing(false);
     };
-    
-    /**
-     * Displays form successful activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays form successful activity.
+    /// </summary>
     instance.displayFormSuccessActivity = function () {
         instance.FormResultMessage(instance.getMessageRepository().get("standard.ok.text"));
         instance.FormProcessing(false);
     };
-    
-    /**
-     * Displays form failure activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays form failure activity.
+    /// </summary>
     instance.displayFormFailureActivity = function () {
         instance.FormResultMessage(instance.getMessageRepository().get("standard.err.text"));
         instance.FormProcessing(false);
     };
-    
-    /**
-     * Display processing indicators.
-     * 
-     * @param {type} status
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays grid processing status.
+    /// </summary>
     instance.displayGridProcessing = function (status) {
         instance.Processing(status);
     };
-    
-    /**
-     * Displays grid's processing activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays grid processing activity.
+    /// </summary>
     instance.displayGridProcessingActivity = function () {
         instance.ResultMessage(instance.getMessageRepository().get("standard.processing.text"));
         instance.Processing(true);
     };
-    
-    /**
-     * Displays grid's successful activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays grid successful activity.
+    /// </summary>
     instance.displayGridSuccessActivity = function () {
         instance.ResultMessage(instance.getMessageRepository().get("standard.ok.text"));
         instance.Processing(false);
     };
-    
-    /**
-     * Displays grid's failure activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays grid failure activity.
+    /// </summary>
     instance.displayGridFailureActivity = function () {
         instance.ResultMessage(instance.getMessageRepository().get("standard.err.text"));
         instance.Processing(false);
     };
-    
-    /**
-     * Displays grid clear activity.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Displays grid clear activity.
+    /// </summary>
     instance.displayGridClearActivity = function () {
         instance.ResultMessage("");
         instance.Processing(false);

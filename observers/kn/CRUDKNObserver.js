@@ -13,13 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * Concrete CRUD KO Observer that provide data and view synchronization based on
- * the provided entity object.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// CRUDKNObserver data communication provide create, read, update, delete and listing functionality against a http service.
+/// </summary>
 function CRUDKNObserver(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -31,198 +27,169 @@ function CRUDKNObserver(options) {
     var findOptions = Object.create(options);
     findOptions.instance = instance;
     instance = SearchKNObserver(findOptions);
-    
+
+    /// <summary>
+    /// NewModeCaption, data member property.
+    /// </summary>
     instance.NewModeCaption = ko.observable(instance.getMessageRepository().get("form.new.text"));
+
+    /// <summary>
+    /// EditModeCaption, data member property.
+    /// </summary>
     instance.EditModeCaption = ko.observable(instance.getMessageRepository().get("form.edit.text"));
+
+    /// <summary>
+    /// EditMode, data member property.
+    /// </summary>
     instance.EditMode = ko.observable(false);
+
+    /// <summary>
+    /// FormObject, data member property.
+    /// </summary>
     instance.FormObject = ko.observable(new (Object.getPrototypeOf(instance.ContentType)).constructor({}));
+
+    /// <summary>
+    /// MasterKeyRecord, data member property.
+    /// </summary>
     instance.MasterKeyRecord = ko.observable(null);
 
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "CRUDKNObserver";
     };
 
-    /**
-     * Sets master key record in detail observer.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets master key record in detail observer.
+    /// </summary>
     instance.setMasterKeyRecord = function (data) {
         instance.MasterKeyRecord(data);
     };
 
-    /**
-     * Gets master key record from detail observer.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets master key record from detail observer.
+    /// </summary>
     instance.getMasterKeyRecord = function () {
         return instance.MasterKeyRecord();
     };
-    
-    /**
-     * Gets observable master key record object.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets observable master key record object.
+    /// </summary>
     instance.getObservableMasterKeyRecord = function () {
         return instance.MasterKeyRecord;
     };
-    
-    /**
-     * Sets form's edit mode (true / false). 
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets form's edit mode (true / false). 
+    /// </summary>
     instance.setEditMode = function (data) {
         instance.EditMode(data);
     };
 
-    /**
-     * Gets form's edit mode.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets form's edit mode.
+    /// </summary>
     instance.getEditMode = function () {
         return instance.EditMode();
     };
-    
-    /**
-     * Gets observable edit mode object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable edit mode.
+    /// </summary>
     instance.getObservableEditMode = function () {
         return instance.EditMode;
     };
 
-    /**
-     * Sets form's new mode caption.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets form's new mode caption.
+    /// </summary>
     instance.setNewModeCaption = function (data) {
         instance.NewModeCaption(data);
     };
 
-    /**
-     * Gets form's new mode caption.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets form's new mode caption.
+    /// </summary>
     instance.getNewModeCaption = function () {
         return instance.NewModeCaption();
     };
-    
-    /**
-     * Gets observable new mode caption object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable new mode caption object.
+    /// </summary>
     instance.getObservableNewModeCaption = function () {
         return instance.NewModeCaption;
     };
 
-    /**
-     * Sets form's edit mode caption.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets form's edit mode caption.
+    /// </summary>
     instance.setEditModeCaption = function (data) {
         instance.EditModeCaption(data);
     };
 
-    /**
-     * Gets form's edit mode caption.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets form's edit mode caption.
+    /// </summary>
     instance.getEditModeCaption = function () {
         return instance.EditModeCaption();
     };
-    
-    /**
-     * Gets observable edit mode caption.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable edit mode caption.
+    /// </summary>
     instance.getObservableEditModeCaption = function () {
         return instance.EditModeCaption;
     };
-    
-    /**
-     * Sets form observer object with optional original key.
-     * 
-     * data.content
-     * data.originalKey
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets form object with optional original key.
+    /// </summary>
     instance.setFormObject = function (data) {
         var newObject = (data.content !== null && data.content !== undefined) ? data.content : data;
         instance.FormObject(newObject);
     };
 
-    /**
-     * Gets form object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets form object.
+    /// </summary>
     instance.getFormObject = function () {
         return instance.FormObject();
     };
-    
-    /**
-     * Gets observable form object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable form object.
+    /// </summary>
     instance.getObservableFormObject = function () {
         return instance.FormObject;
     };
 
-    /**
-     * Gets form's stringified JSON object.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets stringified text from form object.
+    /// </summary>
     instance.getFormStringifiedObject = function () {
         return ko.toJSON(instance.FormObject());
     };
 
-    /**
-     * Gets form's JSON object.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets form's JSON object.
+    /// </summary>
     instance.getFormJSONObject = function () {
         return JSON.parse(ko.toJSON(instance.FormObject()));
     };
-    
-    /**
-     * Resets selected record value.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Resets selected record value.
+    /// </summary>
     instance.resetRecord = function () {
         instance.setRecord(null);
     };
 
-    /**
-     * Validate form object.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Validates form object.
+    /// </summary>
     instance.validateFormObject = function () {
         var errors = ko.validation.group(instance.FormObject(), {deep: true});
         errors.showAllMessages();
@@ -233,12 +200,9 @@ function CRUDKNObserver(options) {
         return true;
     };
 
-    /**
-     * Synchronizes observer with view.
-     * @param {type} options 
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Synchronizes observer with view.
+    /// </summary>
     instance.synchronizeView = function (options) {
 
         options = options === null || options === undefined ? {} : options;
@@ -337,13 +301,9 @@ function CRUDKNObserver(options) {
         }
     };
 
-    /**
-     * Resets form object and view mode.
-     * 
-     * @param {type} options
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Resets form object, form and update view mode.
+    /// </summary>
     instance.resetForm = function (options) {
         instance.displayFormClearActivity();
         instance.EditMode(false);
@@ -362,12 +322,9 @@ function CRUDKNObserver(options) {
         instance.synchronizeView(options);
     };
 
-    /**
-     * Resets form for editing based on the indexed record.
-     * 
-     * @param {type} index
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Resets form for editing based on the indexed record.
+    /// </summary>
     instance.resetFormForEditing = function (index) {
         instance.displayFormClearActivity();
         
@@ -388,12 +345,9 @@ function CRUDKNObserver(options) {
         instance.FormObject(new (instance.getContentTypeObjectPrototype()).constructor(JSON.parse(ko.toJSON(record))));
     };
 
-    /**
-     * Resets form for editing based on the data record.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Resets form for editing based on the data record.
+    /// </summary>
     instance.resetFormForEditingByRecord = function (data) {
         instance.displayFormClearActivity();
         
@@ -414,15 +368,9 @@ function CRUDKNObserver(options) {
         instance.FormObject(new (instance.getContentTypeObjectPrototype()).constructor(JSON.parse(ko.toJSON(record))));
     };
 
-    /**
-     * Updates new record and associated views.
-     * 
-     * data.record - entity records
-     * data.order - 'first' or 'last'
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Add new record and update associated views.
+    /// </summary>
     instance.updateNewRecordView = function (data) {
         
         if (data !== null && data !== undefined) {
@@ -469,12 +417,9 @@ function CRUDKNObserver(options) {
         instance.performRefObjectAction(data);
     };
 
-    /**
-     * Updates existing record and associated views.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Updates existing record and associated views.
+    /// </summary>
     instance.updateExistingRecordView = function (data) {
         instance.displaySuccessActivity();
 
@@ -526,12 +471,9 @@ function CRUDKNObserver(options) {
         instance.performRefObjectAction(data);
     };
 
-    /**
-     * Updates deletion record and associated views.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Deletes record and update associated views.
+    /// </summary>
     instance.updateDeletionRecordView = function (data) {
         instance.displaySuccessActivity();
 
@@ -558,13 +500,10 @@ function CRUDKNObserver(options) {
         
         instance.performRefObjectAction(data);
     };
-    
-    /**
-     * Performs a reference action with reference input on a reference object.
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Performs a reference action with reference input on a reference object.
+    /// </summary>
     instance.performRefObjectAction = function (options) {
         if (options.refActions !== null && options.refActions !== undefined) {
             if (options.refObject !== null && options.refObject !== undefined) {
@@ -592,17 +531,9 @@ function CRUDKNObserver(options) {
         }
     };
 
-    /**
-     * Updates observer (data/views) with result record.
-     * 
-     * data.action - create / update / delete
-     * data.resultRecord - Return result (usually entity object)
-     * data.inputErrors - list of input errors
-     * data.placement - placement
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Updates observer (data/views) with results.
+    /// </summary>
     instance.updateView = function (data) {
         instance.displayProcessing(false);
         instance.displayGridSuccessActivity();

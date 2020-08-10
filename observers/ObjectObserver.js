@@ -13,13 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * ObjectObserver provides concrete observer independent data, statuses, messages 
- * and view synchronization functionality for a particular object source. 
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// ObjectObserver interface provide data, statuses, messages and view synchronization functionality for a particular object source. 
+/// </summary>
 function ObjectObserver(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -62,85 +58,65 @@ function ObjectObserver(options) {
     
     //extend from activity observer
     instance = ActivityObserver({'instance': instance, 'observer': instance.Observer});
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+
+    /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
     instance.getType = function () {
         return "ObjectObserver";
     };
 
-    /**
-     * Sets form observer object with optional original key.
-     * 
-     * data.content
-     * data.originalKey
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets form observer object with optional original key.
+    /// </summary>
     instance.setFormObject = function (data) {
 
         instance.getObserver().setFormObject(data);
     };
 
-    /**
-     * Gets form object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets form object.
+    /// </summary>
     instance.getFormObject = function () {
 
         return instance.getObserver().getFormObject();
     };
 
-    /**
-     * Gets observable form object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets observable form object.
+    /// </summary>
     instance.getObservableFormObject = function () {
 
         return instance.getObserver().getObservableFormObject();
     };
 
-    /**
-     * Gets form's stringified JSON object.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets form's stringified text from JSON Form object.
+    /// </summary>
     instance.getFormStringifiedObject = function () {
 
         return instance.getObserver().getFormStringifiedObject();
     };
 
-    /**
-     * Gets form's JSON object.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets form's JSON object.
+    /// </summary>
     instance.getFormJSONObject = function () {
 
         return instance.getObserver().getFormJSONObject();
     };
 
-    /**
-     * Validate form object.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Validate form object.
+    /// </summary>
     instance.validateFormObject = function () {
 
         return instance.getObserver().validateFormObject();
     };
 
-    /**
-     * Resets form object and view mode.
-     * 
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Resets form object and view mode.
+    /// </summary>
     instance.resetForm = function () {
 
         instance.getObserver().resetForm();

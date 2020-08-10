@@ -13,28 +13,24 @@
  *  limitations under the License.
  */
 
-/**
- * Alternates between objects / concepts.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// Alternates between zero and one conceptual objects.
+/// </summary>
 function Alternator(options) {
     var instance = this;
     var extender = new InstanceExtender();
     instance = extender.extendObjectInterface({'instance': instance, 'field': 'Current'});
-    
-    /**
-     * Represents Zero object / concept.
-     */
+
+    /// <summary>
+    /// Zero, conceptual data member observer property.
+    /// </summary>    
     instance.Zero = options.zero;
-    /**
-     * Represents One object / concept.
-     */
+
+    /// <summary>
+    /// One, conceptual data member observer property.
+    /// </summary>
     instance.One = options.one;
-    /**
-     * Represents Current object (One / Zero).
-     */
+    
 
     if (options.observer !== null && options.observer !== undefined) {
         if (options.object !== null && options.object !== undefined) {
@@ -43,42 +39,38 @@ function Alternator(options) {
             options.observer.setObject(options.zero);
         }
     }
-    
+
+    /// <summary>
+    /// Current, data member observer property.
+    /// </summary>
     instance.Current = options.observer;
-    
-    /**
-     * Gets type information.
-     * 
-     * @returns {String}
-     */
+
+
+    /// <summary>
+    /// Gets type information.
+    /// </summary>
     instance.getType = function () {
         return "Alternator";
     };
 
-    /**
-     * Gets zero object.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets zero object.
+    /// </summary>
     instance.getZero = function () {
         return instance.Zero;
     };
 
-    /**
-     * Gets one object.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets one object.
+    /// </summary>
     instance.getOne = function () {
         return instance.One;
     };
 
-    /**
-     * Alternates an object with other object.
-     * 
-     * @param {type} object
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Alternates an object with other object.
+    /// </summary>
     instance.alternate = function (object) {
 
         if (object !== null && object !== undefined) {
@@ -94,11 +86,9 @@ function Alternator(options) {
         return instance.Current;
     };
 
-    /**
-     * Gets the currently selected object.
-     * 
-     * @returns {unresolved}
-     */
+    /// <summary>
+    /// Gets the currently selected object.
+    /// </summary>
     instance.getCurrent = function () {
         return instance.Current;
     };

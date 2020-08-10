@@ -13,13 +13,9 @@
  *  limitations under the License.
  */
 
-/**
- * Concrete CRUD KO Observer that provide data and view synchronization based on
- * the provided entity object.
- * 
- * @param {type} options
- * @returns {undefined}
- */
+/// <summary>
+/// SearchKNObserver provide reading and listing of record(s) from a http service.
+/// </summary>
 function SearchKNObserver(options) {
     var instance = (options.instance !== null && options.instance !== undefined) ? options.instance : this;
     var extender = new InstanceExtender();
@@ -32,306 +28,270 @@ function SearchKNObserver(options) {
     activityOptions.instance = instance;
     instance = ActivityKNObserver(activityOptions);
     
-    //listactivity
+    
+    /// <summary>
+    /// Record, data member property.
+    /// </summary>
     instance.Record = ko.observable(null);
+
+    /// <summary>
+    /// Records, data member property.
+    /// </summary>
     instance.Records = ko.observableArray([]);
+
+    /// <summary>
+    /// RecordCount, data member property.
+    /// </summary>
     instance.RecordCount = ko.observable(0);
+
+    /// <summary>
+    /// SelectedRecord, data member property.
+    /// </summary>
     instance.SelectedRecord = ko.observable(null);
+
+    /// <summary>
+    /// SelectedRecordIndex, data member property.
+    /// </summary>
     instance.SelectedRecordIndex = -1;
 
+    /// <summary>
+    /// ListNavigator, data member property.
+    /// </summary>
     instance.ListNavigator = ko.observable(new ListNavigator({ 'currentList': 1, 'listSize': 1, 'totalRecords': 0, 'scrollSize': 1, 'listsource': instance.ListSource }));
+
+    /// <summary>
+    /// ListingScrollSize, data member property.
+    /// </summary>
     instance.ListingScrollSize = ko.observable(5);
+
+    /// <summary>
+    /// ListSize, data member property.
+    /// </summary>
     instance.ListSize = ko.observable(10);
+
+    /// <summary>
+    /// CurrentList, data member property.
+    /// </summary>
     instance.CurrentList = ko.observable(1);
+
+    /// <summary>
+    /// ListSource, data member property.
+    /// </summary>
     instance.ListSource = options.listsource;
     
-    
-    /**
-     * Gets the type of the function construct.
-     * 
-     * @returns {String}
-     */
+    /// <summary>
+    /// Gets the type of function construct.
+    /// </summary>
     instance.getType = function () {
         return "SearchKNObserver";
     };
-    
-    /**
-     * Sets record.
-     * 
-     * @param {type} record
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets record.
+    /// </summary>
     instance.setRecord = function (record) {
         instance.Record(record);
     };
-    
-    /**
-     * Gets record.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets record.
+    /// </summary>
     instance.getRecord = function () {
         return instance.Record();
     };
-    
-    /**
-     * Gets observable record.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable record.
+    /// </summary>
     instance.getObservableRecord = function () {
         return instance.Record;
     };
-    
-    /**
-     * Set observer records list with array object.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets list of records.
+    /// </summary>
     instance.setRecords = function(data) {
         instance.Records(data);
     };
-    
-    /**
-     * Get records list from observer records.
-     * 
-     * @returns {ko.observableArray.result}
-     */
+
+    /// <summary>
+    /// Gets list of records.
+    /// </summary>
     instance.getRecords = function() {
         return instance.Records();
     };
-    
-    /**
-     * Get records list from observer records.
-     * 
-     * @returns {ko.observableArray.result}
-     */
+
+    /// <summary>
+    /// Gets observable list of records.
+    /// </summary>
     instance.getObservableRecords = function() {
         return instance.Records;
     };
-    
-    /**
-     * Sets record count.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets record count.
+    /// </summary>
     instance.setRecordCount = function(data) {
         instance.RecordCount(data);
     };
-    
-    /**
-     * Gets record count.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets record count.
+    /// </summary>
     instance.getRecordCount = function() {
         return instance.RecordCount();
     };
-    
-    /**
-     * Gets record count.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable record count.
+    /// </summary>
     instance.getObservableRecordCount = function() {
         return instance.RecordCount;
     };
-    
-    /**
-     * Sets selected record in detail observer.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets selected record in detail observer.
+    /// </summary>
     instance.setSelectedRecord = function (data) {
         instance.SelectedRecord(data);
     };
-    
-    /**
-     * Gets selected record from detail observer.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets selected record from detail observer.
+    /// </summary>
     instance.getSelectedRecord = function () {
         return instance.SelectedRecord();
     };
-    
-    /**
-     * Gets observable selected record.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets observable selected record.
+    /// </summary>
     instance.getObservableSelectedRecord = function () {
         return instance.SelectedRecord;
     };
-    
-    /**
-     * Sets grid / list item current index.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets selected record index.
+    /// </summary>
     instance.setSelectedRecordIndex = function(data) {
         instance.SelectedRecordIndex(data);
     };
-    
-    /**
-     * Gets grid / list item current index.
-     * 
-     * @returns {Number|indexValue}
-     */
+
+    /// <summary>
+    /// Gets selected record index.
+    /// </summary>
     instance.getSelectedRecordIndex = function () {
         return instance.SelectedRecordIndex();
     };
-    
-    /**
-     * Gets observable selected record index.
-     * 
-     * @returns {Number|indexValue}
-     */
+
+    /// <summary>
+    /// Gets observable selected record index.
+    /// </summary>
     instance.getObservableSelectedRecordIndex = function () {
         return instance.SelectedRecordIndex;
     };
-    
-    /**
-     * Sets pagination view data object.
-     * 
-     * @param {type} navigator
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets navigator data object.
+    /// </summary>
     instance.setListNavigator = function (navigator) {
         instance.ListNavigator(navigator);
     };
-    
-    /**
-     * Gets grid / list pagination data view.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets list navigator object.
+    /// </summary>
     instance.getListNavigator = function () {
         return instance.ListNavigator();
     };
-    
-    /**
-     * Gets observable list navigator object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable list navigator object.
+    /// </summary>
     instance.getObservableListNavigator = function () {
         return instance.ListNavigator;
     };
-    
-    /**
-     * Sets grid / list scroll size.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */    
+
+    /// <summary>
+    /// Sets listing scroll size.
+    /// </summary>
     instance.setListingScrollSize = function(data) {
         instance.ListingScrollSize(data);
     };
-    
-    /**
-     * Gets grid / list scroll size.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets listing scroll size.
+    /// </summary>
     instance.getListingScrollSize = function () {
         return instance.ListingScrollSize();
     };
-    
-    /**
-     * Gets observable listing scroll size object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable listing scroll size.
+    /// </summary>
     instance.getObservableListingScrollSize = function () {
         return instance.ListingScrollSize;
     };
-    
-    /**
-     * Sets grid / list data page size.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets list size.
+    /// </summary>
     instance.setListSize = function(data) {
         instance.ListSize(data);
     };
-    
-    /**
-     * Gets grid / list data page size.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets list size.
+    /// </summary>
     instance.getListSize = function () {
         return instance.ListSize();
     };
-    
-    /**
-     * Gets observable list size object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable list size.
+    /// </summary>
     instance.getObservableListSize = function () {
         return instance.ListSize;
     };
-    
-    /**
-     * Sets grid / list current page.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Sets current list.
+    /// </summary>
     instance.setCurrentList = function(data) {
         instance.CurrentList(data);
     };
-    
-    /**
-     * Gets grid / list current page.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets current list number.
+    /// </summary>
     instance.getCurrentList = function () {
         return instance.CurrentList();
     };
 
-    /**
-     * Sets list source.
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Sets list source.
+    /// </summary>
     instance.setListSource = function (value) {
         instance.ListSource = value;
     };
 
-    /**
-     * Gets list source.
-     * 
-     * @returns {ko.observable.observable}
-     */
+    /// <summary>
+    /// Gets list source.
+    /// </summary>
     instance.getListSource = function () {
         return instance.ListSource;
     };
-    
-    /**
-     * Gets observable current list object.
-     * 
-     * @returns {ko.observable.observable}
-     */
+
+    /// <summary>
+    /// Gets observable current list object.
+    /// </summary>
     instance.getObservableCurrentList = function () {
         return instance.CurrentList;
     };
-    
-    /**
-     * Gets indexed stringified JSON object.
-     * 
-     * @param {type} index 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets indexed stringified text from indexed JSON object.
+    /// </summary>
     instance.getIndexedStringifiedObject = function (index) {
         if (index === undefined) {
             if (instance.SelectedRecordIndex >= 0) {
@@ -343,61 +303,45 @@ function SearchKNObserver(options) {
             }
         }
     };
-    
-    /**
-     * Gets indexed JSON object.
-     * 
-     * @param {type} index 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets indexed JSON object from indexed stringified object.
+    /// </summary>
     instance.getIndexedJSONObject = function(index) {
         return JSON.parse(instance.getIndexedStringifiedObject(index));
     };
-    
-    /**
-     * Gets JSON object from provided immediate data object.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets stringified text from selected data record.
+    /// </summary>
     instance.getSelectedStringifiedObject = function() {
         return ko.toJSON(instance.SelectedRecord());
     };
-    
-    /**
-     * Gets JSON object from provided immediate data object.
-     * 
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets JSON object from selected data record.
+    /// </summary>
     instance.getSelectedJSONObject = function() {
         return JSON.parse(ko.toJSON(instance.SelectedRecord()));
     };
-    
-    /**
-     * Gets JSON object from provided immediate data object.
-     * 
-     * @param {type} data
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets stringified text from provided immediate data object.
+    /// </summary>
     instance.getStringifiedObject = function(data) {
         return ko.toJSON(data);
     };
-    
-    /**
-     * Gets JSON object from provided immediate data object.
-     * 
-     * @param {type} data
-     * @returns {unresolved}
-     */
+
+    /// <summary>
+    /// Gets JSON object from provided immediate data object.
+    /// </summary>
     instance.getJSONObject = function(data) {
         return JSON.parse(ko.toJSON(data));
     };
-    
-    /**
-     * Select a record based on index value.
-     * 
-     * @param {type} options 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Select a record based on index value.
+    /// </summary>
     instance.selectRecord = function (options) {
         
         var selectedRecord = null;
@@ -416,29 +360,19 @@ function SearchKNObserver(options) {
             instance.setRecord(selectedRecord);
         }
     };
-    
-    /**
-     * Resets list records, error list and record count views.
-     * 
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Resets list of records, error list and record count views.
+    /// </summary>
     instance.clearListRecordsView = function () {
         instance.Records([]);
         instance.Errors([]);
         instance.RecordCount(0);
     };
 
-    /**
-     * Fills list records and associated views.
-     * 
-     * data.page - page number
-     * data.responseData - response data
-     * data.records - extracted records from response data
-     * data.immediateRecords - immediate entity records
-     * 
-     * @param {type} data
-     * @returns {undefined}
-     */
+    /// <summary>
+    /// Fills list of records and display in associated views.
+    /// </summary>
     instance.fillListRecordsView = function (data) {
 
         if (data.clearRecords !== null && data.clearRecords !== undefined) {
@@ -512,16 +446,10 @@ function SearchKNObserver(options) {
             }
         }
     };
-    
-    /**
-     * Composes list navigator observable object based on records, total records
-     * and current list.
-     * 
-     * options.responseData -
-     * 
-     * @param {type} options
-     * @returns {undefined}
-     */
+
+    /// <summary>
+    /// Composes navigator observable object based on records, total records and current list.
+    /// </summary>
     instance.composeNavigator = function (options) {
         
         if (options.responseData !== null && options.responseData !== undefined) {
