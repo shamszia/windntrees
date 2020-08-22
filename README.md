@@ -2,6 +2,18 @@
 <p>WindnTrees CRUDS is a front-end http request, response and related content processing javascript library that integrates with Observers to synchronize data between source and view objects that follows the create, read, update and delete (CRUD) data extraction, editing, deletion and saving design pattern.</p>
 <p>CRUDS utilize CRUDController to extract data from a data source or CRUDSource and processes response with CRUDProcessor to produce typed objects. Observers utilize typed objects and present them in their appropriate views.</p>
 <p>This simplifies the process of data extraction, processing and presentation.</p>
+<p>Learn CRUD, CRUD2CRUD (CRUDS) programming in WindnTrees JavaScript, ASP .NET and ASP .NET Core. Develop applications with minimal effort using client and server side CRUD controllers and views.</p>
+<p>Benefits:</p>
+<ol>
+  <li>MVVM</li>
+  <li>CRUD2CRUD Controllers (Generalized Communication)</li>
+  <li>CRUD Repositories for persistence</li>
+  <li>Neat Views and Scripting</li>
+  <li>Professional Practice, and</li>
+  <li>Simple Codebase</li>
+</ol>
+<p>Get started with WindnTrees</p>
+<p><a href="www.invincibletec.com/tutorial/detail/getting-started-with-windntrees" title="getting-started-with-windntrees">getting-started-with-windntrees</a></p>
 
 <h2>CRUD2CRUD (CRUD=CRUD) Architecture</h2>
 <p>WindnTrees implements CRUD 2 CRUD (CRUDS parallel) application architecture where server side publish services in terms of CRUD controllers and the client side consumes those services using CRUD controllers.</p>
