@@ -29,6 +29,13 @@ function CRUDSList(options) {
     instance = extender.extendObjectInterface({'instance': instance, 'field': 'Current'});
 
     /// <summary>
+    /// Gets the type of the function construct.
+    /// </summary>
+    instance.getType = function () {
+        return "CRUDSList";
+    };
+
+    /// <summary>
     /// Currently selected CRUD index data member property.
     /// </summary>    
     instance.CRUDIndex = 0;
@@ -55,7 +62,7 @@ function CRUDSList(options) {
     instance.selectCRUD = function (options) {
 
         if (options.crudindex !== null && options.crudindex !== undefined) {
-            
+            instance.CRUDIndex = options.crudindex;
             instance.Current.setObject(instance.CRUDS[options.crudindex]);
             
         } else if (options.crudkey !== null && options.crudkey !== undefined) {
@@ -83,8 +90,6 @@ function CRUDSList(options) {
         instance.CRUDIndex += 1;
         if (instance.CRUDIndex >= instance.CRUDS.length) {
             instance.CRUDIndex = 0;
-        } else if (instance.CRUDIndex < 0) {
-            instance.CRUDIndex = instance.CRUDS.length > 0 ? (instance.CRUDS.length - 1) : 0;
         }
         
         instance.Current.setObject(instance.CRUDS[instance.CRUDIndex]);
@@ -95,10 +100,8 @@ function CRUDSList(options) {
     /// </summary>
     instance.prevCRUD = function () {
         instance.CRUDIndex -= 1;
-        if (instance.CRUDIndex > instance.CRUDS.length) {
-            instance.CRUDIndex = 0;
-        } else if (instance.CRUDIndex < 0) {
-            instance.CRUDIndex = instance.CRUDS.length > 0 ? (instance.CRUDS.length - 1) : 0;
+        if (instance.CRUDIndex < 0) {
+            instance.CRUDIndex = instance.CRUDS.length - 1;
         }
         
         instance.Current.setObject(instance.CRUDS[instance.CRUDIndex]);

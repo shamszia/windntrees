@@ -369,9 +369,13 @@ function ObjectView(options) {
         var observerInterface = instance.Observer;
         try {
             while (1) {
+                if (observerInterface.getObserver === null || observerInterface.getObserver === undefined) {
+                    break;
+                }
                 observerInterface = observerInterface.getObserver();
             }
         } catch (e) {
+            console.log(e.message);
         }
 
         return observerInterface;
