@@ -369,7 +369,11 @@ function ObjectView(options) {
         var observerInterface = instance.Observer;
         try {
             while (1) {
-                if (observerInterface.getObserver === null || observerInterface.getObserver === undefined) {
+
+                if (observerInterface === null || observerInterface === undefined) {
+                    break;
+                }
+                else if (observerInterface.getObserver === null || observerInterface.getObserver === undefined) {
                     break;
                 }
                 observerInterface = observerInterface.getObserver();
