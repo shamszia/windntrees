@@ -187,7 +187,9 @@ function SearchView(options) {
     /// Error processing and presenting event subscription.
     /// </summary>
     instance.presentErrors = function (event, eventData) {
-        
+
+        eventData.event = "errors.before.rendering.view.CRUD.WindnTrees";
+
         if (eventData.data.callback !== null &&
                 eventData.data.callback !== undefined) {
 
@@ -200,6 +202,8 @@ function SearchView(options) {
                 instance.getObserverInterface().setErrors(instance.getErrors());
             }
         }
+
+        eventData.event = "errors.after.rendering.view.CRUD.WindnTrees";
     };
 
     /// <summary>

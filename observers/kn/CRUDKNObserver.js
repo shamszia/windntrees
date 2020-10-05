@@ -491,7 +491,7 @@ function CRUDKNObserver(options) {
                     }
                 }
                 catch (e) {
-                    console.log('Its not DetailKNObserver object');
+                    
                 }
 
                 return item.getKey() === deletedRecord.getKey();
