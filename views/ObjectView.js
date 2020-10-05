@@ -1403,6 +1403,8 @@ function ObjectView(options) {
     instance.presentErrors = function (event, eventData) {
 
         eventData.event = "errors.before.rendering.view.CRUD.WindnTrees";
+        instance.notify(eventData);
+
         if (eventData.data.callback !== null &&
                 eventData.data.callback !== undefined) {
 
@@ -1430,7 +1432,9 @@ function ObjectView(options) {
                 }
             }
         }
+
         eventData.event = "errors.after.rendering.view.CRUD.WindnTrees";
+        instance.notify(eventData);
     };
 
     /// <summary>
