@@ -405,11 +405,11 @@ function SearchKNObserver(options) {
 
                         } else {
 
-                            instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.records.length + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
+                            instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.records.length + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + (instance.ListNavigator().calculateTotalPages() == 0 ? 1 : instance.ListNavigator().calculateTotalPages()) + " " + instance.getMessageRepository().get("form.totalPages.text"));
                         }
                     } else {
 
-                        instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.records.length + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
+                        instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.records.length + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + (instance.ListNavigator().calculateTotalPages() == 0 ? 1 : instance.ListNavigator().calculateTotalPages()) + " " + instance.getMessageRepository().get("form.totalPages.text"));
                     }
                 }
             }
@@ -436,11 +436,11 @@ function SearchKNObserver(options) {
 
                         } else {
 
-                            instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
+                            instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + (instance.ListNavigator().calculateTotalPages() == 0 ? 1 : instance.ListNavigator().calculateTotalPages()) + " " + instance.getMessageRepository().get("form.totalPages.text"));
                         }
                     } else {
 
-                        instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
+                        instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + data.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + (instance.ListNavigator().calculateTotalPages() == 0 ? 1 : instance.ListNavigator().calculateTotalPages()) + " " + instance.getMessageRepository().get("form.totalPages.text"));
                     }
                 }
             }
@@ -460,7 +460,7 @@ function SearchKNObserver(options) {
 
                 var pagesNavigator = new ListNavigator({ 'currentList': instance.CurrentList(), 'listSize': instance.ListSize(), 'totalRecords': options.responseData.total, 'scrollSize': instance.ListingScrollSize(), 'listsource': instance.ListSource });
                 instance.ListNavigator(pagesNavigator);
-                instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + options.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + instance.ListNavigator().calculateTotalPages() + " " + instance.getMessageRepository().get("form.totalPages.text"));
+                instance.ResultMessage(instance.getMessageRepository().get("form.found.text") + " " + options.responseData.total + " " + instance.getMessageRepository().get("form.records.text") + " " + instance.getMessageRepository().get("form.displayingPage.text") + " " + instance.CurrentList() + " " + instance.getMessageRepository().get("form.of.text") + " " + (instance.ListNavigator().calculateTotalPages() == 0 ? 1 : instance.ListNavigator().calculateTotalPages()) + " " + instance.getMessageRepository().get("form.totalPages.text"));
             }
         }
     };
