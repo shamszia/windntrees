@@ -94,23 +94,19 @@ function CRUDController(options) {
 
         //initialize headers and set __RequestVerificationToken for request authorization.
         var headers = (options.headers !== null && options.headers !== undefined) ? options.headers : {};
-        var token = $('[name=__RequestVerificationToken]').val();
-        headers['__RequestVerificationToken'] = token;
+        headers['__RequestVerificationToken'] = $('[name=__RequestVerificationToken]').val();
 
+        //Following commented block is not required should be deleted after verification
         //initialize request data or content and extend with __RequestVerificationToken for request authorization.
-        var data = (options.data !== null && options.data !== undefined) ? JSON.parse(options.data) : {};
-
-        var verificationElements = document.getElementsByName("__RequestVerificationToken");
-        if (verificationElements !== null && verificationElements !== undefined) {
-
-            data.__RequestVerificationToken = [];
-            for (var index = 0; index < verificationElements.length; index++) {
-
-                data.__RequestVerificationToken.push(verificationElements[index].value);
-            }
-        }
-
-        options.data = JSON.stringify(data);
+        //var data = (options.data !== null && options.data !== undefined) ? JSON.parse(options.data) : {};
+        //var verificationElements = document.getElementsByName("__RequestVerificationToken");
+        //if (verificationElements !== null && verificationElements !== undefined) {
+        //    data.__RequestVerificationToken = [];
+        //    for (var index = 0; index < verificationElements.length; index++) {
+        //        data.__RequestVerificationToken.push(verificationElements[index].value);
+        //    }
+        //}
+        //options.data = JSON.stringify(data);
 
         if (options.eventData.target === 'CreateFileContent' || options.eventData.target === 'UpdateFileContent') {
 
@@ -205,7 +201,7 @@ function CRUDController(options) {
         instance.notify(eventData);
         
         instance.sendRequest({
-            'headers': {},
+            'headers': { 'W-Target': data.__target },
             'data': (typeof(data.content) === "string" ? data.content : JSON.stringify(data.content)),
             'url': data.uri + "/" + request,
             'eventData': eventData}, callback);
@@ -226,7 +222,7 @@ function CRUDController(options) {
         instance.notify(eventData);
 
         instance.sendRequest({
-            'headers': {},
+            'headers': { 'W-Target': data.__target },
             'method': 'GET',
             'data': null,
             'url': encodeURI(data.uri + "/" + request + "/" + ((data.key !== null && data.key !== undefined) ? data.key : "")),
@@ -248,7 +244,7 @@ function CRUDController(options) {
         instance.notify(eventData);
 
         instance.sendRequest({
-            'headers': {},
+            'headers': { 'W-Target': data.__target },
             'data': (typeof(data.content) === "string" ? data.content : JSON.stringify(data.content)),
             'url': data.uri + "/" + request,
             'file': data.UploadField,
@@ -269,7 +265,7 @@ function CRUDController(options) {
         instance.notify(eventData);
 
         instance.sendRequest({
-            'headers': {},
+            'headers': { 'W-Target': data.__target },
             'data': (typeof(data.content) === "string" ? data.content : JSON.stringify(data.content)),
             'url': data.uri + "/" + request,
             'eventData': eventData}, callback);
@@ -316,7 +312,7 @@ function CRUDController(options) {
             }
 
             instance.sendRequest({
-                'headers': {},
+                'headers': { 'W-Target': data.__target },
                 'method': "GET",
                 'data': null,
                 'url': url,
@@ -328,7 +324,7 @@ function CRUDController(options) {
             var queryObject = (data.query !== null && data.query !== undefined) ? data.query : { "key": data.key, "source": data.source, "keyword": data.keyword, "size": data.size, "page": data.page };
 
             instance.sendRequest({
-                'headers': {},
+                'headers': { 'W-Target': data.__target },
                 'data': JSON.stringify(queryObject),
                 'url': data.uri + "/" + request,
                 'eventData': eventData
