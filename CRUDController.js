@@ -94,19 +94,7 @@ function CRUDController(options) {
 
         //initialize headers and set __RequestVerificationToken for request authorization.
         var headers = (options.headers !== null && options.headers !== undefined) ? options.headers : {};
-        headers['__RequestVerificationToken'] = $('[name=__RequestVerificationToken]').val();
-
-        //Following commented block is not required should be deleted after verification
-        //initialize request data or content and extend with __RequestVerificationToken for request authorization.
-        //var data = (options.data !== null && options.data !== undefined) ? JSON.parse(options.data) : {};
-        //var verificationElements = document.getElementsByName("__RequestVerificationToken");
-        //if (verificationElements !== null && verificationElements !== undefined) {
-        //    data.__RequestVerificationToken = [];
-        //    for (var index = 0; index < verificationElements.length; index++) {
-        //        data.__RequestVerificationToken.push(verificationElements[index].value);
-        //    }
-        //}
-        //options.data = JSON.stringify(data);
+        headers['__RequestVerificationToken'] = $('[name=__RequestVerificationToken]').val();        
 
         if (options.eventData.target === 'CreateFileContent' || options.eventData.target === 'UpdateFileContent') {
 
