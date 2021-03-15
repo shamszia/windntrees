@@ -524,7 +524,10 @@ function SearchView(options) {
     /// Presents request failure.
     /// </summary>
     instance.presentFailRequest = function (event, eventData) {
-        
+
+        eventData.event = "fail.before.rendering.view.CRUD.WindnTrees";
+        instance.notify(eventData);
+
         if (eventData.data.callback !== null &&
                 eventData.data.callback !== undefined) {
 
@@ -552,6 +555,9 @@ function SearchView(options) {
                 }
             }
         }
+
+        eventData.event = "fail.after.rendering.view.CRUD.WindnTrees";
+        instance.notify(eventData);
     };
 
     /// <summary>

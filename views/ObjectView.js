@@ -1554,17 +1554,20 @@ function ObjectView(options) {
                     }
                 }
             }
-
-            eventData.event = "record.after.rendering.view.CRUD.WindnTrees";
-            instance.notify(eventData);
         }
+
+        eventData.event = "record.after.rendering.view.CRUD.WindnTrees";
+        instance.notify(eventData);
     };
 
     /// <summary>
     /// Presents request failure.
     /// </summary>    
     instance.presentFailRequest = function (event, eventData) {
-        
+
+        eventData.event = "fail.before.rendering.view.CRUD.WindnTrees";
+        instance.notify(eventData);
+
         if (eventData.data.callback !== null &&
                 eventData.data.callback !== undefined) {
 
@@ -1591,6 +1594,9 @@ function ObjectView(options) {
                 }
             }
         }
+
+        eventData.event = "fail.after.rendering.view.CRUD.WindnTrees";
+        instance.notify(eventData);
     };
 
     /// <summary>
