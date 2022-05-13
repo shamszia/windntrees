@@ -1,4 +1,4 @@
-/*  Copyright [2017-2020] [Invincible Technologies]
+/*  Copyright [2017-2022] [Invincible Technologies]
  *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -343,6 +343,7 @@ function CRUDProcessor(options) {
     /// Extracted and processed list of record data objects in response to select, selectList, find, list and listAll.
     /// </summary>
     instance.processRecords = function (eventData) {
+        instance.Records = [];
         var result = eventData.result;
 
         if (result.errors !== null && result.errors !== undefined) {
