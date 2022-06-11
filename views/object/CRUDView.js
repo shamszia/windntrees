@@ -42,8 +42,25 @@ function CRUDView(options) {
     /// </summary>
     instance.formatContent = function (options) {
 
-        //get form object
-        var content = (options.content !== null && options.content !== undefined) ? options.content : instance.getObserverInterface().getFormObject();
+        var content = null;
+        if (instance.Empty !== null && instance.Empty !== undefined) {
+
+            if (!instance.Empty) {
+
+                //get form object
+                content = (options.content !== null && options.content !== undefined) ? options.content : instance.getObserverInterface().getFormObject();
+            }
+        }
+        else {
+
+            //get form object
+            content = (options.content !== null && options.content !== undefined) ? options.content : instance.getObserverInterface().getFormObject();
+        }
+
+        if (options !== null && options !== undefined) {
+
+            content = options.content;
+        }
 
         //if update have time fields then format them in proper order.
         if (options.TimeFields !== null && options.TimeFields !== undefined) {
@@ -217,16 +234,36 @@ function CRUDView(options) {
          */
         instance.getObserverInterface().delete = function (record) {
 
-            if (record.content === null || record.content === undefined) {
-                
-                instance.delete({
-                    'content': record
-                });
-                
-            } else {
-                //it is already composed with content and other options.
+            if (instance.Empty) {
 
-                instance.delete(record);
+                if (record !== null && record !== undefined) {
+
+                    instance.delete({
+                        'content': record.content,
+                        'target': record.target,
+                        '__target': record.__target
+                    });
+                }
+                else {
+
+                    instance.delete({
+                        'content': null
+                    });
+                }
+            }
+            else {
+
+                if (record.content === null || record.content === undefined) {
+
+                    instance.delete({
+                        'content': record
+                    });
+
+                } else {
+                    //it is already composed with content and other options.
+
+                    instance.delete(record);
+                }
             }
         };
     }
@@ -262,16 +299,36 @@ function CRUDView(options) {
          */
         instance.getObserverObject().delete = function (record) {
 
-            if (record.content === null || record.content === undefined) {
+            if (instance.Empty) {
 
-                instance.delete({
-                    'content': record
-                });
+                if (record !== null && record !== undefined) {
 
-            } else {
-                //it is already composed with content and other options.
+                    instance.delete({
+                        'content': record.content,
+                        'target': record.target,
+                        '__target': record.__target
+                    });
+                }
+                else {
 
-                instance.delete(record);
+                    instance.delete({
+                        'content': null
+                    });
+                }
+            }
+            else {
+
+                if (record.content === null || record.content === undefined) {
+
+                    instance.delete({
+                        'content': record
+                    });
+
+                } else {
+                    //it is already composed with content and other options.
+
+                    instance.delete(record);
+                }
             }
         };
     }

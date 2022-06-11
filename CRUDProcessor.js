@@ -265,7 +265,7 @@ function CRUDProcessor(options) {
                         instance.notify({ 'event': 'errors.processor.CRUD.WindnTrees', 'key': instance.Key, 'request': eventData.request, 'data': eventData.data, 'result': 'Exception occured during content processing.', 'code': result.code });
                     }
 
-                    instance.notify({ 'event': 'record.processor.CRUD.WindnTrees', 'key': instance.Key, 'request': eventData.request, 'data': eventData.data, 'result': instance.Record, 'code': result.code });
+                    instance.notify({ 'event': 'record.processor.CRUD.WindnTrees', 'key': instance.Key, 'request': eventData.request, 'data': eventData.data, 'result': result.content, 'code': result.code });
 
                 } else {
 

@@ -96,16 +96,19 @@ function ObjectView(options) {
     /// AuthorizationCode, data member property.
     /// </summary>
     instance.AuthorizationCode = options.authorizationCode;
-    
     //reference to document component node in DOM tree.
     /// <summary>
-    /// , data member property.
+    /// ContentNode, data member property.
     /// </summary>
     instance.ContentNode = options.contentnode;
     /// <summary>
     /// ErrorNode, data member property.
     /// </summary>
     instance.ErrorNode = options.errornode;
+    /// <summary>
+    /// Empty, data member property.
+    /// </summary>
+    instance.Empty = options.empty;
 
 
     /// <summary>
@@ -545,6 +548,14 @@ function ObjectView(options) {
             instance.getObserverInterface().displayFormProcessingActivity();
         }
 
+        if (data === null || data === undefined) {
+
+            data = {};
+            data.empty = instance.Empty;
+        }
+
+        
+
         if (typeof (data) === "object") {
 
             //update uri
@@ -556,7 +567,8 @@ function ObjectView(options) {
             //assume data as key
             instance.getCRUDProcessor().read({
                 'uri': instance.URI,
-                'key': (data !== null && data !== undefined) ? data : instance.getObjectKey()
+                'key': (data !== null && data !== undefined) ? data : instance.getObjectKey(),
+                'empty': data.empty
             });
         }
     };
@@ -781,24 +793,27 @@ function ObjectView(options) {
     instance.createOrUpdateOrDelete = function (options) {
         var formInputErrors = true;
         instance.getObserverInterface().setErrors([]);
-        
-        if (options.validate !== null && options.validate !== undefined) {
-            if (options.validate) {
-                if (options.action === undefined) { //if action is not defined then consider a 'create' action
 
-                    if (options.refObject !== null && options.refObject !== undefined) {
-                        formInputErrors = options.refObject.validateFormObject();
-                    } else {
-                        formInputErrors = instance.getObserverInterface().validateFormObject();
-                    }
+        if (instance.Empty === null || instance.Empty === undefined) {
 
-                } else {
-                    if (options.action === 'create' || options.action === 'update') { //otherwise choose between actions
+            if (options.validate !== null && options.validate !== undefined) {
+                if (options.validate) {
+                    if (options.action === undefined) { //if action is not defined then consider a 'create' action
 
                         if (options.refObject !== null && options.refObject !== undefined) {
                             formInputErrors = options.refObject.validateFormObject();
                         } else {
                             formInputErrors = instance.getObserverInterface().validateFormObject();
+                        }
+
+                    } else {
+                        if (options.action === 'create' || options.action === 'update') { //otherwise choose between actions
+
+                            if (options.refObject !== null && options.refObject !== undefined) {
+                                formInputErrors = options.refObject.validateFormObject();
+                            } else {
+                                formInputErrors = instance.getObserverInterface().validateFormObject();
+                            }
                         }
                     }
                 }
@@ -810,6 +825,7 @@ function ObjectView(options) {
             instance.getObserverInterface().displayFormProcessingActivity();
             
             options.uri = instance.URI;
+            options.empty = instance.Empty;
 
             if (options.action === undefined) {
                 instance.getCRUDProcessor().create(options);

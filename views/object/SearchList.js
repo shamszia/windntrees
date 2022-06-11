@@ -104,7 +104,9 @@ function SearchList(options) {
         } else {
             options.detailEntity = detailObserver;
         }
-        
+
+        options.empty = instance.Empty;
+
         Object.getPrototypeOf(instance).create(options);
     };
 
@@ -135,7 +137,7 @@ function SearchList(options) {
         }
 
         selectedRecord[options.subitems](subitems);
-        parentObserverObject.update({'content': selectedRecord, 'validate': true, 'resetForm': false, 'refObject': instance.getObserverObject(), 'refActions': ['resetForm', 'displayFormSuccessActivity']});
+        parentObserverObject.update({ 'content': selectedRecord, 'validate': true, 'resetForm': false, 'refObject': instance.getObserverObject(), 'refActions': ['resetForm', 'displayFormSuccessActivity'], 'empty': instance.Empty});
     };
 
     /// <summary>

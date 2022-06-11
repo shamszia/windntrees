@@ -92,6 +92,7 @@ function SearchView(options) {
             _options.uri = (options.uri !== null && options.uri !== undefined) ? options.uri : instance.URI;
             _options.keyword = (options.keyword !== null && options.keyword !== undefined) ? options.keyword : _keyword;
             _options.fill = fill;
+            _options.empty = instance.Empty;
 
             instance.getCRUDProcessor().list(_options);
         }
@@ -103,7 +104,8 @@ function SearchView(options) {
                 'keyword': instance.getObserverInterface().getKeyword(),
                 'size': instance.getObserverInterface().getListSize(),
                 'page': options,
-                'fill': fill
+                'fill': fill,
+                'empty': instance.Empty
             });
         }
     };
@@ -266,6 +268,10 @@ function SearchView(options) {
                         }
                     }
                 }
+
+                eventData.event = "record.after.rendering.view.CRUD.WindnTrees";
+                instance.notify(eventData);
+
                 return;
             }
             
@@ -317,7 +323,10 @@ function SearchView(options) {
                         'placement': (options.placement !== null && options.placement !== undefined) ? options.placement : 'first'
                     });
                     }
-                    
+
+                    eventData.event = "record.after.rendering.view.CRUD.WindnTrees";
+                    instance.notify(eventData);
+
                     return;
                 }
             }

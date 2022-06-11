@@ -187,6 +187,12 @@ function CRUDController(options) {
         var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "create";
         
         instance.notify(eventData);
+
+        if (data.empty !== null && data.empty !== undefined) {
+            if (data.empty) {
+                data.content = {};
+            }
+        }
         
         instance.sendRequest({
             'headers': { 'W-Target': data.__target },
@@ -208,6 +214,12 @@ function CRUDController(options) {
         var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "read";
 
         instance.notify(eventData);
+
+        if (data.empty !== null && data.empty !== undefined) {
+            if (data.empty) {
+                data.key = '';
+            }
+        }
 
         instance.sendRequest({
             'headers': { 'W-Target': data.__target },
@@ -231,6 +243,12 @@ function CRUDController(options) {
         
         instance.notify(eventData);
 
+        if (data.empty !== null && data.empty !== undefined) {
+            if (data.empty) {
+                data.content = {};
+            }
+        }
+
         instance.sendRequest({
             'headers': { 'W-Target': data.__target },
             'data': (typeof(data.content) === "string" ? data.content : JSON.stringify(data.content)),
@@ -251,6 +269,12 @@ function CRUDController(options) {
         var request = (data.target !== null && data.target !== undefined) ? data.target : (data.request !== null && data.request !== undefined) ? data.request : "delete";
         
         instance.notify(eventData);
+
+        if (data.empty !== null && data.empty !== undefined) {
+            if (data.empty) {
+                data.content = {};
+            }
+        }
 
         instance.sendRequest({
             'headers': { 'W-Target': data.__target },
@@ -310,6 +334,12 @@ function CRUDController(options) {
         } else {
 
             var queryObject = (data.query !== null && data.query !== undefined) ? data.query : { "key": data.key, "source": data.source, "keyword": data.keyword, "size": data.size, "page": data.page };
+
+            if (data.empty !== null && data.empty !== undefined) {
+                if (data.empty) {
+                    queryObject = {};
+                }
+            }
 
             instance.sendRequest({
                 'headers': { 'W-Target': data.__target },
