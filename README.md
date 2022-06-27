@@ -58,9 +58,11 @@ new CRUDView({
 	'observer': new CRUDObserver({ 'contentType': new Color({}), 
 	'messages': intialize(new MessageRepository()) })
   })
+</pre>
 
-HTTP CRUD:
-
+<h3>HTTP CRUD</h3>
+<p>Version 133</p>
+<pre>
 new CRUDView({
 	'uri': '/color', 
 	'observer': new CRUDObserver({ 'contentType': new Color({}), 
