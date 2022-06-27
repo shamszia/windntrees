@@ -246,13 +246,13 @@ function ObjectView(options) {
         if (instance.ContentProcessor === null) {
             
             if (instance.Observer !== null && instance.Observer !== undefined) {
-                instance.ContentProcessor = new CRUDProcessor({ 'contentType': instance.Observer.getContentTypeObject() });
+                instance.ContentProcessor = new CRUDProcessor({ 'contentType': instance.Observer.getContentTypeObject(), 'HttpMethod': options.HttpMethod });
             } else {
                 
                 if (options.content !== null && options.content !== undefined) {
-                    instance.ContentProcessor = new CRUDProcessor({ 'contentType': options.contentType });
+                    instance.ContentProcessor = new CRUDProcessor({ 'contentType': options.contentType, 'HttpMethod': options.HttpMethod });
                 } else {
-                    instance.ContentProcessor = new CRUDProcessor({ });
+                    instance.ContentProcessor = new CRUDProcessor({ 'HttpMethod': options.HttpMethod });
                 }
             }
         }
@@ -553,7 +553,6 @@ function ObjectView(options) {
             data = {};
             data.empty = instance.Empty;
         }
-
         
 
         if (typeof (data) === "object") {

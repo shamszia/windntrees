@@ -76,8 +76,10 @@ function CRUDProcessor(options) {
     /// Gets CRUDController associated with CRUDProcessor.
     /// </summary>
     instance.getController = function () {
-        if (instance.Controller === null) {
-            instance.Controller = new CRUDController();
+        if (instance.Controller === null ||
+            instance.Controller === undefined)
+        {
+            instance.Controller = new CRUDController(options);
         }
         return instance.Controller;
     };

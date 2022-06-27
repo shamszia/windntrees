@@ -28,7 +28,12 @@ function CRUDController(options) {
     /// <summary>
     /// Key is unique identifier to differentiate between CRUD controllers and is optional.
     /// </summary>
-    instance.Key = options !== undefined ? options.key : null;
+    instance.Key = (options !== null && options !== undefined) ? options.key : null;
+
+    /// <summary>
+    /// HttpMethod when set ensures POST,GET,PUT,DELETE compliance.
+    /// </summary>
+    instance.HttpMethod = (options !== null && options !== undefined) ? options.HttpMethod : false;
 
     /// <summary>
     /// Processing is request status monitoring data member, true status value tells that request is in -process.
@@ -193,9 +198,22 @@ function CRUDController(options) {
                 data.content = {};
             }
         }
-        
+
+        var methodType = 'POST';
+        if (data.method !== null && data.method !== undefined) {
+
+            methodType = data.method;
+        }
+        else {
+
+            if (instance.HttpMethod) {
+                methodType = 'POST';
+            }
+        }
+
         instance.sendRequest({
             'headers': { 'W-Target': data.__target },
+            'method': methodType,
             'data': (typeof(data.content) === "string" ? data.content : JSON.stringify(data.content)),
             'url': data.uri + "/" + request,
             'eventData': eventData}, callback);
@@ -221,9 +239,22 @@ function CRUDController(options) {
             }
         }
 
+        var methodType = 'GET';
+        if (data.method !== null && data.method !== undefined) {
+
+            methodType = data.method;
+        }
+        else {
+
+            if (instance.HttpMethod) {
+                methodType = 'GET';
+            }
+        }
+        
+
         instance.sendRequest({
             'headers': { 'W-Target': data.__target },
-            'method': 'GET',
+            'method': methodType,
             'data': null,
             'url': encodeURI(data.uri + "/" + request + "/" + ((data.key !== null && data.key !== undefined) ? data.key : "")),
             'eventData': eventData
@@ -249,8 +280,21 @@ function CRUDController(options) {
             }
         }
 
+        var methodType = 'POST';
+        if (data.method !== null && data.method !== undefined) {
+
+            methodType = data.method;
+        }
+        else {
+
+            if (instance.HttpMethod) {
+                methodType = 'PUT';
+            }
+        }
+
         instance.sendRequest({
             'headers': { 'W-Target': data.__target },
+            'method': methodType,
             'data': (typeof(data.content) === "string" ? data.content : JSON.stringify(data.content)),
             'url': data.uri + "/" + request,
             'file': data.UploadField,
@@ -276,8 +320,21 @@ function CRUDController(options) {
             }
         }
 
+        var methodType = 'POST';
+        if (data.method !== null && data.method !== undefined) {
+
+            methodType = data.method;
+        }
+        else {
+
+            if (instance.HttpMethod) {
+                methodType = 'DELETE';
+            }
+        }
+
         instance.sendRequest({
             'headers': { 'W-Target': data.__target },
+            'method': methodType,
             'data': (typeof(data.content) === "string" ? data.content : JSON.stringify(data.content)),
             'url': data.uri + "/" + request,
             'eventData': eventData}, callback);
@@ -341,8 +398,21 @@ function CRUDController(options) {
                 }
             }
 
+            var methodType = 'POST';
+            if (data.method !== null && data.method !== undefined) {
+
+                methodType = data.method;
+            }
+            else {
+
+                if (instance.HttpMethod) {
+                    methodType = 'POST';
+                }
+            }
+
             instance.sendRequest({
                 'headers': { 'W-Target': data.__target },
+                'method': methodType,
                 'data': JSON.stringify(queryObject),
                 'url': data.uri + "/" + request,
                 'eventData': eventData
