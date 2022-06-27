@@ -51,6 +51,21 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
             Where <em>errors</em> field is a list or array of error objects composed of "Field Name" and "Error Message" while <em>contents</em> is a list or array of returned response objects.
         </p>
 
+<pre>
+new CRUDView({
+		'uri': '/color', 
+		'observer': new CRUDObserver({ 'contentType': new Color({}), 'messages': intialize(new MessageRepository()) })
+  })
+
+HTTP CRUD:
+
+new CRUDView({
+		'uri': '/color', 
+		'observer': new CRUDObserver({ 'contentType': new Color({}), 'messages': intialize(new MessageRepository()) }),
+		'HttpMethod': true
+  })
+</pre>
+
 
 <h2>Download</h2>
 <h3>.NET Framework Standard</h3>
