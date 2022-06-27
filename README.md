@@ -51,6 +51,7 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
             Where <em>errors</em> field is a list or array of error objects composed of "Field Name" and "Error Message" while <em>contents</em> is a list or array of returned response objects.
         </p>
 
+<h2>CRUDView</h2>
 <pre>
 new CRUDView({
 	'uri': '/color', 
