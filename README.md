@@ -53,16 +53,18 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
 
 <pre>
 new CRUDView({
-		'uri': '/color', 
-		'observer': new CRUDObserver({ 'contentType': new Color({}), 'messages': intialize(new MessageRepository()) })
+	'uri': '/color', 
+	'observer': new CRUDObserver({ 'contentType': new Color({}), 
+	'messages': intialize(new MessageRepository()) })
   })
 
 HTTP CRUD:
 
 new CRUDView({
-		'uri': '/color', 
-		'observer': new CRUDObserver({ 'contentType': new Color({}), 'messages': intialize(new MessageRepository()) }),
-		'HttpMethod': true
+	'uri': '/color', 
+	'observer': new CRUDObserver({ 'contentType': new Color({}), 
+	'messages': intialize(new MessageRepository()) }),
+	'HttpMethod': true
   })
 </pre>
 
