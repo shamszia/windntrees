@@ -76,7 +76,14 @@ function ListNavigator(options) {
     /// Calculates total number of pages or lists.
     /// </summary>
     instance.calculateTotalPages = function () {
-        return Math.ceil(instance.TotalRecords / instance.ListSize);
+
+        var totalPages = Math.ceil(instance.TotalRecords / instance.ListSize);
+        if (totalPages == 0) {
+
+            return 1;
+        }
+
+        return totalPages;
     };
 
     /// <summary>
