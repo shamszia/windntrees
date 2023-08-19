@@ -57,11 +57,6 @@ function CRUDView(options) {
             content = (options.content !== null && options.content !== undefined) ? options.content : instance.getObserverInterface().getFormObject();
         }
 
-        if (options !== null && options !== undefined) {
-
-            content = options.content;
-        }
-
         //if update have time fields then format them in proper order.
         if (options.TimeFields !== null && options.TimeFields !== undefined) {
 
