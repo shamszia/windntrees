@@ -34,6 +34,7 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
 <p>Note: Book does not explain CRUD2CRUD</p>
 <p>Amazon - https://www.amazon.com/dp/B0CHL52XB2</p>
 <p>Eliva Bookstore: https://www.elivabooks.com/en/book/book-3803083425</p>
+<p><img src="https://m.media-amazon.com/images/I/414rDBBu7uL._SY445_SX342_.jpg"></p>
 
 <h2>Dependencies</h2>
         <p>
