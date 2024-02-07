@@ -15,6 +15,10 @@
 <p>Get started with WindnTrees application development by learning following:</p>
 <p><a href="http://www.invincibletec.com/tutorial/detail/getting-started-with-windntrees" title="getting-started-with-windntrees">Tutorial</a></p>
 
+<h2>Websites</h2>
+<p><a href="http://www.invincibletec.com" title="www.invincibletec.com">www.invincibletec.com</a></p>
+<p><a href="http://16.170.242.60:8000" title="backup website">backup website</a></p>
+
 <h2>CRUD2CRUD (CRUD=CRUD) Architecture</h2>
 <p>WindnTrees implements CRUD 2 CRUD (CRUDS parallel) application architecture where server side publish services in terms of CRUD controllers and the client side consumes those services using CRUD controllers.</p>
 
