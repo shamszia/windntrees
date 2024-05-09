@@ -35,6 +35,12 @@ CRUDSource(s) --- CRUDController(s) -- CRUDProcessor(s) --- CRUDConsumer(s)
 <h2>Equated Accounting Math Research Book</h2>
 <p>Get to know about equation accountancy math, it is natural, counts and completes equation. CRUD2CRUD is CRUD balance where CRUD (is a design value).</p>
 <p>"A design is about design"</p>
+
+<ol>
+	<li>Equated Accounting is a standard equal value design equation.</li>
+	<li>Circle 45 /7 is a standard equal design circle.</li>
+</ol>
+
 <p>Note: Book does not explain CRUD2CRUD</p>
 <p>Amazon - https://www.amazon.com/dp/B0CHL52XB2</p>
 <p>Eliva Bookstore: https://www.elivabooks.com/en/book/book-3803083425</p>
